@@ -12,8 +12,8 @@ public enum SuccessMessage {
 
 
     // 201 CREATED
-    USER_CREATE_SUCCESS("회원가입이 완료되었습니다.");
-
+    USER_CREATE_SUCCESS("회원가입이 완료되었습니다."),
+    PRODUCT_CREATE_SUCCESS("상품 등록 완료");
 
     private final String message;
 }
