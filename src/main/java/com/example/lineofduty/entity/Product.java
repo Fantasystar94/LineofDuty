@@ -19,10 +19,6 @@ public class Product extends BaseEntity {
     @Column(name = "product_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "seller_id", nullable = false)
-    private User seller;
-
     @Column(nullable = false)
     private String name;
 
@@ -39,8 +35,7 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private ApplicationStatus.ProductStatus status;
 
-   public Product(User seller, String name, String description, Integer price, Integer stock, ApplicationStatus.ProductStatus status) {
-       this.seller = seller;
+   public Product(String name, String description, Integer price, Integer stock, ApplicationStatus.ProductStatus status) {
        this.name = name;
        this.description = description;
        this.price = price;
