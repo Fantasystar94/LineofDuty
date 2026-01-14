@@ -1,10 +1,10 @@
 package com.example.lineofduty.common.model.enums;
 
 public enum ApplicationStatus {
-    COMPLETED,
-    CANCELED,
-    CONFIRMED,
-    DEFERRED;
+    CONFIRMED,  //완료
+    CANCELED,   //취소
+    PENDING,  //신청완료
+    DEFERRED;   //연기
 
     public enum OrderStatus {
         ORDERED,
@@ -22,4 +22,5 @@ public enum ApplicationStatus {
         ON_SALE,
         SOLD_OUT
     }
+
 }

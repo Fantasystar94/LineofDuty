@@ -2,15 +2,13 @@ package com.example.lineofduty.entity;
 
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "enlistment_applications")
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EnlistmentApplication extends BaseEntity {
 
     @Id
@@ -22,11 +20,14 @@ public class EnlistmentApplication extends BaseEntity {
     @Column(name = "application_status", nullable = false)
     private ApplicationStatus applicationStatus;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    private Long userId;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "schedule_id", nullable = false)
-    private EnlistmentSchedule schedule;
+    private Long scheduleId;
+
+    public EnlistmentApplication(ApplicationStatus applicationStatus, Long userId, Long scheduleId) {
+        this.applicationStatus = applicationStatus;
+        this.userId = userId;
+        this.scheduleId = scheduleId;
+    }
+
 }

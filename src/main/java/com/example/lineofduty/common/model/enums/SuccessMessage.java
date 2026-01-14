@@ -12,10 +12,13 @@ public enum SuccessMessage {
 
 
     // 201 CREATED
-    USER_CREATE_SUCCESS("회원가입이 완료되었습니다.");
-
+    USER_CREATE_SUCCESS("회원가입이 완료되었습니다."),
+    //200 enlistment success
+    ENLISTMENT_SUCCESS("입영 가능 일정 조회 성공");
 
     private final String message;
+
+
 }
 
 
