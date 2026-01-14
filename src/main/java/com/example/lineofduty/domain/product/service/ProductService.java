@@ -5,10 +5,9 @@ import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import com.example.lineofduty.domain.product.dto.request.ProductCreateRequest;
 import com.example.lineofduty.domain.product.dto.response.ProductCreateResponse;
+import com.example.lineofduty.domain.product.dto.response.ProductGetOneResponse;
 import com.example.lineofduty.domain.product.repository.ProductRepository;
-import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.entity.Product;
-import com.example.lineofduty.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -29,5 +28,17 @@ public class ProductService {
         Product savedProduct = productRepository.save(product);
 
         return ProductCreateResponse.from(savedProduct);
+    }
+
+    @Transactional(readOnly = true)
+    public ProductGetOneResponse getProduct(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND));
+
+        if (product.isDeleted()) {
+            throw new CustomException(ErrorMessage.PRODUCT_NOT_FOUND);
+        }
+
+        return ProductGetOneResponse.from(product);
     }
 }
