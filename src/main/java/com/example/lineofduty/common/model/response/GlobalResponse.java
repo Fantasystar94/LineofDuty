@@ -31,10 +31,3 @@ public class GlobalResponse<T> {
         return new GlobalResponse<>(false, errorMessage, null, LocalDateTime.now());
     }
 }
-
-
-
-
-
-
-

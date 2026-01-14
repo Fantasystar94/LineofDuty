@@ -17,6 +17,3 @@ public enum SuccessMessage {
 
     private final String message;
 }
-
-
-
