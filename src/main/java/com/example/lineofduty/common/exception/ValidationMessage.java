@@ -1,4 +1,4 @@
-package com.example.lineofduty.exception;
+package com.example.lineofduty.common.exception;
 
 public final class ValidationMessage {
 

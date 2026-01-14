@@ -1,4 +1,4 @@
-package com.example.lineofduty.model.enums;
+package com.example.lineofduty.common.model.enums;
 
 public enum ApplicationStatus {
     COMPLETED,

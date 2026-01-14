@@ -1,4 +1,4 @@
-package com.example.lineofduty.model.response;
+package com.example.lineofduty.common.model.response;
 
 import java.util.List;
 import lombok.AllArgsConstructor;

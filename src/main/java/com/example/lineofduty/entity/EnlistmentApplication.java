@@ -1,6 +1,6 @@
 package com.example.lineofduty.entity;
 
-import com.example.lineofduty.model.enums.ApplicationStatus;
+import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

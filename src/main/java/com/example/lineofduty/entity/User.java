@@ -1,7 +1,8 @@
 package com.example.lineofduty.entity;
 
-import com.example.lineofduty.model.enums.Role;
+import com.example.lineofduty.common.model.enums.Role;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,7 +10,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "users")
 @Getter
-@Setter
 @NoArgsConstructor
 public class User extends BaseEntity {
 
@@ -33,4 +33,13 @@ public class User extends BaseEntity {
 
     @Column(nullable = false)
     private String residentNumber;
+
+    public User(String username, String email, String password, Role role, String residentNumber) {
+        this.username = username;
+        this.email = email;
+        this.password = password;
+        this.role = role;
+        this.residentNumber = residentNumber;
+    }
+
 }

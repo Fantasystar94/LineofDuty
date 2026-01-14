@@ -1,7 +1,8 @@
 package com.example.lineofduty.entity;
 
-import com.example.lineofduty.model.enums.ApplicationStatus;
+import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -37,4 +38,13 @@ public class Product extends BaseEntity {
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ApplicationStatus.ProductStatus status;
+
+   public Product(User seller, String name, String description, Integer price, Integer stock, ApplicationStatus.ProductStatus status) {
+       this.seller = seller;
+       this.name = name;
+       this.description = description;
+       this.price = price;
+       this.stock = stock;
+       this.status = status;
+   }
 }

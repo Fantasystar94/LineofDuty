@@ -1,6 +1,6 @@
-package com.example.lineofduty.model.response;
+package com.example.lineofduty.common.model.response;
 
-import com.example.lineofduty.model.enums.SuccessMessage;
+import com.example.lineofduty.common.model.enums.SuccessMessage;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

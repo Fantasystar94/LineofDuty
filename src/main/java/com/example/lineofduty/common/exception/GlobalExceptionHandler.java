@@ -1,6 +1,6 @@
-package com.example.lineofduty.exception;
+package com.example.lineofduty.common.exception;
 
-import com.example.lineofduty.model.response.GlobalResponse;
+import com.example.lineofduty.common.model.response.GlobalResponse;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
