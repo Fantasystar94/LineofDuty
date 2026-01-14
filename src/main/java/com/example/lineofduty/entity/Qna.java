@@ -1,6 +1,9 @@
 package com.example.lineofduty.entity;
 
+import com.example.lineofduty.common.exception.ValidationMessage;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -10,6 +13,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 public class Qna extends BaseEntity {
 
     @Id
@@ -29,4 +33,14 @@ public class Qna extends BaseEntity {
 
     @Column(name = "ask_content")
     private String askContent;
+
+    public Qna(@NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK) String title, @NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK) String questionContent, User user) {
+        this.title = title;
+        this.questionContent = questionContent;
+        this.user = user;
+    }
+
+    public Qna(@NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK) String title, @NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK) String questionContent) {
+        super();
+    }
 }

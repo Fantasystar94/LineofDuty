@@ -18,7 +18,7 @@ public final class ValidationMessage {
     public static final String PASSWORD_REQUIRED = "비밀번호를 입력해주세요.";
 
     // --- Task 관련 ---
-    public static final String TASK_TITLE_ASSIGNEE_NOT_BLANK = "제목과 담당자는 필수입니다.";
+    public static final String TITLE_CONTENT_NOT_BLANK = "질문 제목과 질문 내용은 필수입니다.";
 
     // --- Team 관련 ---
     public static final String TEAM_NAME_NOT_BLANK = "팀 이름은 필수입니다.";
