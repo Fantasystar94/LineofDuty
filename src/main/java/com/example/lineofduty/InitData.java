@@ -86,14 +86,8 @@ public class InitData {
             }
         }
 
-        // 판매자 = 관리자
-        User productAdmin = userRepository.findByEmail(("admin@example.com")).orElseThrow(
-                ()-> new CustomException(ErrorMessage.USER_NOT_FOUND)
-        );
-
         productRepository.save(
                 new Product(
-                        productAdmin,
                         "왕고무링",
                         "짬의 상징 왕 고무링, 훈련소에서부터 착용해보세요",
                         10000,
@@ -104,7 +98,6 @@ public class InitData {
 
         productRepository.save(
                 new Product(
-                        productAdmin,
                         "물집 안생기는 깔창",
                         "물집은 자랑이 아닙니다. 미리 예방하세요",
                         6000,
