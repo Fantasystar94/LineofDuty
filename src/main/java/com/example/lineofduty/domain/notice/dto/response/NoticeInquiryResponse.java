@@ -7,7 +7,7 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-@JsonPropertyOrder
+@JsonPropertyOrder({"id", "title", "content", "createdAt", "modifiedAt"})
 public class NoticeInquiryResponse {
 
     private final Long id;
