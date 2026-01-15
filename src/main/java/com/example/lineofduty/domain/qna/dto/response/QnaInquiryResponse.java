@@ -21,6 +21,12 @@ public class QnaInquiryResponse {
     private LocalDateTime modifiedAt;
 
     public QnaInquiryResponse(QnaDto from) {
-
+        this.id = from.getId();
+        this.userId = from.getUserId();
+        this.title = from.getTitle();
+        this.questionContent = from.getQuestionContent();
+        this.askContent = from.getAskContent();
+        this.createdAt = from.getCreatedAt();
+        this.modifiedAt = from.getModifiedAt();
     }
 }

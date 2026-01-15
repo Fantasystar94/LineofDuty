@@ -40,7 +40,4 @@ public class Qna extends BaseEntity {
         this.user = user;
     }
 
-    public Qna(@NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK) String title, @NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK) String questionContent) {
-        super();
-    }
 }
