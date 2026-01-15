@@ -39,17 +39,13 @@ public class ProductService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND));
 
-        if (product.isDeleted()) {
-            throw new CustomException(ErrorMessage.PRODUCT_NOT_FOUND);
-        }
-
         return ProductGetOneResponse.from(product);
     }
 
     // 상품 목록 조회
     @Transactional(readOnly = true)
     public Page<ProductGetAllResponse> getProductList(Pageable pageable) {
-        Page<Product> products = productRepository.findAllByIsDeletedFalse(pageable);
+        Page<Product> products = productRepository.findAll(pageable);
 
         return products.map(ProductGetAllResponse::from);
     }
@@ -60,13 +56,19 @@ public class ProductService {
         Product product = productRepository.findById(productId)
                 .orElseThrow(() -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND));
 
-        if (product.isDeleted()) {
-            throw new CustomException((ErrorMessage.PRODUCT_NOT_FOUND));
-        }
         product.update(request);
         productRepository.saveAndFlush(product);
 
         return ProductUpdateResponse.from(product);
+    }
+
+    // 상품 삭제
+    @Transactional
+    public void deleteProduct(Long productId) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND));
+
+        productRepository.deleteById(productId);
     }
 
 }

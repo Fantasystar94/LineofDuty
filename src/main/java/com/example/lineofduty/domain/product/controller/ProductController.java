@@ -27,21 +27,16 @@ public class ProductController {
 
     private final ProductService productService;
 
-
     @PostMapping("/admin/products")
     public ResponseEntity<GlobalResponse<ProductCreateResponse>> createProduct(@Valid @RequestBody ProductCreateRequest request) {
-
         ProductCreateResponse response = productService.createProduct(request);
-
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_CREATE_SUCCESS, response));
     }
 
     @GetMapping("/products/{productId}")
     public ResponseEntity<GlobalResponse<ProductGetOneResponse>> getProduct(@PathVariable Long productId) {
-
         ProductGetOneResponse response = productService.getProduct(productId);
-
         return ResponseEntity.status(HttpStatus.OK)
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_GET_ONE_SUCCESS, response));
     }
@@ -51,17 +46,20 @@ public class ProductController {
         Sort.Direction sortDirection = direction.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sort));
         Page<ProductGetAllResponse> products = productService.getProductList(pageable);
-
         return ResponseEntity.status(HttpStatus.OK)
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_GET_ALL_SUCCESS, PageResponse.from(products)));
     }
 
     @PutMapping("/admin/products/{productId}")
     public ResponseEntity<GlobalResponse<ProductUpdateResponse>> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductUpdateRequest request) {
-
         ProductUpdateResponse response = productService.updateProduct(request, productId);
-
         return ResponseEntity.status(HttpStatus.OK)
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_UPDATE_SUCCESS, response));
+    }
+
+    @DeleteMapping("/admin/products/{productId}")
+    public ResponseEntity<GlobalResponse<Void>> deleteProduct(@PathVariable Long productId) {
+        productService.deleteProduct(productId);
+        return ResponseEntity.ok(GlobalResponse.successNodata(SuccessMessage.PRODUCT_DELETE_SUCCESS));
     }
 }
