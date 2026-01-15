@@ -40,4 +40,8 @@ public class Qna extends BaseEntity {
         this.user = user;
     }
 
+    public void update(@NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK) String title, @NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK) String questionContent) {
+        this.title = title;
+        this.questionContent = questionContent;
+    }
 }

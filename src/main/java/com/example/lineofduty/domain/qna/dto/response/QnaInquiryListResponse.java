@@ -10,14 +10,13 @@ import java.util.List;
 
 @Getter
 @AllArgsConstructor
-@NoArgsConstructor
 public class QnaInquiryListResponse {
 
-    private List<QnaDto> content;
-    private long totalElements;
-    private int totalPages;
-    private int size;
-    private int number;
+    private final List<QnaDto> content;
+    private final long totalElements;
+    private final int totalPages;
+    private final int size;
+    private final int number;
 
     public static QnaInquiryListResponse from(Page<QnaDto> page) {
         return new QnaInquiryListResponse(

@@ -1,18 +1,18 @@
 package com.example.lineofduty.domain.qna.dto.response;
 
 import com.example.lineofduty.domain.qna.dto.QnaDto;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
 @JsonPropertyOrder({"id", "userId", "title", "questionContent", "askContent", "createdAt", "modifiedAt"})
-public class QnaResisterResponse {
+public class QnaUpdateResponse {
 
     private final Long id;
     private final Long userId;
@@ -22,7 +22,7 @@ public class QnaResisterResponse {
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
-    public QnaResisterResponse(QnaDto from) {
+    public QnaUpdateResponse(QnaDto from) {
         this.id = from.getId();
         this.userId = from.getUserId();
         this.title = from.getTitle();
@@ -31,4 +31,6 @@ public class QnaResisterResponse {
         this.createdAt = from.getCreatedAt();
         this.modifiedAt = from.getModifiedAt();
     }
+
+
 }

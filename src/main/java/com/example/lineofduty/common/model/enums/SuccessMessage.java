@@ -14,7 +14,9 @@ public enum SuccessMessage {
 
 
     // 201 CREATED
-    USER_CREATE_SUCCESS("회원가입이 완료되었습니다.");
+    USER_CREATE_SUCCESS("회원가입이 완료되었습니다."),
+    QNA_UPDATE_SUCCESS("질문이 수정되었습니다"),
+    QNA_DELETE_SUCCESS("질문이 삭제되었습니다");
 
 
     private final String message;
