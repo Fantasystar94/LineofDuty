@@ -1,12 +1,9 @@
 package com.example.lineofduty.domain.qna.dto.response;
 
 import com.example.lineofduty.domain.qna.dto.QnaDto;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDateTime;
 
 @Getter

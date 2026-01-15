@@ -3,11 +3,11 @@ package com.example.lineofduty.domain.qna.controller;
 
 import com.example.lineofduty.common.model.enums.SuccessMessage;
 import com.example.lineofduty.common.model.response.GlobalResponse;
+import com.example.lineofduty.domain.qna.service.QnaAdminService;
 import com.example.lineofduty.domain.qna.dto.request.QnaAdminAnswerRequest;
 import com.example.lineofduty.domain.qna.dto.request.QnaAdminAnswerUpdateRequest;
 import com.example.lineofduty.domain.qna.dto.response.QnaAdminAnswerResponse;
 import com.example.lineofduty.domain.qna.dto.response.QnaAdminAnswerUpdateResponse;
-import com.example.lineofduty.domain.qna.service.QnaAdminService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

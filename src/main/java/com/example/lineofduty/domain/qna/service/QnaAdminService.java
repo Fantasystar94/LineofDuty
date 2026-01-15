@@ -2,12 +2,12 @@ package com.example.lineofduty.domain.qna.service;
 
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
+import com.example.lineofduty.domain.qna.repository.QnaRepository;
 import com.example.lineofduty.domain.qna.dto.QnaDto;
 import com.example.lineofduty.domain.qna.dto.request.QnaAdminAnswerRequest;
 import com.example.lineofduty.domain.qna.dto.request.QnaAdminAnswerUpdateRequest;
 import com.example.lineofduty.domain.qna.dto.response.QnaAdminAnswerResponse;
 import com.example.lineofduty.domain.qna.dto.response.QnaAdminAnswerUpdateResponse;
-import com.example.lineofduty.domain.qna.repository.QnaRepository;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.entity.Qna;
 import lombok.RequiredArgsConstructor;
