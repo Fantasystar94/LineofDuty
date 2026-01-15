@@ -87,11 +87,11 @@ public class QnaService {
     //질문 삭제
     public void qnaDelete(Long qnaId) {
 
-        Qna qna = qnaRepository.findById(qnaId).orElseThrow
-                (() -> new CustomException(ErrorMessage.QUESTION_NOT_FOUND)
-        );
+        Qna qna = qnaRepository.findById(qnaId).orElseThrow(
+                ()-> new CustomException(ErrorMessage.QUESTION_NOT_FOUND));
 
         qnaRepository.delete(qna);
 
     }
+
 }

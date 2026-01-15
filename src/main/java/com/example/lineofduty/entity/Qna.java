@@ -40,8 +40,16 @@ public class Qna extends BaseEntity {
         this.user = user;
     }
 
+    public Qna(String askContent) {
+        this.askContent = askContent;
+    }
+
     public void update(@NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK) String title, @NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK) String questionContent) {
         this.title = title;
         this.questionContent = questionContent;
+    }
+
+    public void createAnswer(@NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK) String askContent) {
+        this.askContent = askContent;
     }
 }

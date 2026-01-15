@@ -5,17 +5,14 @@ import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Getter
-@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class QnaResisterRequest {
+public class QnaAdminAnswerRequest {
 
-    @NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK)
-    private String title;
-    @NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK)
-    private String questionContent;
+    @NotBlank(message = ValidationMessage.ASK_CONTENT_NOT_BLANK)
+    private String askContent;
+
 
 }

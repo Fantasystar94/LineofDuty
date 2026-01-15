@@ -55,7 +55,8 @@ public enum ErrorMessage {
     /* --- 409 Conflict --- */
     // 데이터 충돌
     DUPLICATE_EMAIL(HttpStatus.CONFLICT, "이미 존재하는 이메일입니다."),
-    ALREADY_PAID_ORDER(HttpStatus.CONFLICT, "이미 결제된 주문입니다.");
+    ALREADY_PAID_ORDER(HttpStatus.CONFLICT, "이미 결제된 주문입니다."),
+    ;
 
     private final HttpStatus status;
     private final String message;

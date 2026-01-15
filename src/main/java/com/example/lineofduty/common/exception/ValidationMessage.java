@@ -2,6 +2,8 @@ package com.example.lineofduty.common.exception;
 
 public final class ValidationMessage {
 
+
+
     private ValidationMessage() {}
 
     // --- 공통 메시지 ---
@@ -17,8 +19,9 @@ public final class ValidationMessage {
     public static final String LOGIN_REQUIRED = "username과 password는 필수입니다";
     public static final String PASSWORD_REQUIRED = "비밀번호를 입력해주세요.";
 
-    // --- Task 관련 ---
+    // --- QNA 관련 ---
     public static final String TITLE_CONTENT_NOT_BLANK = "질문 제목과 질문 내용은 필수입니다.";
+    public static final String ASK_CONTENT_NOT_BLANK = "답변 내용은 필수 입니다.";
 
     // --- Team 관련 ---
     public static final String TEAM_NAME_NOT_BLANK = "팀 이름은 필수입니다.";
