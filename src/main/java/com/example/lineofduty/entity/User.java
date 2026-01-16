@@ -1,16 +1,14 @@
 package com.example.lineofduty.entity;
 
 import com.example.lineofduty.common.model.enums.Role;
+import com.example.lineofduty.common.util.AesUtil;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Table(name = "users")
 @Getter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
     @Id
@@ -18,7 +16,7 @@ public class User extends BaseEntity {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, length = 30)
     private String username;
 
     @Column(nullable = false, unique = true)
@@ -31,7 +29,8 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private Role role;
 
-    @Column(nullable = false)
+    @Column(name = "resident_number", nullable = false)
+    @Convert(converter = AesUtil.ResidentNumberConverter.class)
     private String residentNumber;
 
     public User(String username, String email, String password, Role role, String residentNumber) {

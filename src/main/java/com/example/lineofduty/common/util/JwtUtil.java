@@ -1,10 +1,7 @@
 package com.example.lineofduty.common.util;
 
 import com.example.lineofduty.common.model.enums.Role;
-import io.jsonwebtoken.Claims;
-import io.jsonwebtoken.JwtException;
-import io.jsonwebtoken.JwtParser;
-import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
@@ -54,9 +51,16 @@ public class JwtUtil {
         try {
             jwtParser.parseSignedClaims(token);
             return true;
-        } catch (JwtException e) {
-            return false;
+        } catch (SecurityException | MalformedJwtException | SignatureException e) {
+            log.error("유효하지 않는 JWT 입니다.");
+        } catch (ExpiredJwtException e) {
+            log.error("만료된 JWT token 입니다.");
+        } catch (UnsupportedJwtException e) {
+            log.error("지원되지 않는 JWT 토큰 입니다.");
+        } catch (IllegalArgumentException e) {
+            log.error("잘못된 JWT 토큰 입니다.");
         }
+        return false;
     }
 
     // 복호화
