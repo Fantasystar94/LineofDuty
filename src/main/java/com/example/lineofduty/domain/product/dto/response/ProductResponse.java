@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @Getter
-public class ProductGetAllResponse {
+public class ProductResponse {
 
     private Long productId;
     private String name;
@@ -17,8 +17,8 @@ public class ProductGetAllResponse {
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
-    public static ProductGetAllResponse from(Product product) {
-        return new ProductGetAllResponse(
+    public static ProductResponse from(Product product) {
+        return new ProductResponse(
                 product.getId(),
                 product.getName(),
                 product.getDescription(),

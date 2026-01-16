@@ -7,7 +7,7 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
-public class ProductCreateRequest {
+public class ProductRequest {
 
     @NotBlank(message = ValidationMessage.MISSING_PRODUCT_NAME)
     private String name;

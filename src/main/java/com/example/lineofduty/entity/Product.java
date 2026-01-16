@@ -1,14 +1,11 @@
 package com.example.lineofduty.entity;
 
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
-import com.example.lineofduty.domain.product.dto.request.ProductUpdateRequest;
+import com.example.lineofduty.domain.product.dto.request.ProductRequest;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.util.Locale;
 
 @Entity
 @Table(name = "products")
@@ -38,18 +35,18 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private ApplicationStatus.ProductStatus status;
 
-   public Product(String name, String description, Integer price, Integer stock, ApplicationStatus.ProductStatus status) {
-       this.name = name;
-       this.description = description;
-       this.price = price;
-       this.stock = stock;
-       this.status = status;
-   }
+    public Product(String name, String description, Integer price, Integer stock, ApplicationStatus.ProductStatus status) {
+        this.name = name;
+        this.description = description;
+        this.price = price;
+        this.stock = stock;
+        this.status = status;
+    }
 
-   public void update(ProductUpdateRequest request) {
-       if (request.getName() != null) this.name = request.getName();
-       if (request.getDescription() != null) this.description = request.getDescription();
-       if (request.getPrice() != null) this.price = request.getPrice();
-       if (request.getPrice() != null) this.stock = request.getStock();
-   }
+    public void update(ProductRequest request) {
+        if (request.getName() != null) this.name = request.getName();
+        if (request.getDescription() != null) this.description = request.getDescription();
+        if (request.getPrice() != null) this.price = request.getPrice();
+        if (request.getPrice() != null) this.stock = request.getStock();
+    }
 }
