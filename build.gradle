@@ -50,6 +50,8 @@ dependencies {
 
     //Security
     //implementation 'org.springframework.boot:spring-boot-starter-security'
+    //flyaway
+    implementation 'org.flywaydb:flyway-core'
 
 }
 

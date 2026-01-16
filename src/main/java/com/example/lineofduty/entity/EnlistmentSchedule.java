@@ -28,4 +28,11 @@ public class EnlistmentSchedule extends BaseEntity {
     @Column(name = "remaining_slots", nullable = false)
     private Integer remainingSlots;
 
+    public void slotDeduct() {
+        this.remainingSlots--;
+    }
+
+    public void restoreSlot() {
+        this.remainingSlots += 1;
+    }
 }

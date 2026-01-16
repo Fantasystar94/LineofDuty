@@ -4,6 +4,8 @@ import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Entity
 @Table(name = "enlistment_applications")
 @Getter
@@ -24,10 +26,17 @@ public class EnlistmentApplication extends BaseEntity {
 
     private Long scheduleId;
 
-    public EnlistmentApplication(ApplicationStatus applicationStatus, Long userId, Long scheduleId) {
+    private LocalDate enlistmentDate;
+
+    public EnlistmentApplication(ApplicationStatus applicationStatus, Long userId, Long scheduleId,LocalDate enlistmentDate) {
         this.applicationStatus = applicationStatus;
         this.userId = userId;
         this.scheduleId = scheduleId;
+        this.enlistmentDate = enlistmentDate;
+    }
+
+    public void changeStatus(ApplicationStatus status) {
+        this.applicationStatus = status;
     }
 
 }
