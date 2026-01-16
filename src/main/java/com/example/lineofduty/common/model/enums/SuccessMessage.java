@@ -8,7 +8,6 @@ import lombok.RequiredArgsConstructor;
 public enum SuccessMessage {
 
     // 200 OK
-
     ORDER_GET_SUCCESS("주문이 성공적으로 조회되었습니다."),
     ORDER_UPDATE_SUCCESS("주문이 수정되었습니다."),
 
@@ -18,6 +17,7 @@ public enum SuccessMessage {
 
     // 204 NO Content
     ORDER_DELETE_SUCCESS("주문이 취소되었습니다."),
+
 
     // auth
     AUTH_LOGIN_SUCCESS("로그인 성공"),
@@ -31,6 +31,7 @@ public enum SuccessMessage {
     USER_ALL_READ_SUCCESS("회원 전체 조회 성공"),
     USER_READ_ADMIN_SUCCESS("회원 정보 조회 성공"),
     USER_DELETE_ADMIN_SUCCESS("회원 탈퇴 완료")
+
 
 ;
     private final String message;

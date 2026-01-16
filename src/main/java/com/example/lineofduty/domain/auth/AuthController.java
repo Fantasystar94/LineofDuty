@@ -35,7 +35,7 @@ public class AuthController {
         data.put("userId", userId);
 
         return ResponseEntity.status(HttpStatus.CREATED)
-                .body(GlobalResponse.success(SuccessMessage.SIGNUP_SUCCESS, data));
+                .body(GlobalResponse.success(SuccessMessage.USER_CREATE_SUCCESS, data));
     }
 
     // 로그인
