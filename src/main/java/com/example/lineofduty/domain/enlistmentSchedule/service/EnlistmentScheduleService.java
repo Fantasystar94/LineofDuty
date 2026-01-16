@@ -1,5 +1,4 @@
 package com.example.lineofduty.domain.enlistmentSchedule.service;
-
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
@@ -12,8 +11,8 @@ import com.example.lineofduty.domain.enlistmentApplication.repository.QueryEnlis
 import com.example.lineofduty.domain.enlistmentSchedule.model.request.EnlistmentScheduleCreateRequest;
 import com.example.lineofduty.domain.enlistmentSchedule.model.response.EnlistmentScheduleCreateResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.model.response.EnlistmentScheduleReadResponse;
-import com.example.lineofduty.domain.enlistmentSchedule.repository.QueryEnlistmentScheduleRepository;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository;
+import com.example.lineofduty.domain.enlistmentSchedule.repository.QueryEnlistmentScheduleRepository;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.entity.Deferment;
 import com.example.lineofduty.entity.EnlistmentApplication;
@@ -24,7 +23,6 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.LocalDate;
 import java.util.List;
 
@@ -200,7 +198,13 @@ public class EnlistmentScheduleService {
         application.changeStatus(ApplicationStatus.REQUESTED);
 
         // 4. 저장
-        Deferment deferment = new Deferment(application.getId(),userId,request.getReasonDetail(), request.getDefermentStatus(),request.getRequestedUntil());
+        Deferment deferment = new Deferment(
+                application.getId(),
+                userId,
+                request.getReasonDetail(),
+                request.getDefermentStatus(),
+                request.getRequestedUntil()
+        );
         defermentRepository.save(deferment);
 
         return EnlistmentApplicationReadResponse.from(application);
@@ -225,7 +229,10 @@ public class EnlistmentScheduleService {
     @Transactional
     public DefermentsReadResponse getDeferment(Long userId, Long defermentId) {
 
-        Deferment deferment = defermentRepository.findByIdAndUserId(defermentId, userId).orElseThrow(()-> new CustomException(ErrorMessage.DEFERMENT_NOT_FOUND));
+        Deferment deferment = defermentRepository
+                .findByIdAndUserId(defermentId, userId).orElseThrow(
+                        ()-> new CustomException(ErrorMessage.DEFERMENT_NOT_FOUND)
+                );
 
         return DefermentsReadResponse.from(deferment);
     }
@@ -236,8 +243,6 @@ public class EnlistmentScheduleService {
     }
 
     private EnlistmentSchedule scheduleValidate(Long scheduleId) {
-        return scheduleRepository
-                .findById(scheduleId)
-                .orElseThrow(()-> new CustomException(ErrorMessage.SCHEDULE_NOT_FOUND));
+        return scheduleRepository.findById(scheduleId).orElseThrow(()-> new CustomException(ErrorMessage.SCHEDULE_NOT_FOUND));
     }
 }

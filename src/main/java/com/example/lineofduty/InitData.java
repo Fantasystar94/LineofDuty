@@ -32,7 +32,7 @@ public class InitData {
     @PostConstruct
     @Transactional
     public void init() {
-//         중복 생성 방지
+        // 중복 생성 방지
         if (userRepository.count() > 0) {
             return;
         }
@@ -65,17 +65,6 @@ public class InitData {
         userRepository.save(admin);
         userRepository.save(user);
 
-
-        for (int i = 0; i < 10; i++) {
-            User severalUser = new User(
-                "유저"+i,
-                "user@example"+i+".com",
-                passwordEncoder.encode("1234!"),
-                Role.ROLE_USER,
-                "941229-1182611"
-            );
-            userRepository.save(severalUser);
-        }
 
         //2026년 동안 화요일마다 4회씩 생성
         int year = 2026;

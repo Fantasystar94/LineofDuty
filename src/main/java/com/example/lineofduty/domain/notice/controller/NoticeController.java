@@ -22,7 +22,7 @@ public class NoticeController {
 
     // 공지사항 등록
     @PostMapping("/admin/notices/{userId}")
-    public ResponseEntity<GlobalResponse<NoticeResisterResponse>> noticeResisterApi(
+    public ResponseEntity<GlobalResponse> noticeResisterApi(
             @PathVariable Long userId,
             @RequestBody NoticeResisterRequest request
     ) {
@@ -33,7 +33,7 @@ public class NoticeController {
 
     //공지사항 상세조회
     @GetMapping("/notices/{noticeId}")
-    public ResponseEntity<GlobalResponse<NoticeInquiryResponse>> noticeInquiryApi(@PathVariable Long noticeId) {
+    public ResponseEntity<GlobalResponse> noticeInquiryApi(@PathVariable Long noticeId) {
 
         NoticeInquiryResponse response = noticeService.noticeInquiry(noticeId);
 
@@ -42,7 +42,7 @@ public class NoticeController {
 
     //공지사항 페이징 조회
     @GetMapping("/notices")
-    public ResponseEntity<GlobalResponse<NoticeInquiryListResponse>> noticeInquiryListApi(
+    public ResponseEntity<GlobalResponse> noticeInquiryListApi(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "sort", defaultValue = "id,desc") String[] sort
@@ -54,7 +54,7 @@ public class NoticeController {
 
     //공지사항 수정
     @PutMapping("/admin/notices/{noticeId}")
-    public ResponseEntity<GlobalResponse<NoticeUpdateResponse>> noticeUpdateApi(
+    public ResponseEntity<GlobalResponse> noticeUpdateApi(
             @PathVariable Long noticeId,
             @RequestBody NoticeResisterRequest request
     ) {
@@ -65,7 +65,7 @@ public class NoticeController {
 
     //공지사항 삭제
     @DeleteMapping("/admin/notices/{noticeId}")
-    public ResponseEntity<GlobalResponse<Void>> noticeDelete(
+    public ResponseEntity<GlobalResponse> noticeDelete(
             @PathVariable Long noticeId
     ) {
         noticeService.noticeDelete(noticeId);
