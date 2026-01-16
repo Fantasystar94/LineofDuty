@@ -18,17 +18,23 @@ public class OrderItem extends BaseEntity {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "order_id", nullable = false)
-    private Order order;
-
-    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "product_id", nullable = false)
     private Product product;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "order_id", nullable = false)
+    private Order order;
 
     @Column(name = "order_price", nullable = false)
-    private Integer orderPrice;
+    private Long orderPrice;
 
     @Column(nullable = false)
-    private Integer quantity;
+    private Long quantity;
+
+    public OrderItem(Product product, Order order, Long orderPrice, Long quantity) {
+        this.product = product;
+        this.order = order;
+        this.orderPrice = orderPrice;
+        this.quantity = quantity;
+    }
 }
