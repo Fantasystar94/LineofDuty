@@ -26,6 +26,7 @@ public enum SuccessMessage {
     USER_CREATE_SUCCESS("회원가입이 완료되었습니다."),
     PRODUCT_CREATE_SUCCESS("상품 등록 완료"),
     ORDER_CREATE_SUCCESS("주문이 생성되었습니다."),
+    PAYMENT_CREATE_SUCCESS("결제 요청 생성 완료"),
 
     // 204 NO Content
     PRODUCT_DELETE_SUCCESS("상품 삭제 완료"),

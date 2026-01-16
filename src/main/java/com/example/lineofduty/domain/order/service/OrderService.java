@@ -27,6 +27,7 @@ public class OrderService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
+    // 주문서(주문 포함) 생성
     @Transactional
     public OrderCreateResponse createOrderService(OrderCreateRequest request, Long userId) {
 
@@ -54,6 +55,7 @@ public class OrderService {
         return OrderCreateResponse.from(order);
     }
 
+    // 주문서(order) 조회
     @Transactional(readOnly = true)
     public OrderGetResponse getOrderService(Long orderId) {
 
@@ -64,6 +66,7 @@ public class OrderService {
         return OrderGetResponse.from(order);
     }
 
+    // 주문(orderItem) 조회
     @Transactional(readOnly = true)
     public OrderItemGetResponse getOrderItemService(Long orderId, Long orderItemId) {
 
@@ -74,6 +77,7 @@ public class OrderService {
         return OrderItemGetResponse.from(orderId, orderItem);
     }
 
+    // 주문 수정
     @Transactional
     public OrderUpdateResponse updateOrderService(Long orderId, Long orderItemId, OrderUpdateRequest request) {
 
@@ -114,6 +118,7 @@ public class OrderService {
         return OrderUpdateResponse.from(orderItem);
     }
 
+    // 주문 취소(삭제)
     @Transactional
     public void deleteOrderService(Long orderId, Long userId) {
 

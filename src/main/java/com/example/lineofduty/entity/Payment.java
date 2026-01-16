@@ -1,6 +1,5 @@
 package com.example.lineofduty.entity;
 
-import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,8 +17,11 @@ public class Payment extends BaseEntity {
     @Column(name = "payment_id")
     private Long id;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.PERSIST)
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
+    public Payment(Order order) {
+        this.order = order;
+    }
 }
