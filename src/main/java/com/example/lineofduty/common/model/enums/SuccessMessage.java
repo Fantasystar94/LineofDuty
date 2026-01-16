@@ -9,11 +9,17 @@ public enum SuccessMessage {
 
     // 200 OK
     AUTH_LOGIN_SUCCESS("로그인 성공"),
+    USER_READ_SUCCESS("내 정보 조회 성공"),
+    USER_UPDATE_SUCCESS("내 정보 수정 성공"),
+    USER_ALL_READ_SUCCESS("회원 전체 조회 성공"),
+    USER_READ_ADMIN_SUCCESS("회원 정보 조회 성공"),
+
     PRODUCT_GET_ONE_SUCCESS("상품 단건 조회 성공"),
     PRODUCT_GET_ALL_SUCCESS("상품 목록 조회 성공"),
     PRODUCT_UPDATE_SUCCESS("상품 수정 완료"),
     ORDER_GET_SUCCESS("주문이 성공적으로 조회되었습니다."),
     ORDER_UPDATE_SUCCESS("주문이 수정되었습니다."),
+
     QNA_CREATE_SUCCESS("질문이 생성되었습니다."),
     QNA_READ_SUCCESS("질문 단건 조회 성공"),
     QNA_UPDATE_SUCCESS("질문이 수정되었습니다"),
@@ -28,12 +34,15 @@ public enum SuccessMessage {
     ORDER_CREATE_SUCCESS("주문이 생성되었습니다."),
 
     // 204 NO Content
+    USER_DELETE_SUCCESS("회원탈퇴 성공"),
+    USER_DELETE_ADMIN_SUCCESS("관리자 회원 탈퇴 성공"),
     PRODUCT_DELETE_SUCCESS("상품 삭제 완료"),
     ORDER_DELETE_SUCCESS("주문이 취소되었습니다."),
     QNA_DELETE_SUCCESS("질문이 삭제되었습니다"),
     NOTICE_DELETE_SUCCESS("공지가 삭제되었습니다.");
 
 
+;
     private final String message;
 }
 
