@@ -14,7 +14,7 @@ import java.util.Objects;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
-    public ResponseEntity<GlobalResponse<Void>> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
+    public ResponseEntity<GlobalResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException ex) {
 
         log.error("MethodArgumentNotValidException 발생 : {} ", ex.getMessage());
 
@@ -24,7 +24,7 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler(value = CustomException.class)
-    public ResponseEntity<GlobalResponse<Void>> handlerCustomException(CustomException ex) {
+    public ResponseEntity<GlobalResponse> handlerCustomException(CustomException ex) {
 
         log.error("CustomException 발생 : {} ", ex.getMessage());
 
