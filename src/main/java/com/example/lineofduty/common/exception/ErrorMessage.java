@@ -50,6 +50,9 @@ public enum ErrorMessage {
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 상품입니다."),
     ORDER_NOT_FOUND(HttpStatus.NOT_FOUND, "주문이 존재하지 않습니다."),
     SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND, "입영 일정이 존재하지 않습니다."),
+    NOTICE_NOT_FOUND(HttpStatus.NOT_FOUND, "공지를 찾을 수 없습니다."),
+
+
 
     /* --- 409 Conflict --- */
     // 데이터 충돌
@@ -57,6 +60,7 @@ public enum ErrorMessage {
     ALREADY_PAID_ORDER(HttpStatus.CONFLICT, "이미 결제된 주문입니다."),
     DUPLICATE_SCHEDULE(HttpStatus.CONFLICT, "이미 신청된 유저입니다"),
     INVALID_APPLICATION_STATUS(HttpStatus.CONFLICT,"승인 할 수 없습니다");
+
     private final HttpStatus status;
     private final String message;
 }
