@@ -41,4 +41,19 @@ public class User extends BaseEntity {
         this.residentNumber = residentNumber;
     }
 
+    public void updateProfile(String email, String username, String password) {
+
+        if (email != null && !email.isEmpty()) {
+            this.email = email;
+        }
+
+        if (username != null && !username.isEmpty()) {
+            this.username = username;
+        }
+
+        if (password != null && !password.isEmpty()) {
+            this.password = password;
+        }
+    }
+
 }
