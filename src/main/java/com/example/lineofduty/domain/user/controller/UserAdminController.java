@@ -22,21 +22,21 @@ public class UserAdminController {
 
     // 전체 조회
     @GetMapping
-    public ResponseEntity<GlobalResponse<List<UserAdminResponse>>> getAllUsers() {
+    public ResponseEntity<GlobalResponse> getAllUsers() {
         List<UserAdminResponse> data = userService.getAllUsers();
         return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_ALL_READ_SUCCESS, data));
     }
 
     // 상세 조회
     @GetMapping("/{userId}")
-    public ResponseEntity<GlobalResponse<UserAdminResponse>> getUser(@PathVariable Long userId) {
+    public ResponseEntity<GlobalResponse> getUser(@PathVariable Long userId) {
         UserAdminResponse data = userService.getUserById(userId);
         return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_READ_ADMIN_SUCCESS, data));
     }
 
     // 관리자 본인 탈퇴
     @DeleteMapping("/{userId}")
-    public ResponseEntity<GlobalResponse<UserWithdrawResponse>> withdrawAdmin(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<GlobalResponse> withdrawAdmin(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         UserWithdrawResponse data = userService.withdrawAdmin(userDetails.getUser().getId());
         return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_DELETE_ADMIN_SUCCESS, data));
     }

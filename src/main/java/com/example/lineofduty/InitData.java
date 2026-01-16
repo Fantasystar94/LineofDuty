@@ -1,5 +1,4 @@
 package com.example.lineofduty;
-
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import com.example.lineofduty.common.model.enums.Role;
@@ -14,7 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
-
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.temporal.TemporalAdjusters;
