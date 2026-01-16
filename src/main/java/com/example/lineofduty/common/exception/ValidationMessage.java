@@ -27,6 +27,11 @@ public final class ValidationMessage {
     // --- Comment 관련 ---
     public static final String COMMENT_CONTENT_NOT_BLANK = "댓글 내용은 필수입니다.";
 
+    // --- Product 관련 ---
+    public static final String MISSING_PRODUCT_NAME = "상품명이 입력되지 않았습니다.";
+    public static final String INVALID_PRICE = "가격은 0원 이상이어야 합니다.";
+    public static final String INVALID_STOCK = "재고는 0개 이상이어야 합니다.";
+
     // --- 정규식 ---
     public static final String PASSWORD_REGEXP = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@#$%])(?=\\S+$).{8,}$";
 }

@@ -1,6 +1,7 @@
 package com.example.lineofduty.entity;
 
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
+import com.example.lineofduty.domain.product.dto.request.ProductUpdateRequest;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -41,5 +42,12 @@ public class Product extends BaseEntity {
        this.price = price;
        this.stock = stock;
        this.status = status;
+   }
+
+   public void update(ProductUpdateRequest request) {
+       if (request.getName() != null) this.name = request.getName();
+       if (request.getDescription() != null) this.description = request.getDescription();
+       if (request.getPrice() != null) this.price = request.getPrice();
+       if (request.getPrice() != null) this.stock = request.getStock();
    }
 }
