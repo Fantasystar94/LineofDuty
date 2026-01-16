@@ -3,9 +3,9 @@ spring:
     import: optional:file:.properties[.properties]
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/lineofduty
-    username: root
-    password: 1234
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
+    password: ${DB_PASSWORD}
 
   jpa:
     hibernate:
@@ -18,6 +18,3 @@ spring:
 
   application:
     name: Lineofduty
-
-# AES-256 암호화 키 - 주민번호 암호화
-AES_SECRET_KEY: "9f2a7d3c8e1b5a6f4d0c9e7b2a1f8c6e"
