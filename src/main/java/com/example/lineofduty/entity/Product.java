@@ -8,8 +8,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Locale;
-
 @Entity
 @Table(name = "products")
 @Getter
