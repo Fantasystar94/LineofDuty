@@ -79,9 +79,12 @@ public class NoticeService {
         String sortDirection = sort.length > 1 ? sort[1] : "desc";
         Sort.Direction direction = Sort.Direction.fromString(sortDirection);
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortField));
+        // PageRequest.of는 0부터 시작하므로, 사용자가 1페이지를 요청하면 0으로 변환
+        int pageNumber = (page > 0) ? page - 1 : 0;
 
-        Page<Notice> noticePage = noticeRepository.findAll(pageable);
+        Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(direction, sortField));
+
+        Page<Notice> noticePage = noticeRepository.findAllByIsDeletedFalse(pageable);
         Page<NoticeDto> noticeDtoPage = noticePage.map(NoticeDto::from);
 
         return NoticeInquiryListResponse.from(noticeDtoPage);

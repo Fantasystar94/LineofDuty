@@ -66,9 +66,11 @@ public class QnaService {
         String sortDirection = sort.length > 1 ? sort[1] : "desc";
         Sort.Direction direction = Sort.Direction.fromString(sortDirection);
 
-        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortField));
+        int pageNumber = (page > 0) ? page - 1 : 0;
 
-        Page<Qna> qnaPage = qnaRepository.findAll(pageable);
+        Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(direction, sortField));
+
+        Page<Qna> qnaPage = qnaRepository.findAllByIsDeletedFalse(pageable);
         Page<QnaDto> qnaDtoPage = qnaPage.map(QnaDto::from);
 
         return QnaInquiryListResponse.from(qnaDtoPage);
