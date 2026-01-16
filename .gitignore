@@ -36,6 +36,7 @@ out/
 .vscode/
 
 ### properties ###
-.properties
 *.properties
-!/.properties
+
+### initData ###
+src/main/java/com/example/lineofduty/InitData.java

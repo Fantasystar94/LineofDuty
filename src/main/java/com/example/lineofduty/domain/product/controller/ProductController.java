@@ -28,21 +28,21 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/admin/products")
-    public ResponseEntity<GlobalResponse<ProductCreateResponse>> createProduct(@Valid @RequestBody ProductCreateRequest request) {
+    public ResponseEntity<GlobalResponse> createProduct(@Valid @RequestBody ProductCreateRequest request) {
         ProductCreateResponse response = productService.createProduct(request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_CREATE_SUCCESS, response));
     }
 
     @GetMapping("/products/{productId}")
-    public ResponseEntity<GlobalResponse<ProductGetOneResponse>> getProduct(@PathVariable Long productId) {
+    public ResponseEntity<GlobalResponse> getProduct(@PathVariable Long productId) {
         ProductGetOneResponse response = productService.getProduct(productId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_GET_ONE_SUCCESS, response));
     }
 
     @GetMapping("/products")
-    public ResponseEntity<GlobalResponse<PageResponse<ProductGetAllResponse>>> getProDuctList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "createdAt") String sort, @RequestParam(defaultValue = "desc") String direction) {
+    public ResponseEntity<GlobalResponse> getProDuctList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "createdAt") String sort, @RequestParam(defaultValue = "desc") String direction) {
         Sort.Direction sortDirection = direction.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sort));
         Page<ProductGetAllResponse> products = productService.getProductList(pageable);
@@ -51,14 +51,14 @@ public class ProductController {
     }
 
     @PutMapping("/admin/products/{productId}")
-    public ResponseEntity<GlobalResponse<ProductUpdateResponse>> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductUpdateRequest request) {
+    public ResponseEntity<GlobalResponse> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductUpdateRequest request) {
         ProductUpdateResponse response = productService.updateProduct(request, productId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_UPDATE_SUCCESS, response));
     }
 
     @DeleteMapping("/admin/products/{productId}")
-    public ResponseEntity<GlobalResponse<Void>> deleteProduct(@PathVariable Long productId) {
+    public ResponseEntity<GlobalResponse> deleteProduct(@PathVariable Long productId) {
         productService.deleteProduct(productId);
         return ResponseEntity.ok(GlobalResponse.successNodata(SuccessMessage.PRODUCT_DELETE_SUCCESS));
     }
