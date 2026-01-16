@@ -38,12 +38,21 @@ public enum SuccessMessage {
     USER_DELETE_ADMIN_SUCCESS("관리자 회원 탈퇴 성공"),
     PRODUCT_DELETE_SUCCESS("상품 삭제 완료"),
     ORDER_DELETE_SUCCESS("주문이 취소되었습니다."),
+    //200 enlistment success
+    ENLISTMENT_SUCCESS("입영 가능 일정 조회 성공"),
+    ENLISTMENT_APPLY_SUCCESS("입영 신청 완료"),
+    ENLISTMENT_LIST_SUCCESS("입영 신청 조회 성공"),
+    ENLISTMENT_CANCEL_SUCCESS("입영 신청이 취소 완료."),
+    ENLISTMENT_APPROVE_SUCCESS("입영 신청 승인 완료."),
+    DEFERMENTS_SUCCESS("연기 신청이 접수되었습니다."),
+    DEFERMENTS_GET_SUCCESS("연기 신청 조회 성공"),
     QNA_DELETE_SUCCESS("질문이 삭제되었습니다"),
     NOTICE_DELETE_SUCCESS("공지가 삭제되었습니다.");
 
 
-;
     private final String message;
+
+
 }
 
 

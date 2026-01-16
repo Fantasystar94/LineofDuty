@@ -54,7 +54,7 @@ public class ProductController {
     }
 
     @DeleteMapping("/admin/products/{productId}")
-    public ResponseEntity<GlobalResponse<Void>> deleteProduct(@PathVariable Long productId) {
+    public ResponseEntity<GlobalResponse> deleteProduct(@PathVariable Long productId) {
         productService.deleteProduct(productId);
         return ResponseEntity.ok(GlobalResponse.successNodata(SuccessMessage.PRODUCT_DELETE_SUCCESS));
     }

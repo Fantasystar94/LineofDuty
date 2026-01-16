@@ -22,7 +22,7 @@ public class QnaAdminController {
 
     // 질문 관리자 답변 등록
     @PostMapping("/{qnaId}")
-    public ResponseEntity<GlobalResponse<QnaAdminAnswerResponse>> qnaAdminAnswerApi(
+    public ResponseEntity<GlobalResponse> qnaAdminAnswerApi(
             @PathVariable Long qnaId,
             @RequestBody QnaAdminAnswerRequest request) {
 
@@ -34,7 +34,7 @@ public class QnaAdminController {
 
     // 질문 관리자 답변 수정
     @PutMapping("/{qnaId}")
-    public ResponseEntity<GlobalResponse<QnaAdminAnswerUpdateResponse>> qnaAdminAnswerUpdateApi(
+    public ResponseEntity<GlobalResponse> qnaAdminAnswerUpdateApi(
             @PathVariable Long qnaId,
             @RequestBody QnaAdminAnswerUpdateRequest request) {
 

@@ -29,7 +29,7 @@ public class AuthController {
 
     // 회원가입
     @PostMapping("/signup")
-    public ResponseEntity<GlobalResponse<Map<String, Object>>> signup(@Valid @RequestBody SignupRequest request) {
+    public ResponseEntity<GlobalResponse> signup(@Valid @RequestBody SignupRequest request) {
 
         Long userId = authService.signup(request);
 
@@ -42,7 +42,7 @@ public class AuthController {
 
     // 로그인
     @PostMapping("/login")
-    public ResponseEntity<GlobalResponse<Map<String, String>>> login(@Valid @RequestBody LoginRequest request) {
+    public ResponseEntity<GlobalResponse> login(@Valid @RequestBody LoginRequest request) {
 
         String token = authService.login(request);
 

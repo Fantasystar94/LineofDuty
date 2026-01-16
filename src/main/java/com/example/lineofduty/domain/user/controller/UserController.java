@@ -20,14 +20,14 @@ class UserController {
 
     // 조회
     @GetMapping("/{userId}")
-    public ResponseEntity<GlobalResponse<UserResponse>> getMyProfile(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<GlobalResponse> getMyProfile(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         UserResponse data = userService.getMyProfile(userDetails.getUser().getId());
         return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_READ_SUCCESS, data));
     }
 
     // 수정
     @PutMapping("/{userId}")
-    public ResponseEntity<GlobalResponse<UserResponse>> updateProfile(
+    public ResponseEntity<GlobalResponse> updateProfile(
             @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody UserUpdateRequest requestDto) {
         UserResponse data = userService.updateProfile(userDetails.getUser().getId(), requestDto);
@@ -36,7 +36,7 @@ class UserController {
 
     // 탈퇴
     @DeleteMapping("/{userId}")
-    public ResponseEntity<GlobalResponse<Void>> withdrawUser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<GlobalResponse> withdrawUser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         userService.withdrawUser(userDetails.getUser().getId());
         return ResponseEntity.ok(GlobalResponse.successNodata(SuccessMessage.USER_DELETE_SUCCESS));
     }
