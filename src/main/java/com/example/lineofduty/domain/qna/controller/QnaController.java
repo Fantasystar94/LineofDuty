@@ -25,7 +25,7 @@ public class QnaController {
 
     // 질문 등록
     @PostMapping("/{userId}")
-    public ResponseEntity<GlobalResponse<QnaResisterResponse>> qnaRegistrationApi(
+    public ResponseEntity<GlobalResponse> qnaRegistrationApi(
             @PathVariable Long userId,
             @RequestBody @Valid QnaResisterRequest request
     ) {
@@ -37,7 +37,7 @@ public class QnaController {
 
     //질문 단건 조회
     @GetMapping("/{qnaId}")
-    public ResponseEntity<GlobalResponse<QnaInquiryResponse>> qnaInquiryApi(@PathVariable Long qnaId) {
+    public ResponseEntity<GlobalResponse> qnaInquiryApi(@PathVariable Long qnaId) {
 
         QnaInquiryResponse response = qnaService.qnaInquiry(qnaId);
 
@@ -47,7 +47,7 @@ public class QnaController {
 
     //질문 목록 조회
     @GetMapping
-    public ResponseEntity<GlobalResponse<QnaInquiryListResponse>> qnaInquiryListApi(
+    public ResponseEntity<GlobalResponse> qnaInquiryListApi(
             @RequestParam(value = "page", defaultValue = "0") int page,
             @RequestParam(value = "size", defaultValue = "10") int size,
             @RequestParam(value = "sort", defaultValue = "id,desc") String[] sort
@@ -59,7 +59,7 @@ public class QnaController {
 
     //질문 수정
     @PutMapping("/{qnaId}")
-    public ResponseEntity<GlobalResponse<QnaUpdateResponse>> qnaUpdateApi(
+    public ResponseEntity<GlobalResponse> qnaUpdateApi(
             @PathVariable Long qnaId,
             @RequestBody @Valid QnaUpdateRequest request
     ) {
@@ -70,7 +70,7 @@ public class QnaController {
 
     //질문 삭제
     @DeleteMapping("/{qnaId}")
-    public ResponseEntity<GlobalResponse<Void>> qnaDeleteApi(@PathVariable Long qnaId) {
+    public ResponseEntity<GlobalResponse> qnaDeleteApi(@PathVariable Long qnaId) {
 
         qnaService.qnaDelete(qnaId);
 
