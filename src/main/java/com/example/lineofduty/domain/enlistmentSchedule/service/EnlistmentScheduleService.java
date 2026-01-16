@@ -4,6 +4,7 @@ import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import com.example.lineofduty.domain.deferment.model.request.DefermentsPostRequest;
+import com.example.lineofduty.domain.deferment.model.response.DefermentsReadResponse;
 import com.example.lineofduty.domain.deferment.repository.DefermentRepository;
 import com.example.lineofduty.domain.enlistmentApplication.model.response.EnlistmentApplicationReadResponse;
 import com.example.lineofduty.domain.enlistmentApplication.repository.EnlistmentApplicationRepository;
@@ -19,6 +20,8 @@ import com.example.lineofduty.entity.EnlistmentApplication;
 import com.example.lineofduty.entity.EnlistmentSchedule;
 import com.example.lineofduty.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -153,6 +156,9 @@ public class EnlistmentScheduleService {
         return EnlistmentApplicationReadResponse.from(application);
     }
 
+    /*
+     * 입영 신청 승인 - v1 / Authentication 없음
+     * */
     @Transactional
     public EnlistmentApplicationReadResponse approveApplication(Long userId, Long applicationId) {
 
@@ -173,6 +179,9 @@ public class EnlistmentScheduleService {
         return EnlistmentApplicationReadResponse.from(application);
     }
 
+    /*
+     * 입영 연기 요청 - v1 / Authentication 없음
+     * */
     @Transactional
     public EnlistmentApplicationReadResponse defermentsSchedule(Long userId, DefermentsPostRequest request) {
 
@@ -191,11 +200,36 @@ public class EnlistmentScheduleService {
         application.changeStatus(ApplicationStatus.REQUESTED);
 
         // 4. 저장
-        Deferment deferment = new Deferment(application.getId(),userId,request.getReasonDetail(), request.getDefermentStatus());
+        Deferment deferment = new Deferment(application.getId(),userId,request.getReasonDetail(), request.getDefermentStatus(),request.getRequestedUntil());
         defermentRepository.save(deferment);
 
         return EnlistmentApplicationReadResponse.from(application);
     }
+
+    /*
+     * 입영 연기 다건조회 - v1 / Authentication 없음
+     * */
+    @Transactional
+    public Page<DefermentsReadResponse> getDefermentList(Long userId, Pageable pageable) {
+
+        userValidate(userId);
+
+        Page<Deferment> page = defermentRepository.findAll(pageable);
+
+        return page.map(DefermentsReadResponse::from);
+    }
+
+    /*
+     * 입영 연기 단건조회 - v1 / Authentication 없음
+     * */
+    @Transactional
+    public DefermentsReadResponse getDeferment(Long userId, Long defermentId) {
+
+        Deferment deferment = defermentRepository.findByIdAndUserId(defermentId, userId).orElseThrow(()-> new CustomException(ErrorMessage.DEFERMENT_NOT_FOUND));
+
+        return DefermentsReadResponse.from(deferment);
+    }
+
 
     private User userValidate(Long userId) {
         return userRepository.findById(userId).orElseThrow(()-> new CustomException(ErrorMessage.USER_NOT_FOUND));

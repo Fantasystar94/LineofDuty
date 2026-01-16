@@ -2,6 +2,7 @@ package com.example.lineofduty.domain.enlistmentSchedule.controller;
 
 import com.example.lineofduty.common.model.response.GlobalResponse;
 import com.example.lineofduty.domain.deferment.model.request.DefermentsPostRequest;
+import com.example.lineofduty.domain.deferment.model.response.DefermentsReadResponse;
 import com.example.lineofduty.domain.enlistmentApplication.model.response.EnlistmentApplicationReadResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.model.request.EnlistmentScheduleCreateRequest;
 import com.example.lineofduty.domain.enlistmentSchedule.model.response.EnlistmentScheduleCreateResponse;
@@ -9,6 +10,8 @@ import com.example.lineofduty.domain.enlistmentSchedule.model.response.Enlistmen
 import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -87,4 +90,21 @@ public class EnlistmentScheduleController {
     public ResponseEntity<GlobalResponse<?>> defermentsSchedule(@RequestBody DefermentsPostRequest request) {
         return ResponseEntity.ok(GlobalResponse.success(DEFERMENTS_SUCCESS, enlistmentScheduleService.defermentsSchedule(userId, request)));
     }
+
+    /*
+     * 입영 신청 연기 다건조회/어드민 - v1 / Authentication 없음
+     * */
+    @GetMapping("/deferments")
+    public ResponseEntity<GlobalResponse<Page<DefermentsReadResponse>>> getDefermentList(Pageable pageable) {
+        return ResponseEntity.ok(GlobalResponse.success(DEFERMENTS_GET_SUCCESS, enlistmentScheduleService.getDefermentList(userId, pageable)));
+    }
+
+    /*
+     * 입영 신청 연기 단건조회 - v1 / Authentication 없음
+     * */
+    @GetMapping("/deferments/{defermentsId}")
+    public ResponseEntity<GlobalResponse<DefermentsReadResponse>> getDeferment(@PathVariable Long defermentsId) {
+        return ResponseEntity.ok(GlobalResponse.success(DEFERMENTS_GET_SUCCESS, enlistmentScheduleService.getDeferment(userId, defermentsId)));
+    }
+
 }
