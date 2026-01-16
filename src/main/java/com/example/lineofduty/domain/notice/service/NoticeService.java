@@ -2,15 +2,23 @@ package com.example.lineofduty.domain.notice.service;
 
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
+import com.example.lineofduty.domain.notice.dto.response.NoticeInquiryListResponse;
 import com.example.lineofduty.domain.notice.dto.response.NoticeInquiryResponse;
 import com.example.lineofduty.domain.notice.repository.NoticeRepository;
 import com.example.lineofduty.domain.notice.dto.NoticeDto;
 import com.example.lineofduty.domain.notice.dto.request.NoticeResisterRequest;
 import com.example.lineofduty.domain.notice.dto.response.NoticeResisterResponse;
+import com.example.lineofduty.domain.qna.dto.QnaDto;
+import com.example.lineofduty.domain.qna.dto.response.QnaInquiryListResponse;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.entity.Notice;
+import com.example.lineofduty.entity.Qna;
 import com.example.lineofduty.entity.User;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,6 +32,7 @@ public class NoticeService {
 
 
 
+    //공지사항 등록
     @Transactional
     public NoticeResisterResponse noticeResister(Long userId, NoticeResisterRequest request) {
         //1.관리자 권한인지 확인
@@ -50,7 +59,7 @@ public class NoticeService {
 
         return new NoticeResisterResponse(NoticeDto.from(notice));
     }
-
+    //공지사항 상세 조회
     @Transactional(readOnly = true)
     public NoticeInquiryResponse noticeInquiry(Long noticeId) {
 
@@ -59,6 +68,23 @@ public class NoticeService {
         );
 
         return new NoticeInquiryResponse(NoticeDto.from(notice));
+    }
+
+    //공지사항 페이징 조회
+    @Transactional(readOnly = true)
+    public NoticeInquiryListResponse noticeInquiryList(int page, int size, String[] sort) {
+
+        String sortField = sort[0];
+        String sortDirection = sort.length > 1 ? sort[1] : "desc";
+        Sort.Direction direction = Sort.Direction.fromString(sortDirection);
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(direction, sortField));
+
+        Page<Notice> noticePage = noticeRepository.findAll(pageable);
+        Page<NoticeDto> noticeDtoPage = noticePage.map(NoticeDto::from);
+
+        return NoticeInquiryListResponse.from(noticeDtoPage);
+
     }
 
 
