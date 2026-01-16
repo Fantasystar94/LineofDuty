@@ -37,6 +37,8 @@ public class JwtFilter extends OncePerRequestFilter {
 
         String url = request.getRequestURI();
 
+
+
         // 헤더에서 토큰 꺼내기
         String tokenValue = request.getHeader(JwtUtil.AUTHORIZATION);
 
