@@ -22,9 +22,11 @@ public enum SuccessMessage {
     NOTICE_CREATE_SUCCESS("공지사항이 등록되었습니다."),
     NOTICE_READ_SUCCESS("공지사항 상세 조회 성공");
     USER_CREATE_SUCCESS("회원가입이 완료되었습니다."),
+    PRODUCT_CREATE_SUCCESS("상품 등록 완료"),
     ORDER_CREATE_SUCCESS("주문이 생성되었습니다."),
 
     // 204 NO Content
+    PRODUCT_DELETE_SUCCESS("상품 삭제 완료"),
     ORDER_DELETE_SUCCESS("주문이 취소되었습니다.");
 
 
