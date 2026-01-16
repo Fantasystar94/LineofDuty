@@ -4,6 +4,7 @@ import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.domain.notice.dto.response.NoticeInquiryListResponse;
 import com.example.lineofduty.domain.notice.dto.response.NoticeInquiryResponse;
+import com.example.lineofduty.domain.notice.dto.response.NoticeUpdateResponse;
 import com.example.lineofduty.domain.notice.repository.NoticeRepository;
 import com.example.lineofduty.domain.notice.dto.NoticeDto;
 import com.example.lineofduty.domain.notice.dto.request.NoticeResisterRequest;
@@ -84,8 +85,30 @@ public class NoticeService {
         Page<NoticeDto> noticeDtoPage = noticePage.map(NoticeDto::from);
 
         return NoticeInquiryListResponse.from(noticeDtoPage);
-
     }
+
+    //공지사항 수정
+    @Transactional
+    public NoticeUpdateResponse noticeUpdate(Long noticeId, NoticeResisterRequest request) {
+
+        Notice notice = noticeRepository.findById(noticeId).orElseThrow(
+                () -> new CustomException(ErrorMessage.NOTICE_NOT_FOUND));
+
+        notice.update(request.getTitle(),request.getContent());
+
+        return new NoticeUpdateResponse(NoticeDto.from(notice));
+    }
+
+    //공지사항 삭제
+    @Transactional
+    public void noticeDelete(Long noticeId) {
+
+        Notice notice = noticeRepository.findById(noticeId).orElseThrow(
+                () -> new CustomException(ErrorMessage.NOTICE_NOT_FOUND));
+
+        noticeRepository.delete(notice);
+    }
+
 
 
 

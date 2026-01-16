@@ -6,6 +6,7 @@ import com.example.lineofduty.domain.notice.dto.request.NoticeResisterRequest;
 import com.example.lineofduty.domain.notice.dto.response.NoticeInquiryListResponse;
 import com.example.lineofduty.domain.notice.dto.response.NoticeInquiryResponse;
 import com.example.lineofduty.domain.notice.dto.response.NoticeResisterResponse;
+import com.example.lineofduty.domain.notice.dto.response.NoticeUpdateResponse;
 import com.example.lineofduty.domain.notice.service.NoticeService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -24,10 +25,10 @@ public class NoticeController {
     public ResponseEntity<GlobalResponse<NoticeResisterResponse>> noticeResisterApi(
             @PathVariable Long userId,
             @RequestBody NoticeResisterRequest request
-            ) {
-        NoticeResisterResponse response = noticeService.noticeResister(userId,request);
+    ) {
+        NoticeResisterResponse response = noticeService.noticeResister(userId, request);
 
-        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.NOTICE_CREATE_SUCCESS,response));
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.NOTICE_CREATE_SUCCESS, response));
     }
 
     //공지사항 상세조회
@@ -36,10 +37,10 @@ public class NoticeController {
 
         NoticeInquiryResponse response = noticeService.noticeInquiry(noticeId);
 
-        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.NOTICE_READ_SUCCESS,response));
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.NOTICE_READ_SUCCESS, response));
     }
 
-    //공지사항 페이징 조조히
+    //공지사항 페이징 조회
     @GetMapping("/notices")
     public ResponseEntity<GlobalResponse<NoticeInquiryListResponse>> noticeInquiryListApi(
             @RequestParam(value = "page", defaultValue = "0") int page,
@@ -49,6 +50,27 @@ public class NoticeController {
         NoticeInquiryListResponse response = noticeService.noticeInquiryList(page, size, sort);
 
         return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.NOTICE_READ_SUCCESS, response));
+    }
+
+    //공지사항 수정
+    @PutMapping("/admin/notices/{noticeId}")
+    public ResponseEntity<GlobalResponse<NoticeUpdateResponse>> noticeUpdateApi(
+            @PathVariable Long noticeId,
+            @RequestBody NoticeResisterRequest request
+    ) {
+        NoticeUpdateResponse response = noticeService.noticeUpdate(noticeId, request);
+
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.NOTICE_UPDATE_SUCCESS, response));
+    }
+
+    //공지사항 삭제
+    @DeleteMapping("/admin/notices/{noticeId}")
+    public ResponseEntity<GlobalResponse<Void>> noticeDelete(
+            @PathVariable Long noticeId
+    ) {
+        noticeService.noticeDelete(noticeId);
+
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.NOTICE_DELETE_SUCCESS, null));
 
     }
 }

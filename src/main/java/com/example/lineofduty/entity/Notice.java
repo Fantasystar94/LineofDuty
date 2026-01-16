@@ -36,4 +36,9 @@ public class Notice extends BaseEntity {
         this.author = user;
 
     }
+
+    public void update(@NotBlank(message = ValidationMessage.NOTICE_TITLE_CONTENT_NOT_BLANK) String title, @NotBlank(message = ValidationMessage.NOTICE_TITLE_CONTENT_NOT_BLANK) String content) {
+        this.title = title;
+        this.content = content;
+    }
 }
