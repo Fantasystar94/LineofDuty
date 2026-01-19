@@ -1,6 +1,5 @@
 package com.example.lineofduty.domain.product.dto.request;
 
-import com.example.lineofduty.common.exception.ValidationMessage;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -17,9 +16,9 @@ public class ProductRequest {
 
     @NotNull
     @Min(value = 0)
-    private Integer price;
+    private Long price;
 
     @NotNull
     @Min(value = 0)
-    private Integer stock;
+    private Long stock;
 }

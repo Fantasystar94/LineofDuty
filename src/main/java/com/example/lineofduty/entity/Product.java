@@ -5,12 +5,10 @@ import com.example.lineofduty.domain.product.dto.request.ProductRequest;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "products")
 @Getter
-@Setter
 @NoArgsConstructor
 public class Product extends BaseEntity {
 
@@ -26,16 +24,16 @@ public class Product extends BaseEntity {
     private String description;
 
     @Column(nullable = false)
-    private Integer price;
+    private Long price;
 
     @Column(nullable = false)
-    private Integer stock;
+    private Long stock;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ApplicationStatus.ProductStatus status;
 
-    public Product(String name, String description, Integer price, Integer stock, ApplicationStatus.ProductStatus status) {
+    public Product(String name, String description, Long price, Long stock, ApplicationStatus.ProductStatus status) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -43,10 +41,25 @@ public class Product extends BaseEntity {
         this.status = status;
     }
 
+    public void updateStock(Long newStock) {
+        this.stock = newStock;
+        updateStatusBasedOnStock();
+    }
+
+    private void updateStatusBasedOnStock() {
+        if (this.stock == 0) {
+            this.status = ApplicationStatus.ProductStatus.SOLD_OUT;
+        } else if (this.stock > 0 && this.status == ApplicationStatus.ProductStatus.SOLD_OUT) {
+            this.status = ApplicationStatus.ProductStatus.ON_SALE;
+        }
+    }
+
     public void update(ProductRequest request) {
         if (request.getName() != null) this.name = request.getName();
         if (request.getDescription() != null) this.description = request.getDescription();
         if (request.getPrice() != null) this.price = request.getPrice();
-        if (request.getPrice() != null) this.stock = request.getStock();
+        if (request.getStock() != null) {
+            updateStock(request.getStock());
+        }
     }
 }

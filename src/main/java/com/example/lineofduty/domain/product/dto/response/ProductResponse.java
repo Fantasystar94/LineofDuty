@@ -1,5 +1,6 @@
 package com.example.lineofduty.domain.product.dto.response;
 
+import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import com.example.lineofduty.entity.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -12,8 +13,9 @@ public class ProductResponse {
     private Long productId;
     private String name;
     private String description;
-    private Integer price;
-    private Integer stock;
+    private Long price;
+    private Long stock;
+    private ApplicationStatus.ProductStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
@@ -24,6 +26,7 @@ public class ProductResponse {
                 product.getDescription(),
                 product.getPrice(),
                 product.getStock(),
+                product.getStatus(),
                 product.getCreatedAt(),
                 product.getModifiedAt()
         );

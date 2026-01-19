@@ -22,8 +22,6 @@ public class ProductService {
     // 상품 등록
     @Transactional
     public ProductResponse createProduct(ProductRequest request) {
-        Product product = new Product(request.getName(), request.getDescription(), request.getPrice(), request.getStock(), ApplicationStatus.ProductStatus.ON_SALE);
-        Product savedProduct = productRepository.save(product);
 
         if (request.getName() == null || request.getDescription() == null) {
             throw new CustomException(ErrorMessage.MISSING_PRODUCT_NAME_OR_DESCRIPTION);
@@ -36,6 +34,9 @@ public class ProductService {
         if (request.getStock() <= 0) {
             throw new CustomException(ErrorMessage.INVALID_STOCK);
         }
+
+        Product product = new Product(request.getName(), request.getDescription(), request.getPrice(), request.getStock(), ApplicationStatus.ProductStatus.ON_SALE);
+        Product savedProduct = productRepository.save(product);
 
         return ProductResponse.from(savedProduct);
     }
