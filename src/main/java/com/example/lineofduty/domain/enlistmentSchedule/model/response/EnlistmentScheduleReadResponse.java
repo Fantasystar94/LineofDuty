@@ -1,6 +1,6 @@
 package com.example.lineofduty.domain.enlistmentSchedule.model.response;
 
-import com.example.lineofduty.entity.EnlistmentSchedule;
+import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentSchedule;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

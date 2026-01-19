@@ -1,16 +1,15 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.enlistmentSchedule;
 
+import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
 @Entity
 @Table(name = "enlistment_schedules")
 @Getter
-@Setter
 @NoArgsConstructor
 public class EnlistmentSchedule extends BaseEntity {
 
@@ -27,6 +26,13 @@ public class EnlistmentSchedule extends BaseEntity {
 
     @Column(name = "remaining_slots", nullable = false)
     private Integer remainingSlots;
+
+    public EnlistmentSchedule(LocalDate enlistmentDate, Integer capacity, Integer remainingSlots) {
+        this.enlistmentDate = enlistmentDate;
+        this.capacity = capacity;
+        this.remainingSlots = remainingSlots;
+    }
+
 
     public void slotDeduct() {
         this.remainingSlots--;
