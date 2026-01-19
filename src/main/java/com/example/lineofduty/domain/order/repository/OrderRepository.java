@@ -1,6 +1,6 @@
 package com.example.lineofduty.domain.order.repository;
 
-import com.example.lineofduty.entity.Order;
+import com.example.lineofduty.domain.order.Order;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;

@@ -1,6 +1,6 @@
 package com.example.lineofduty.domain.order.dto;
 
-import com.example.lineofduty.entity.OrderItem;
+import com.example.lineofduty.domain.orderItem.OrderItem;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
@@ -29,7 +29,7 @@ public class OrderUpdateResponse {
                 orderItem.getId(),
                 orderItem.getProduct().getId(),
                 orderItem.getQuantity(),
-                (long) orderItem.getProduct().getPrice(),
+                orderItem.getProduct().getPrice(),
                 orderItem.getCreatedAt(),
                 orderItem.getModifiedAt()
         );

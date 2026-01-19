@@ -1,15 +1,15 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.orderItem;
 
+import com.example.lineofduty.domain.order.Order;
 import com.example.lineofduty.domain.product.Product;
+import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "order_items")
 @Getter
-@Setter
 @NoArgsConstructor
 public class OrderItem extends BaseEntity {
 
@@ -36,6 +36,18 @@ public class OrderItem extends BaseEntity {
         this.product = product;
         this.order = order;
         this.orderPrice = orderPrice;
+        this.quantity = quantity;
+    }
+
+    public void updateProduct(Product product) {
+        this.product = product;
+    }
+
+    public void updateOrder(Order order) {
+        this.order = order;
+    }
+
+    public void updateQuantity(Long quantity) {
         this.quantity = quantity;
     }
 }

@@ -30,6 +30,13 @@ public final class ValidationMessage {
     // --- Comment 관련 ---
     public static final String COMMENT_CONTENT_NOT_BLANK = "댓글 내용은 필수입니다.";
 
+    // --- Order 관련 ---
+    public static final String NOT_BLANK_PRODUCT_ID = "product id는 필수입니다";
+    public static final String NOT_BLANK_QUANTITY = "수량은 필수 입력 요소입니다.";
+
+    // --- Payment 관련 ---
+    public static final String NOT_SELECTED_ORDER_ID = "order id가 누락되었습니다.";
+
     // --- 정규식 ---
     public static final String PASSWORD_REGEXP = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@#$%])(?=\\S+$).{8,}$";
 }

@@ -4,9 +4,13 @@ import com.example.lineofduty.common.model.enums.SuccessMessage;
 import com.example.lineofduty.common.model.response.GlobalResponse;
 import com.example.lineofduty.domain.order.dto.*;
 import com.example.lineofduty.domain.order.service.OrderService;
+
+import com.example.lineofduty.domain.user.UserDetail;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -18,9 +22,10 @@ public class OrderController {
 
     // 주문 생성
     @PostMapping
-    public ResponseEntity<GlobalResponse> createOrder(@RequestBody OrderCreateRequest request) { // @AuthenicationPrincipal Long userId
+    public ResponseEntity<GlobalResponse> createOrder(@Valid @RequestBody OrderCreateRequest request, @AuthenticationPrincipal UserDetail userDetail) {
 
-        OrderCreateResponse response = orderService.createOrderService(request, 1L);
+        long userId = userDetail.getUser().getId();
+        OrderCreateResponse response = orderService.createOrderService(request, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(GlobalResponse.success(SuccessMessage.ORDER_CREATE_SUCCESS, response));
     }
 
@@ -42,7 +47,7 @@ public class OrderController {
 
     // 주문 상태 수정
     @PatchMapping("/{orderId}/orderItems/{orderItemId}")
-    public ResponseEntity<GlobalResponse> updateOrder(@PathVariable Long orderId, @PathVariable Long orderItemId, @RequestBody OrderUpdateRequest request) {
+    public ResponseEntity<GlobalResponse> updateOrder(@PathVariable Long orderId, @PathVariable Long orderItemId,@Valid @RequestBody OrderUpdateRequest request) {
 
         OrderUpdateResponse response = orderService.updateOrderService(orderId, orderItemId, request);
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.ORDER_UPDATE_SUCCESS, response));
@@ -50,8 +55,9 @@ public class OrderController {
 
     // 주문 취소
     @DeleteMapping("/{orderId}")
-    public ResponseEntity<GlobalResponse> deleteOrder(@PathVariable Long orderId, Long userId) {       // @AuthenicationPrincipal Long userId
+    public ResponseEntity<GlobalResponse> deleteOrder(@PathVariable Long orderId, @AuthenticationPrincipal UserDetail userDetail) {
 
+        Long userId = userDetail.getUser().getId();
         orderService.deleteOrderService(orderId, userId);
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.successNodata(SuccessMessage.ORDER_DELETE_SUCCESS));
     }
