@@ -6,7 +6,7 @@ import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import com.example.lineofduty.domain.product.dto.request.ProductRequest;
 import com.example.lineofduty.domain.product.dto.response.ProductResponse;
 import com.example.lineofduty.domain.product.repository.ProductRepository;
-import com.example.lineofduty.entity.Product;
+import com.example.lineofduty.domain.product.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

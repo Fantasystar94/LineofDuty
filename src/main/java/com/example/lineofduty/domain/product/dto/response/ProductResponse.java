@@ -1,7 +1,7 @@
 package com.example.lineofduty.domain.product.dto.response;
 
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
-import com.example.lineofduty.entity.Product;
+import com.example.lineofduty.domain.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import java.time.LocalDateTime;

@@ -9,7 +9,7 @@ import com.example.lineofduty.domain.product.repository.ProductRepository;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.entity.Order;
 import com.example.lineofduty.entity.OrderItem;
-import com.example.lineofduty.entity.Product;
+import com.example.lineofduty.domain.product.Product;
 import com.example.lineofduty.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

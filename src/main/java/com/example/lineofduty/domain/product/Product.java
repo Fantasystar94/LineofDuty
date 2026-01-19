@@ -1,7 +1,8 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.product;
 
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import com.example.lineofduty.domain.product.dto.request.ProductRequest;
+import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
