@@ -1,6 +1,8 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.orderItem;
 
 import com.example.lineofduty.domain.product.Product;
+import com.example.lineofduty.entity.BaseEntity;
+import com.example.lineofduty.domain.order.Order;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

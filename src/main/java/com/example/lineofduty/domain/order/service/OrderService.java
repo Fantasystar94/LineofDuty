@@ -7,8 +7,8 @@ import com.example.lineofduty.domain.order.repository.OrderRepository;
 import com.example.lineofduty.domain.orderItem.repository.OrderItemRepository;
 import com.example.lineofduty.domain.product.repository.ProductRepository;
 import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.entity.Order;
-import com.example.lineofduty.entity.OrderItem;
+import com.example.lineofduty.domain.order.Order;
+import com.example.lineofduty.domain.orderItem.OrderItem;
 import com.example.lineofduty.domain.product.Product;
 import com.example.lineofduty.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
@@ -46,7 +46,7 @@ public class OrderService {
         );
 
         // request를 기반으로 주문(orderItem)을 만들어
-        OrderItem orderItem = new OrderItem(product, order, (long) product.getPrice(), request.getQuantity());
+        OrderItem orderItem = new OrderItem(product, order, product.getPrice(), request.getQuantity());
         OrderItem savedOrderItem = orderItemRepository.save(orderItem);
 
         // 주문서에 주문을 추가해
@@ -113,7 +113,7 @@ public class OrderService {
         for (OrderItem item : order.getOrderItems()) {
             changedTotalPrice += item.getProduct().getPrice() * item.getQuantity();
         }
-        order.setTotalPrice(changedTotalPrice);
+        order.updateTotalPrice(changedTotalPrice);
 
         return OrderUpdateResponse.from(orderItem);
     }
@@ -122,12 +122,12 @@ public class OrderService {
     @Transactional
     public void deleteOrderService(Long orderId, Long userId) {
 
-        Order order = orderRepository.findById(1L).orElseThrow(
+        Order order = orderRepository.findById(orderId).orElseThrow(
                 () -> new CustomException(ErrorMessage.ORDER_NOT_FOUND)
         );
 
         Long orderUserId = order.getUser().getId();
-        if (!orderUserId.equals(1L)) {
+        if (!orderUserId.equals(userId)) {
             throw new CustomException(ErrorMessage.ACCESS_DENIED);
         }
 
