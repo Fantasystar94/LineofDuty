@@ -12,6 +12,4 @@ public interface QnaRepository extends JpaRepository<Qna, Long> {
 
      Optional<Qna> findById(Long qnaId);
 
-     @Query("SELECT q FROM Qna q WHERE q.isDeleted = false")
-     Page<Qna> findAllByIsDeletedFalse(Pageable pageable);
 }

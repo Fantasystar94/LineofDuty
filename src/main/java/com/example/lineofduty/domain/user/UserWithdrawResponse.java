@@ -1,15 +1,14 @@
-package com.example.lineofduty.domain.user.dto.response;
+package com.example.lineofduty.domain.user;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-
 import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
 public class UserWithdrawResponse {
-    private Long userId;
+    private final Long userId;
 
     @JsonProperty("is_deleted")
     private boolean isDeleted;

@@ -1,11 +1,11 @@
 package com.example.lineofduty.domain.user.service;
 
-import com.example.lineofduty.domain.user.dto.request.UserUpdateRequest;
-import com.example.lineofduty.domain.user.dto.response.UserAdminResponse;
-import com.example.lineofduty.domain.user.dto.response.UserResponse;
-import com.example.lineofduty.domain.user.dto.response.UserWithdrawResponse;
+import com.example.lineofduty.domain.user.UserUpdateRequest;
+import com.example.lineofduty.domain.user.UserAdminResponse;
+import com.example.lineofduty.domain.user.UserResponse;
+import com.example.lineofduty.domain.user.UserWithdrawResponse;
 import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.entity.User;
+import com.example.lineofduty.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

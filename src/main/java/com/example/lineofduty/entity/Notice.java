@@ -1,6 +1,7 @@
 package com.example.lineofduty.entity;
 
 import com.example.lineofduty.common.exception.ValidationMessage;
+import com.example.lineofduty.domain.user.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
