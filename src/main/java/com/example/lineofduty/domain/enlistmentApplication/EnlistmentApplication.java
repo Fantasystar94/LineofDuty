@@ -1,6 +1,7 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.enlistmentApplication;
 
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
+import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -9,7 +10,6 @@ import java.time.LocalDate;
 @Entity
 @Table(name = "enlistment_applications")
 @Getter
-@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EnlistmentApplication extends BaseEntity {
 

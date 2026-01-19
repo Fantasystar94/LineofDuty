@@ -1,6 +1,6 @@
 package com.example.lineofduty.domain.deferment.repository;
 
-import com.example.lineofduty.entity.Deferment;
+import com.example.lineofduty.domain.deferment.Deferment;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

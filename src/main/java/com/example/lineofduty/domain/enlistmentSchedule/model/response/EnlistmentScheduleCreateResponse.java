@@ -1,13 +1,11 @@
 package com.example.lineofduty.domain.enlistmentSchedule.model.response;
 
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
-import com.example.lineofduty.entity.BaseEntity;
-import com.example.lineofduty.entity.EnlistmentApplication;
+import com.example.lineofduty.domain.enlistmentApplication.EnlistmentApplication;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor

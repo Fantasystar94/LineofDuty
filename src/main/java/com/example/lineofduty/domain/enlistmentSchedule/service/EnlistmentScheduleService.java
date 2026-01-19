@@ -16,9 +16,9 @@ import com.example.lineofduty.domain.enlistmentSchedule.model.response.Enlistmen
 import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.QueryEnlistmentScheduleRepository;
 import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.entity.Deferment;
-import com.example.lineofduty.entity.EnlistmentApplication;
-import com.example.lineofduty.entity.EnlistmentSchedule;
+import com.example.lineofduty.domain.deferment.Deferment;
+import com.example.lineofduty.domain.enlistmentApplication.EnlistmentApplication;
+import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentSchedule;
 import com.example.lineofduty.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

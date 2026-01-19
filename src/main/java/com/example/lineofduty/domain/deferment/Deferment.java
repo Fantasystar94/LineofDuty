@@ -1,14 +1,13 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.deferment;
 
 import com.example.lineofduty.common.model.enums.DefermentStatus;
+import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "deferments")
