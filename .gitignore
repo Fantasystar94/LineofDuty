@@ -40,3 +40,6 @@ out/
 
 ### initData ###
 src/main/java/com/example/lineofduty/InitData.java
+
+### env ###
+*.env

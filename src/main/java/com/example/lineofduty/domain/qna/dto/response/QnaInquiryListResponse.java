@@ -1,15 +1,17 @@
 package com.example.lineofduty.domain.qna.dto.response;
 
-import com.example.lineofduty.domain.qna.dto.QnaDto;
+import com.example.lineofduty.domain.qna.Qna;
+import com.example.lineofduty.domain.qna.QnaDto;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import org.springframework.data.domain.Page;
 
 import java.util.List;
 
 @Getter
 @AllArgsConstructor
+@JsonPropertyOrder({"content", "totalElements", "totalPages", "size", "number"})
 public class QnaInquiryListResponse {
 
     private final List<QnaDto> content;

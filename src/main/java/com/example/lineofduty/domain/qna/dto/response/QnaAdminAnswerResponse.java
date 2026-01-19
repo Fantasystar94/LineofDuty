@@ -1,10 +1,9 @@
 package com.example.lineofduty.domain.qna.dto.response;
 
-import com.example.lineofduty.domain.qna.dto.QnaDto;
+import com.example.lineofduty.domain.qna.Qna;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
@@ -21,13 +20,15 @@ public class QnaAdminAnswerResponse {
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
-    public QnaAdminAnswerResponse(QnaDto from) {
-        this.id = from.getId();
-        this.userId = from.getUserId();
-        this.title = from.getTitle();
-        this.questionContent = from.getQuestionContent();
-        this.askContent = from.getAskContent();
-        this.createdAt = from.getCreatedAt();
-        this.modifiedAt = from.getModifiedAt();
+    public static QnaAdminAnswerResponse from(Qna from) {
+        return new QnaAdminAnswerResponse(
+                from.getId(),
+                from.getUser().getId(),
+                from.getTitle(),
+                from.getQuestionContent(),
+                from.getAskContent(),
+                from.getCreatedAt(),
+                from.getModifiedAt()
+        );
     }
 }

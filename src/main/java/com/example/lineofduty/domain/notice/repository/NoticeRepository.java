@@ -1,6 +1,6 @@
 package com.example.lineofduty.domain.notice.repository;
 
-import com.example.lineofduty.entity.Notice;
+import com.example.lineofduty.domain.notice.Notice;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

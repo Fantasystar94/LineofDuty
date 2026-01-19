@@ -1,5 +1,6 @@
 package com.example.lineofduty.domain.notice.dto.response;
 
+import com.example.lineofduty.domain.notice.Notice;
 import com.example.lineofduty.domain.notice.dto.NoticeDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
