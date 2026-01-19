@@ -14,6 +14,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,6 +24,7 @@ public class ProductController {
 
     private final ProductService productService;
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/products")
     public ResponseEntity<GlobalResponse> createProduct(@Valid @RequestBody ProductRequest request) {
         ProductResponse response = productService.createProduct(request);
@@ -46,6 +48,7 @@ public class ProductController {
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_GET_ALL_SUCCESS, PageResponse.from(products)));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/products/{productId}")
 public ResponseEntity<GlobalResponse> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductRequest request) {
         ProductResponse response = productService.updateProduct(request, productId);
@@ -53,6 +56,7 @@ public ResponseEntity<GlobalResponse> updateProduct(@PathVariable Long productId
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_UPDATE_SUCCESS, response));
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/admin/products/{productId}")
     public ResponseEntity<GlobalResponse> deleteProduct(@PathVariable Long productId) {
         productService.deleteProduct(productId);
