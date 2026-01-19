@@ -24,8 +24,7 @@ public enum ErrorMessage {
 
     // 주문/상품 관련
     MISSING_ORDER_ID(HttpStatus.BAD_REQUEST, "orderId가 누락되었습니다."),
-    MISSING_PRODUCT_NAME(HttpStatus.BAD_REQUEST, "상품명이 입력되지 않았습니다."),
-    MISSING_PRODUCT_DESCRIPTION(HttpStatus.BAD_REQUEST, "상품설명이 입력되지 않았습니다."),
+    MISSING_PRODUCT_NAME_OR_DESCRIPTION(HttpStatus.BAD_REQUEST, "상품명과 상품설명은 필수입니다."),
     INVALID_PRICE(HttpStatus.BAD_REQUEST, "가격은 1원 이상이어야 합니다."),
     INVALID_STOCK(HttpStatus.BAD_REQUEST, "재고는 1개 이상이어야 합니다."),
 

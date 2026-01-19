@@ -9,16 +9,17 @@ import lombok.Getter;
 @Getter
 public class ProductRequest {
 
-    @NotBlank(message = ValidationMessage.MISSING_PRODUCT_NAME)
+    @NotBlank
     private String name;
 
+    @NotBlank
     private String description;
 
-    @NotNull(message = ValidationMessage.INVALID_PRICE)
-    @Min(value = 0, message = ValidationMessage.INVALID_PRICE)
+    @NotNull
+    @Min(value = 0)
     private Integer price;
 
-    @NotNull(message = ValidationMessage.INVALID_STOCK)
-    @Min(value = 0, message = ValidationMessage.INVALID_STOCK)
+    @NotNull
+    @Min(value = 0)
     private Integer stock;
 }

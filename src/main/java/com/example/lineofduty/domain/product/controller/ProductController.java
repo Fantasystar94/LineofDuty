@@ -24,21 +24,21 @@ public class ProductController {
     private final ProductService productService;
 
     @PostMapping("/admin/products")
-    public ResponseEntity<GlobalResponse<ProductResponse>> createProduct(@Valid @RequestBody ProductRequest request) {
+    public ResponseEntity<GlobalResponse> createProduct(@Valid @RequestBody ProductRequest request) {
         ProductResponse response = productService.createProduct(request);
         return ResponseEntity.status(HttpStatus.CREATED)
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_CREATE_SUCCESS, response));
     }
 
     @GetMapping("/products/{productId}")
-    public ResponseEntity<GlobalResponse<ProductResponse>> getProduct(@PathVariable Long productId) {
+    public ResponseEntity<GlobalResponse> getProduct(@PathVariable Long productId) {
         ProductResponse response = productService.getProduct(productId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_GET_ONE_SUCCESS, response));
     }
 
     @GetMapping("/products")
-    public ResponseEntity<GlobalResponse<PageResponse<ProductResponse>>> getProDuctList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "createdAt") String sort, @RequestParam(defaultValue = "desc") String direction) {
+    public ResponseEntity<GlobalResponse> getProDuctList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "createdAt") String sort, @RequestParam(defaultValue = "desc") String direction) {
         Sort.Direction sortDirection = direction.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sort));
         Page<ProductResponse> products = productService.getProductList(pageable);
@@ -47,7 +47,7 @@ public class ProductController {
     }
 
     @PutMapping("/admin/products/{productId}")
-    public ResponseEntity<GlobalResponse<ProductResponse>> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductRequest request) {
+public ResponseEntity<GlobalResponse> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductRequest request) {
         ProductResponse response = productService.updateProduct(request, productId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_UPDATE_SUCCESS, response));

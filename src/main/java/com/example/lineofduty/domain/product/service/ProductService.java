@@ -25,6 +25,18 @@ public class ProductService {
         Product product = new Product(request.getName(), request.getDescription(), request.getPrice(), request.getStock(), ApplicationStatus.ProductStatus.ON_SALE);
         Product savedProduct = productRepository.save(product);
 
+        if (request.getName() == null || request.getDescription() == null) {
+            throw new CustomException(ErrorMessage.MISSING_PRODUCT_NAME_OR_DESCRIPTION);
+        }
+
+        if (request.getPrice() <= 0) {
+            throw new CustomException(ErrorMessage.INVALID_PRICE);
+        }
+
+        if (request.getStock() <= 0) {
+            throw new CustomException(ErrorMessage.INVALID_STOCK);
+        }
+
         return ProductResponse.from(savedProduct);
     }
 
@@ -60,8 +72,9 @@ public class ProductService {
     // 상품 삭제
     @Transactional
     public void deleteProduct(Long productId) {
-        Product product = productRepository.findById(productId)
-                .orElseThrow(() -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND));
+        if (!productRepository.existsById(productId)) {
+            throw new CustomException(ErrorMessage.PRODUCT_NOT_FOUND);
+        }
 
         productRepository.deleteById(productId);
     }
