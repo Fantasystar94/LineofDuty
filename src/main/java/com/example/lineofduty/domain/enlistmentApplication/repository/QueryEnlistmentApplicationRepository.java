@@ -10,7 +10,6 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 import static com.example.lineofduty.entity.QEnlistmentApplication.enlistmentApplication;
-import static com.example.lineofduty.entity.QUser.user;
 import static com.example.lineofduty.entity.QEnlistmentSchedule.enlistmentSchedule;
 @Repository
 @RequiredArgsConstructor

@@ -1,5 +1,6 @@
 package com.example.lineofduty.entity;
 
+import com.example.lineofduty.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

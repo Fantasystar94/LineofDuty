@@ -12,7 +12,7 @@ import com.example.lineofduty.domain.qna.dto.response.QnaResisterResponse;
 import com.example.lineofduty.domain.qna.dto.response.QnaUpdateResponse;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.entity.Qna;
-import com.example.lineofduty.entity.User;
+import com.example.lineofduty.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -70,7 +70,7 @@ public class QnaService {
 
         Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(direction, sortField));
 
-        Page<Qna> qnaPage = qnaRepository.findAllByIsDeletedFalse(pageable);
+        Page<Qna> qnaPage = qnaRepository.findAll(pageable);
         Page<QnaDto> qnaDtoPage = qnaPage.map(QnaDto::from);
 
         return QnaInquiryListResponse.from(qnaDtoPage);
