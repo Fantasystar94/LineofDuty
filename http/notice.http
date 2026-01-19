@@ -1,0 +1,56 @@
+@baseUrl = http://localhost:8080
+@accessToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwidXNlclJvbGUiOiJST0xFX0FETUlOIiwiaWF0IjoxNzY4Nzg4MDQxLCJleHAiOjE3Njg3OTE2NDF9.hQ0pm_LRqA2kAyf_PVRFyR2cDawy0vqscs_YadibOSk
+
+### SIGNIN
+POST {{baseUrl}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "testuser3332@example.com",
+  "password": "Test1234!",
+  "username": "test3",
+  "residentNumber": "900101-1234569",
+  "admin": false
+}
+
+
+### LOGIN
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "password": "1234!"
+}
+
+### 공지사항 등록 (관리자)
+POST http://localhost:8080/api/admin/notices/1
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "title": "공지사항 제목 테스트",
+  "content": "공지사항 내용 테스트입니다."
+}
+
+### 공지사항 단건 조회
+### =========================
+GET http://localhost:8080/api/notices/1
+
+### 공지사항 목록 조회 (페이징)
+### =========================
+GET http://localhost:8080/api/notices?page=0&size=10&sort=id,desc
+
+### 공지사항 수정 (관리자)
+PUT http://localhost:8080/api/admin/notices/1
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "title": "공지사항 제목 수정",
+  "content": "공지사항 내용이 수정되었습니다."
+}
+
+### 공지사항 삭제 (관리자)
+DELETE http://localhost:8080/api/admin/notices/1
+Authorization: Bearer {{accessToken}}

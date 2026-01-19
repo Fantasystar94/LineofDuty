@@ -1,7 +1,7 @@
 package com.example.lineofduty.domain.enlistmentApplication.model.response;
 
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
-import com.example.lineofduty.entity.EnlistmentApplication;
+import com.example.lineofduty.domain.enlistmentApplication.EnlistmentApplication;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

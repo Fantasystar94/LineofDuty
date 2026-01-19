@@ -1,6 +1,6 @@
 package com.example.lineofduty.domain.order.dto;
 
-import com.example.lineofduty.entity.OrderItem;
+import com.example.lineofduty.domain.orderItem.OrderItem;
 import lombok.Getter;
 
 @Getter

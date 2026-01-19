@@ -7,10 +7,10 @@ import com.example.lineofduty.domain.order.repository.OrderRepository;
 import com.example.lineofduty.domain.orderItem.repository.OrderItemRepository;
 import com.example.lineofduty.domain.product.repository.ProductRepository;
 import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.entity.Order;
-import com.example.lineofduty.entity.OrderItem;
-import com.example.lineofduty.entity.Product;
-import com.example.lineofduty.domain.user.User;
+import com.example.lineofduty.domain.order.Order;
+import com.example.lineofduty.domain.orderItem.OrderItem;
+import com.example.lineofduty.domain.product.Product;
+import com.example.lineofduty.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +27,7 @@ public class OrderService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
+    // 주문서(주문 포함) 생성
     @Transactional
     public OrderCreateResponse createOrderService(OrderCreateRequest request, Long userId) {
 
@@ -45,7 +46,7 @@ public class OrderService {
         );
 
         // request를 기반으로 주문(orderItem)을 만들어
-        OrderItem orderItem = new OrderItem(product, order, (long) product.getPrice(), request.getQuantity());
+        OrderItem orderItem = new OrderItem(product, order, product.getPrice(), request.getQuantity());
         OrderItem savedOrderItem = orderItemRepository.save(orderItem);
 
         // 주문서에 주문을 추가해
@@ -54,6 +55,7 @@ public class OrderService {
         return OrderCreateResponse.from(order);
     }
 
+    // 주문서(order) 조회
     @Transactional(readOnly = true)
     public OrderGetResponse getOrderService(Long orderId) {
 
@@ -64,6 +66,7 @@ public class OrderService {
         return OrderGetResponse.from(order);
     }
 
+    // 주문(orderItem) 조회
     @Transactional(readOnly = true)
     public OrderItemGetResponse getOrderItemService(Long orderId, Long orderItemId) {
 
@@ -74,6 +77,7 @@ public class OrderService {
         return OrderItemGetResponse.from(orderId, orderItem);
     }
 
+    // 주문 수정
     @Transactional
     public OrderUpdateResponse updateOrderService(Long orderId, Long orderItemId, OrderUpdateRequest request) {
 
@@ -88,20 +92,18 @@ public class OrderService {
         );
 
         // request대로 주문을 수정해
-        Product product = orderItem.getProduct();
-        long quantity = orderItem.getQuantity();
         if (request.getProductId() != null) {
 
-            product = productRepository.findById(request.getProductId()).orElseThrow(
+            Product product = productRepository.findById(request.getProductId()).orElseThrow(
                     () -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND)
             );
-            orderItem.setProduct(product);
+            orderItem.updateProduct(product);
         }
 
         if (request.getQuantity() != null) {
 
-            quantity = request.getQuantity();
-            orderItem.setQuantity(quantity);
+            long quantity = request.getQuantity();
+            orderItem.updateQuantity(quantity);
         }
 
         // 상품 변경으로 인한 총금액 수정
@@ -109,20 +111,21 @@ public class OrderService {
         for (OrderItem item : order.getOrderItems()) {
             changedTotalPrice += item.getProduct().getPrice() * item.getQuantity();
         }
-        order.setTotalPrice(changedTotalPrice);
+        order.updateTotalPrice(changedTotalPrice);
 
         return OrderUpdateResponse.from(orderItem);
     }
 
+    // 주문 취소(삭제)
     @Transactional
     public void deleteOrderService(Long orderId, Long userId) {
 
-        Order order = orderRepository.findById(1L).orElseThrow(
+        Order order = orderRepository.findById(orderId).orElseThrow(
                 () -> new CustomException(ErrorMessage.ORDER_NOT_FOUND)
         );
 
         Long orderUserId = order.getUser().getId();
-        if (!orderUserId.equals(1L)) {
+        if (!orderUserId.equals(userId)) {
             throw new CustomException(ErrorMessage.ACCESS_DENIED);
         }
 

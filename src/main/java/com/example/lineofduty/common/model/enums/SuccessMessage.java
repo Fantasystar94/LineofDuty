@@ -32,6 +32,7 @@ public enum SuccessMessage {
     USER_CREATE_SUCCESS("회원가입이 완료되었습니다."),
     PRODUCT_CREATE_SUCCESS("상품 등록 완료"),
     ORDER_CREATE_SUCCESS("주문이 생성되었습니다."),
+    PAYMENT_CREATE_SUCCESS("결제 요청 생성 완료"),
 
     // 204 NO Content
     USER_DELETE_SUCCESS("회원탈퇴 성공"),
@@ -47,6 +48,7 @@ public enum SuccessMessage {
     DEFERMENTS_SUCCESS("연기 신청이 접수되었습니다."),
     DEFERMENTS_GET_SUCCESS("연기 신청 조회 성공"),
     QNA_DELETE_SUCCESS("질문이 삭제되었습니다"),
+    DEFERMENTS_PROCEED("연기 신청이 처리 되었습니다."),
     NOTICE_DELETE_SUCCESS("공지가 삭제되었습니다.");
 
 

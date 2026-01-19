@@ -1,11 +1,11 @@
 package com.example.lineofduty.entity;
 
 import com.example.lineofduty.common.model.enums.DefermentStatus;
+import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.time.LocalDate;
 
@@ -43,4 +43,13 @@ public class Deferment extends BaseEntity {
         this.status = status;
         this.requestedUntil = requestedUntil;
     }
+
+    public void approve() {
+        this.status = DefermentStatus.APPROVED;
+    }
+
+    public void reject() {
+        this.status = DefermentStatus.REJECTED;
+    }
+
 }
