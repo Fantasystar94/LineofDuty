@@ -9,6 +9,8 @@ import java.util.List;
 import static com.example.lineofduty.domain.enlistmentApplication.QEnlistmentApplication.enlistmentApplication;
 import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentSchedule.enlistmentSchedule;
 
+import static com.example.lineofduty.entity.QEnlistmentApplication.enlistmentApplication;
+import static com.example.lineofduty.entity.QEnlistmentSchedule.enlistmentSchedule;
 @Repository
 @RequiredArgsConstructor
 public class QueryEnlistmentApplicationRepository {

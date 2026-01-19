@@ -1,9 +1,11 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.user.entity;
 
 import com.example.lineofduty.common.model.enums.Role;
 import com.example.lineofduty.common.util.AesUtil;
+import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.ColumnDefault;
 
 @Entity
 @Table(name = "users")
@@ -33,6 +35,10 @@ public class User extends BaseEntity {
     @Convert(converter = AesUtil.ResidentNumberConverter.class)
     private String residentNumber;
 
+    @ColumnDefault("0")
+    @Column(nullable = false, columnDefinition = "TINYINT(1)")
+    private boolean isDeleted;
+
     public User(String username, String email, String password, Role role, String residentNumber) {
         this.username = username;
         this.email = email;
@@ -54,6 +60,10 @@ public class User extends BaseEntity {
         if (password != null && !password.isEmpty()) {
             this.password = password;
         }
+    }
+
+    public void updateIsDeleted() {
+        this.isDeleted = true;
     }
 
 }

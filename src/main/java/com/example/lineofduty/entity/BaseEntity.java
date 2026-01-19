@@ -22,11 +22,4 @@ public abstract class BaseEntity {
     @Column(nullable = false)
     private LocalDateTime modifiedAt;
 
-    @ColumnDefault("0")
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean isDeleted;
-
-    public void updateIsDeleted() {
-        this.isDeleted = true;
-    }
 }

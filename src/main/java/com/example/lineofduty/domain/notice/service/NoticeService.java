@@ -9,12 +9,9 @@ import com.example.lineofduty.domain.notice.repository.NoticeRepository;
 import com.example.lineofduty.domain.notice.dto.NoticeDto;
 import com.example.lineofduty.domain.notice.dto.request.NoticeResisterRequest;
 import com.example.lineofduty.domain.notice.dto.response.NoticeResisterResponse;
-import com.example.lineofduty.domain.qna.dto.QnaDto;
-import com.example.lineofduty.domain.qna.dto.response.QnaInquiryListResponse;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.entity.Notice;
-import com.example.lineofduty.entity.Qna;
-import com.example.lineofduty.entity.User;
+import com.example.lineofduty.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -84,7 +81,7 @@ public class NoticeService {
 
         Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(direction, sortField));
 
-        Page<Notice> noticePage = noticeRepository.findAllByIsDeletedFalse(pageable);
+        Page<Notice> noticePage = noticeRepository.findAll(pageable);
         Page<NoticeDto> noticeDtoPage = noticePage.map(NoticeDto::from);
 
         return NoticeInquiryListResponse.from(noticeDtoPage);
