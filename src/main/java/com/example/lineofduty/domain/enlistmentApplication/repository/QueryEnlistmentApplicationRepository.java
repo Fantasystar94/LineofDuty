@@ -6,8 +6,9 @@ import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import java.util.List;
-import static com.example.lineofduty.entity.QEnlistmentApplication.enlistmentApplication;
-import static com.example.lineofduty.entity.QEnlistmentSchedule.enlistmentSchedule;
+import static com.example.lineofduty.domain.enlistmentApplication.QEnlistmentApplication.enlistmentApplication;
+import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentSchedule.enlistmentSchedule;
+
 @Repository
 @RequiredArgsConstructor
 public class QueryEnlistmentApplicationRepository {
