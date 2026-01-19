@@ -3,7 +3,6 @@ package com.example.lineofduty.domain.user;
 import com.example.lineofduty.domain.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
-
 import java.time.LocalDateTime;
 
 @Getter

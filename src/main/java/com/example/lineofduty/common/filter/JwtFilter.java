@@ -1,7 +1,7 @@
 package com.example.lineofduty.common.filter;
 
 import com.example.lineofduty.common.util.JwtUtil;
-import com.example.lineofduty.domain.user.UserDetailsService;
+import com.example.lineofduty.domain.user.UserDetailService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -16,7 +16,6 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
-
 import java.io.IOException;
 
 @Component
@@ -25,7 +24,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private final UserDetailsService userDetailsService;
+    private final UserDetailService userDetailService;
 
     @Override
     protected void doFilterInternal(
@@ -56,7 +55,7 @@ public class JwtFilter extends OncePerRequestFilter {
                 Long userId = jwtUtil.extractUserId(token);
                 System.out.println("4. 토큰 검증 성공 ID: " + userId);
 
-                UserDetails userDetails = userDetailsService.loadUserById(userId);
+                UserDetails userDetails = userDetailService.loadUserById(userId);
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
                         userDetails,
