@@ -40,7 +40,7 @@ public class Order extends BaseEntity {
     public void addOrderItem(OrderItem orderItem) {
         orderItems.add(orderItem);
         this.totalPrice += orderItem.getOrderPrice() * orderItem.getQuantity();
-        orderItem.setOrder(this);
+        orderItem.updateOrder(this);
     }
 
     public void updateTotalPrice(Long changedTotalPrice) {

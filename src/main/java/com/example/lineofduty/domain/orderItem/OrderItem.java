@@ -1,12 +1,11 @@
 package com.example.lineofduty.domain.orderItem;
 
+import com.example.lineofduty.domain.order.Order;
 import com.example.lineofduty.domain.product.Product;
 import com.example.lineofduty.entity.BaseEntity;
-import com.example.lineofduty.domain.order.Order;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "order_items")
@@ -42,6 +41,10 @@ public class OrderItem extends BaseEntity {
 
     public void updateProduct(Product product) {
         this.product = product;
+    }
+
+    public void updateOrder(Order order) {
+        this.order = order;
     }
 
     public void updateQuantity(Long quantity) {
