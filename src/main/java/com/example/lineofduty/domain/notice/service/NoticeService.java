@@ -2,6 +2,7 @@ package com.example.lineofduty.domain.notice.service;
 
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
+import com.example.lineofduty.common.model.enums.Role;
 import com.example.lineofduty.domain.notice.dto.response.NoticeInquiryListResponse;
 import com.example.lineofduty.domain.notice.dto.response.NoticeInquiryResponse;
 import com.example.lineofduty.domain.notice.dto.response.NoticeUpdateResponse;
@@ -9,11 +10,8 @@ import com.example.lineofduty.domain.notice.repository.NoticeRepository;
 import com.example.lineofduty.domain.notice.dto.NoticeDto;
 import com.example.lineofduty.domain.notice.dto.request.NoticeResisterRequest;
 import com.example.lineofduty.domain.notice.dto.response.NoticeResisterResponse;
-import com.example.lineofduty.domain.qna.dto.QnaDto;
-import com.example.lineofduty.domain.qna.dto.response.QnaInquiryListResponse;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.entity.Notice;
-import com.example.lineofduty.entity.Qna;
 import com.example.lineofduty.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -36,18 +34,14 @@ public class NoticeService {
     //공지사항 등록
     @Transactional
     public NoticeResisterResponse noticeResister(Long userId, NoticeResisterRequest request) {
-        //1.관리자 권한인지 확인
-//        User user = userRepository.findById(userId).orElseThrow(
-//                () -> new CustomException(ErrorMessage.USER_NOT_FOUND)
-//        );
-//
-//         if (user.getRole() != Role.ROLE_ADMIN) {
-//             throw new CustomException(ErrorMessage.ADMIN_PERMISSION_REQUIRED);
-//         }
-        // 임시로 첫 번째 유저를 조회하여 할당 (테스트용)
+//        1.관리자 권한인지 확인
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(ErrorMessage.USER_NOT_FOUND)
         );
+
+         if (user.getRole() != Role.ROLE_ADMIN) {
+             throw new CustomException(ErrorMessage.ADMIN_PERMISSION_REQUIRED);
+         }
 
         //2.공지사항 등록
         Notice notice = new Notice(

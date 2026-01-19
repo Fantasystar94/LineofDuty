@@ -8,8 +8,11 @@ import com.example.lineofduty.domain.notice.dto.response.NoticeInquiryResponse;
 import com.example.lineofduty.domain.notice.dto.response.NoticeResisterResponse;
 import com.example.lineofduty.domain.notice.dto.response.NoticeUpdateResponse;
 import com.example.lineofduty.domain.notice.service.NoticeService;
+import com.example.lineofduty.domain.user.UserDetailsImpl;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -23,9 +26,11 @@ public class NoticeController {
     // 공지사항 등록
     @PostMapping("/admin/notices/{userId}")
     public ResponseEntity<GlobalResponse> noticeResisterApi(
-            @PathVariable Long userId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails,
             @RequestBody NoticeResisterRequest request
     ) {
+        Long userId = userDetails.getUser().getId();
+
         NoticeResisterResponse response = noticeService.noticeResister(userId, request);
 
         return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.NOTICE_CREATE_SUCCESS, response));
