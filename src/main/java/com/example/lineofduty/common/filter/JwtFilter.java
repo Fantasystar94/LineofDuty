@@ -1,7 +1,7 @@
 package com.example.lineofduty.common.filter;
 
 import com.example.lineofduty.common.util.JwtUtil;
-import com.example.lineofduty.domain.user.UserDetailsServiceImpl;
+import com.example.lineofduty.domain.user.UserDetailsService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -25,7 +25,7 @@ import java.io.IOException;
 public class JwtFilter extends OncePerRequestFilter {
 
     private final JwtUtil jwtUtil;
-    private final UserDetailsServiceImpl userDetailsService;
+    private final UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(

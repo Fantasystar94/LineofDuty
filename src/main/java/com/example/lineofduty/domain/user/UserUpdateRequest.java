@@ -1,4 +1,4 @@
-package com.example.lineofduty.domain.user.dto.request;
+package com.example.lineofduty.domain.user;
 
 import lombok.Getter;
 import lombok.NoArgsConstructor;

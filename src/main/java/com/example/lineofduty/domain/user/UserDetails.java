@@ -1,19 +1,18 @@
 package com.example.lineofduty.domain.user;
 
 import com.example.lineofduty.common.model.enums.Role;
-import com.example.lineofduty.entity.User;
+import com.example.lineofduty.domain.user.entity.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Getter
 @RequiredArgsConstructor
-public class UserDetailsImpl implements UserDetails {
+public class UserDetails implements org.springframework.security.core.userdetails.UserDetails {
 
     private final User user;
 

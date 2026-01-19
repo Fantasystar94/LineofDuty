@@ -1,6 +1,6 @@
-package com.example.lineofduty.domain.user.dto.response;
+package com.example.lineofduty.domain.user;
 
-import com.example.lineofduty.entity.User;
+import com.example.lineofduty.domain.user.entity.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 
@@ -8,14 +8,14 @@ import java.time.LocalDateTime;
 
 @Getter
 public class UserAdminResponse {
-    private Long id;
-    private String username;
-    private String email;
+    private final Long id;
+    private final String username;
+    private final String email;
 
     @JsonProperty("resident_number")
-    private String residentNumber;
+    private final String residentNumber;
 
-    private String role;
+    private final String role;
 
     @JsonProperty("enlistment_application")
     private Object enlistmentApplication;

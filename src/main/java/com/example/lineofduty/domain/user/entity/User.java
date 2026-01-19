@@ -1,7 +1,8 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.user.entity;
 
 import com.example.lineofduty.common.model.enums.Role;
 import com.example.lineofduty.common.util.AesUtil;
+import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.ColumnDefault;
