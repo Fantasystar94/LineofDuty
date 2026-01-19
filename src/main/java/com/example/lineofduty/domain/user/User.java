@@ -45,6 +45,7 @@ public class User extends BaseEntity {
         this.password = password;
         this.role = role;
         this.residentNumber = residentNumber;
+        this.isDeleted = false;
     }
 
     public void updateProfile(String email, String username, String password) {

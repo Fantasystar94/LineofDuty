@@ -13,7 +13,6 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -38,7 +37,7 @@ public class UserService {
 
         if (StringUtils.hasText(request.getEmail()) && !user.getEmail().equals(request.getEmail())) {
             if (userRepository.existsByEmail(request.getEmail())) {
-                throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+                throw new CustomException(ErrorMessage.DUPLICATE_EMAIL);
             }
         }
 
@@ -56,6 +55,9 @@ public class UserService {
     @Transactional
     public void withdrawUser(Long userId) {
         User user = findUserById(userId);
+        if (user.isDeleted()) {
+            throw new CustomException(ErrorMessage.USER_WITHDRAWN);
+        }
         user.updateIsDeleted(); // BaseEntity 메서드
     }
 
@@ -77,6 +79,9 @@ public class UserService {
     @Transactional
     public UserWithdrawResponse withdrawAdmin(Long adminId) {
         User user = findUserById(adminId);
+        if (user.isDeleted()) {
+            throw new CustomException(ErrorMessage.USER_WITHDRAWN);
+        }
         user.updateIsDeleted(); // BaseEntity 메서드
 
         return new UserWithdrawResponse(user.getId(), true, LocalDateTime.now());
@@ -84,6 +89,6 @@ public class UserService {
 
     private User findUserById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorMessage.USER_NOT_FOUND));
     }
 }
