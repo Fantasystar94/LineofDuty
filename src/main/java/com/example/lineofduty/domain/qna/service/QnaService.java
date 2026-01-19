@@ -70,7 +70,7 @@ public class QnaService {
 
         Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(direction, sortField));
 
-        Page<Qna> qnaPage = qnaRepository.findAllByIsDeletedFalse(pageable);
+        Page<Qna> qnaPage = qnaRepository.findAll(pageable);
         Page<QnaDto> qnaDtoPage = qnaPage.map(QnaDto::from);
 
         return QnaInquiryListResponse.from(qnaDtoPage);

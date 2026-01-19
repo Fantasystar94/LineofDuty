@@ -84,7 +84,7 @@ public class NoticeService {
 
         Pageable pageable = PageRequest.of(pageNumber, size, Sort.by(direction, sortField));
 
-        Page<Notice> noticePage = noticeRepository.findAllByIsDeletedFalse(pageable);
+        Page<Notice> noticePage = noticeRepository.findAll(pageable);
         Page<NoticeDto> noticeDtoPage = noticePage.map(NoticeDto::from);
 
         return NoticeInquiryListResponse.from(noticeDtoPage);
