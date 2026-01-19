@@ -49,6 +49,8 @@ public class SecurityConfig {
                         // 입영신청 조회, 공지사항 GET 요청은 비로그인 유저도 허용
                         .requestMatchers(HttpMethod.GET, "/api/enlistment/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/notices/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/qnas/**").permitAll()
+                        .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
 
                         // 관리자 전용 페이지
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
