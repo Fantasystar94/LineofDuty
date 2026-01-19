@@ -5,5 +5,7 @@ public enum DefermentStatus {
     STUDY,
     FAMILY,
     PERSONAL,
-    SIMPLECHANGE
+    SIMPLECHANGE,
+    APPROVED,
+    REJECTED
 }

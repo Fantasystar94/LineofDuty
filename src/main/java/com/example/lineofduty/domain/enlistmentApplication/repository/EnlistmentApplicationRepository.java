@@ -1,12 +1,11 @@
 package com.example.lineofduty.domain.enlistmentApplication.repository;
 
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
-import com.example.lineofduty.entity.EnlistmentApplication;
+import com.example.lineofduty.domain.enlistmentApplication.EnlistmentApplication;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
-import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 

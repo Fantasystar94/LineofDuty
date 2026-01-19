@@ -1,0 +1,89 @@
+@baseUrl = http://localhost:8080
+@accessToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwidXNlclJvbGUiOiJST0xFX0FETUlOIiwiaWF0IjoxNzY4Nzg4MDQxLCJleHAiOjE3Njg3OTE2NDF9.hQ0pm_LRqA2kAyf_PVRFyR2cDawy0vqscs_YadibOSk
+
+### SIGNIN
+POST {{baseUrl}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "testuser3332@example.com",
+  "password": "Test1234!",
+  "username": "test3",
+  "residentNumber": "900101-1234569",
+  "admin": false
+}
+
+
+### LOGIN
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "1234!"
+}
+
+### GET ENLISTMENT LIST
+GET {{baseUrl}}/api/enlistment
+Authorization: Bearer {{accessToken}}
+
+### GET ENLISTMENT DETAIL
+GET {{baseUrl}}/api/enlistment/3
+Authorization: Bearer {{accessToken}}
+### APPLY ENLISTMENT
+POST {{baseUrl}}/api/enlistment
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "scheduleId": 4
+}
+
+### GET APPLICATION LIST
+GET {{baseUrl}}/api/enlistment/admin/pending
+Authorization: Bearer {{accessToken}}
+
+### GET APPLICATION DETAIL
+GET {{baseUrl}}/api/enlistment/pending/1
+Authorization: Bearer {{accessToken}}
+
+### CANCEL APPLICATION
+PATCH {{baseUrl}}/api/enlistment/2/cancel
+Authorization: Bearer {{accessToken}}
+
+### APPROVE APPLICATION (ADMIN)
+PATCH {{baseUrl}}/api/enlistment/1/approve
+Authorization: Bearer {{accessToken}}
+
+### DEFER ENLISTMENT
+#private Long applicationId;
+#private DefermentStatus defermentStatus;
+#private String reasonDetail;
+#private LocalDate requestedUntil;
+POST {{baseUrl}}/api/enlistment/deferments
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "applicationId": 1,
+  "defermentStatus": "ILLNESS",
+  "reasonDetail": "존나아픔",
+  "requestedUntil": "2026-03-01"
+}
+
+### GET DEFERMENT LIST
+GET {{baseUrl}}/api/enlistment/deferments?page=0&size=10
+Authorization: Bearer {{accessToken}}
+
+### GET DEFERMENT DETAIL
+GET {{baseUrl}}/api/enlistment/deferments/1
+Authorization: Bearer {{accessToken}}
+
+### PATCH DEFERMENT APPROVE/REJECT
+PATCH {{baseUrl}}/api/enlistment/deferments/1
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+ "decisionStatus": "REJECTED"
+}

@@ -48,6 +48,7 @@ public enum SuccessMessage {
     DEFERMENTS_SUCCESS("연기 신청이 접수되었습니다."),
     DEFERMENTS_GET_SUCCESS("연기 신청 조회 성공"),
     QNA_DELETE_SUCCESS("질문이 삭제되었습니다"),
+    DEFERMENTS_PROCEED("연기 신청이 처리 되었습니다."),
     NOTICE_DELETE_SUCCESS("공지가 삭제되었습니다.");
 
 

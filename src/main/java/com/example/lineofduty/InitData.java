@@ -1,5 +1,6 @@
 package com.example.lineofduty;
 import com.example.lineofduty.common.exception.CustomException;
+import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import com.example.lineofduty.common.model.enums.Role;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository;
@@ -82,6 +83,10 @@ public class InitData {
             }
         }
 
+        // 판매자 = 관리자
+        User productAdmin = userRepository.findByEmail(("admin@example.com")).orElseThrow(
+                ()-> new CustomException(ErrorMessage.USER_NOT_FOUND)
+        );
 
         productRepository.save(
                 new Product(
