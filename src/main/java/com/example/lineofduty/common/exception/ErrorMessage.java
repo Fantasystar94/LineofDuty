@@ -35,11 +35,13 @@ public enum ErrorMessage {
     INVALID_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "유효하지 않은 리프레시 토큰입니다."),
     ACCESS_DENIED(HttpStatus.UNAUTHORIZED, "접근 권한이 없습니다."),
     ADMIN_PERMISSION_REQUIRED(HttpStatus.UNAUTHORIZED, "관리자 권한이 필요합니다."),
+    PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
 
     /* --- 403 Forbidden --- */
     // 인가 실패 (권한 부족 - 작성자가 아님 등)
     NO_MODIFY_PERMISSION(HttpStatus.FORBIDDEN, "수정 권한이 없습니다."),
     NO_DELETE_PERMISSION(HttpStatus.FORBIDDEN, "삭제 권한이 없습니다."),
+    USER_WITHDRAWN(HttpStatus.FORBIDDEN, "탈퇴한 회원입니다."),
 
 
     /* --- 404 Not Found --- */
@@ -58,6 +60,7 @@ public enum ErrorMessage {
     /* --- 409 Conflict --- */
     // 데이터 충돌
     DUPLICATE_EMAIL(HttpStatus.CONFLICT, "이미 존재하는 이메일입니다."),
+    DUPLICATE_RESIDENT_NUMBER(HttpStatus.CONFLICT, "이미 등록된 주민등록번호입니다."),
     ALREADY_PAID_ORDER(HttpStatus.CONFLICT, "이미 결제된 주문입니다."),
     DUPLICATE_SCHEDULE(HttpStatus.CONFLICT, "이미 신청된 유저입니다"),
     INVALID_APPLICATION_STATUS(HttpStatus.CONFLICT,"승인 할 수 없습니다");

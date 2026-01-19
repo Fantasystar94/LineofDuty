@@ -17,7 +17,7 @@ import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.entity.Deferment;
 import com.example.lineofduty.entity.EnlistmentApplication;
 import com.example.lineofduty.entity.EnlistmentSchedule;
-import com.example.lineofduty.domain.user.entity.User;
+import com.example.lineofduty.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;

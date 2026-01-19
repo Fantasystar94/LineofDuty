@@ -1,6 +1,7 @@
-package com.example.lineofduty.domain.user;
+package com.example.lineofduty.domain.user.dto;
 
-import com.example.lineofduty.domain.user.entity.User;
+import com.example.lineofduty.domain.user.User;
+import com.example.lineofduty.domain.user.UserDetail;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;

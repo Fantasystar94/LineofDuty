@@ -11,7 +11,7 @@ import com.example.lineofduty.domain.notice.dto.request.NoticeResisterRequest;
 import com.example.lineofduty.domain.notice.dto.response.NoticeResisterResponse;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.entity.Notice;
-import com.example.lineofduty.domain.user.entity.User;
+import com.example.lineofduty.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;

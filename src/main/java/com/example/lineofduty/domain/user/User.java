@@ -1,4 +1,4 @@
-package com.example.lineofduty.domain.user.entity;
+package com.example.lineofduty.domain.user;
 
 import com.example.lineofduty.common.model.enums.Role;
 import com.example.lineofduty.common.util.AesUtil;

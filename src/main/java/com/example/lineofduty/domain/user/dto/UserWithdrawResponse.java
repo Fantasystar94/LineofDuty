@@ -1,4 +1,4 @@
-package com.example.lineofduty.domain.user;
+package com.example.lineofduty.domain.user.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;

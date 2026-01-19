@@ -1,11 +1,13 @@
 package com.example.lineofduty.domain.auth;
 
+import com.example.lineofduty.common.exception.CustomException;
+import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.Role;
 import com.example.lineofduty.common.util.JwtUtil;
 import com.example.lineofduty.domain.auth.dto.request.LoginRequest;
 import com.example.lineofduty.domain.auth.dto.request.SignupRequest;
 import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.domain.user.entity.User;
+import com.example.lineofduty.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,10 +26,10 @@ public class AuthService {
     @Transactional
     public Long signup(SignupRequest request) {
         if (userRepository.existsByEmail(request.getEmail())) {
-            throw new IllegalArgumentException("이미 존재하는 이메일입니다.");
+            throw new CustomException(ErrorMessage.DUPLICATE_EMAIL);
         }
         if (userRepository.existsByResidentNumber(request.getResidentNumber())) {
-            throw new IllegalArgumentException("이미 등록된 주민등록번호입니다.");
+            throw new CustomException(ErrorMessage.DUPLICATE_RESIDENT_NUMBER);
         }
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
@@ -47,13 +49,13 @@ public class AuthService {
     // 로그인
     public String login(LoginRequest request) {
         User user = userRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new IllegalArgumentException("등록된 사용자가 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorMessage.INVALID_AUTH_INFO));
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new IllegalArgumentException("비밀번호가 일치하지 않습니다.");
+            throw new CustomException(ErrorMessage.INVALID_AUTH_INFO);
         }
         if (user.isDeleted()) {
-            throw new IllegalArgumentException("탈퇴한 사용자입니다.");
+            throw new CustomException(ErrorMessage.USER_WITHDRAWN);
         }
 
         return jwtUtil.generateToken(user.getId(), user.getRole());

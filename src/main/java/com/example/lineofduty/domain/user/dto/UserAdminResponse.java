@@ -1,6 +1,7 @@
-package com.example.lineofduty.domain.user;
+package com.example.lineofduty.domain.user.dto;
 
-import com.example.lineofduty.domain.user.entity.User;
+import com.example.lineofduty.domain.user.User;
+import com.example.lineofduty.entity.EnlistmentApplication;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import java.time.LocalDateTime;
@@ -39,5 +40,29 @@ public class UserAdminResponse {
     private String maskResidentNumber(String origin) {
         if (origin == null || origin.length() < 8) return origin;
         return origin.substring(0, 8) + "******";
+    }
+
+    @Getter
+    static class EnlistmentInfo {
+        private final Long id;
+        @JsonProperty("enlistment_schedule_id")
+        private final Long enlistmentScheduleId;
+        @JsonProperty("user_id")
+        private final Long userId;
+        private final String status;
+        @JsonProperty("created_at")
+        private final LocalDateTime createdAt;
+        @JsonProperty("modified_at")
+        private final LocalDateTime modifiedAt;
+
+        public EnlistmentInfo(EnlistmentApplication application) {
+            this.id = application.getId();
+            this.enlistmentScheduleId = application.getScheduleId();
+            this.userId = application.getUserId();
+            this.status = application.getApplicationStatus().name();
+                    // TODO : application enlistmentDate 받아와서 쓸수있게 추가할것
+            this.createdAt = application.getCreatedAt();
+            this.modifiedAt = application.getModifiedAt();
+        }
     }
 }

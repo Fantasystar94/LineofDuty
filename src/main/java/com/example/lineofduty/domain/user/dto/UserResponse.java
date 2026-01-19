@@ -1,6 +1,6 @@
-package com.example.lineofduty.domain.user;
+package com.example.lineofduty.domain.user.dto;
 
-import com.example.lineofduty.domain.user.entity.User;
+import com.example.lineofduty.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import java.time.LocalDateTime;
