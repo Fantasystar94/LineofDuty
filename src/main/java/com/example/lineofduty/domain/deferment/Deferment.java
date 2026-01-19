@@ -1,4 +1,4 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.deferment;
 
 import com.example.lineofduty.common.model.enums.DefermentStatus;
 import com.example.lineofduty.entity.BaseEntity;

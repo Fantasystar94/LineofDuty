@@ -1,10 +1,11 @@
 package com.example.lineofduty.entity;
 
-import com.example.lineofduty.domain.user.User;
+import com.example.lineofduty.domain.orderItem.OrderItem;
+import com.example.lineofduty.entity.BaseEntity;
+import com.example.lineofduty.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,7 +13,6 @@ import java.util.List;
 @Entity
 @Table(name = "orders")
 @Getter
-@Setter
 @NoArgsConstructor
 public class Order extends BaseEntity {
 
