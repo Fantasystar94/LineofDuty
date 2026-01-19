@@ -5,7 +5,7 @@ import com.example.lineofduty.domain.deferment.model.request.DefermentsPostReque
 import com.example.lineofduty.domain.enlistmentApplication.model.response.EnlistmentApplicationReadResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.model.request.EnlistmentScheduleCreateRequest;
 import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentScheduleService;
-import com.example.lineofduty.domain.user.UserDetailsImpl;
+import com.example.lineofduty.domain.user.UserDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
@@ -43,7 +43,7 @@ public class EnlistmentScheduleController {
      * 입영 신청 - v1
      * */
     @PostMapping
-    public ResponseEntity<GlobalResponse> applyEnlistment(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody EnlistmentScheduleCreateRequest request) {
+    public ResponseEntity<GlobalResponse> applyEnlistment(@AuthenticationPrincipal UserDetail userDetails, @RequestBody EnlistmentScheduleCreateRequest request) {
         return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_APPLY_SUCCESS, enlistmentScheduleService.applyEnlistment(userDetails.getUser().getId(), request)));
     }
 
@@ -68,7 +68,7 @@ public class EnlistmentScheduleController {
      * 입영 신청 취소 - v1
      * */
     @PatchMapping("/{applicationId}/cancel")
-    public ResponseEntity<GlobalResponse> cancelApplication(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long applicationId) {
+    public ResponseEntity<GlobalResponse> cancelApplication(@AuthenticationPrincipal UserDetail userDetails, @PathVariable Long applicationId) {
         return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_CANCEL_SUCCESS, enlistmentScheduleService.cancelApplication(userDetails.getUser().getId(), applicationId)));
     }
 
@@ -77,7 +77,7 @@ public class EnlistmentScheduleController {
      * */
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/{applicationId}/approve")
-    public ResponseEntity<GlobalResponse> approveApplication(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long applicationId) {
+    public ResponseEntity<GlobalResponse> approveApplication(@AuthenticationPrincipal UserDetail userDetails, @PathVariable Long applicationId) {
         return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_APPROVE_SUCCESS, enlistmentScheduleService.approveApplication(userDetails.getUser().getId(), applicationId)));
     }
 
@@ -85,7 +85,7 @@ public class EnlistmentScheduleController {
      * 입영 신청 연기 - v1
      * */
     @PostMapping("/deferments")
-    public ResponseEntity<GlobalResponse> defermentsSchedule(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody DefermentsPostRequest request) {
+    public ResponseEntity<GlobalResponse> defermentsSchedule(@AuthenticationPrincipal UserDetail userDetails, @RequestBody DefermentsPostRequest request) {
         return ResponseEntity.ok(GlobalResponse.success(DEFERMENTS_SUCCESS, enlistmentScheduleService.defermentsSchedule(userDetails.getUser().getId(), request)));
     }
 
@@ -94,7 +94,7 @@ public class EnlistmentScheduleController {
      * */
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/deferments")
-    public ResponseEntity<GlobalResponse> getDefermentList(@AuthenticationPrincipal UserDetailsImpl userDetails, Pageable pageable) {
+    public ResponseEntity<GlobalResponse> getDefermentList(@AuthenticationPrincipal UserDetail userDetails, Pageable pageable) {
         return ResponseEntity.ok(GlobalResponse.success(DEFERMENTS_GET_SUCCESS, enlistmentScheduleService.getDefermentList(userDetails.getUser().getId(), pageable)));
     }
 
@@ -102,7 +102,7 @@ public class EnlistmentScheduleController {
      * 입영 신청 연기 단건조회 - v1
      * */
     @GetMapping("/deferments/{defermentsId}")
-    public ResponseEntity<GlobalResponse> getDeferment(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long defermentsId) {
+    public ResponseEntity<GlobalResponse> getDeferment(@AuthenticationPrincipal UserDetail userDetails, @PathVariable Long defermentsId) {
         return ResponseEntity.ok(GlobalResponse.success(DEFERMENTS_GET_SUCCESS, enlistmentScheduleService.getDeferment(userDetails.getUser().getId(), defermentsId)));
     }
 
@@ -113,7 +113,7 @@ public class EnlistmentScheduleController {
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/deferments/{applicationId}")
     public ResponseEntity<GlobalResponse> processDeferment(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @AuthenticationPrincipal UserDetail userDetails,
             @PathVariable Long applicationId,
             @RequestBody DefermentPatchRequest request
     ) {
