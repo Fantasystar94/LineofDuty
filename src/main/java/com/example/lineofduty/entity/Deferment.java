@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "deferments")
@@ -43,4 +44,13 @@ public class Deferment extends BaseEntity {
         this.status = status;
         this.requestedUntil = requestedUntil;
     }
+
+    public void approve() {
+        this.status = DefermentStatus.APPROVED;
+    }
+
+    public void reject() {
+        this.status = DefermentStatus.REJECTED;
+    }
+
 }

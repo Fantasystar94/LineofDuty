@@ -11,4 +11,6 @@ public interface DefermentRepository extends JpaRepository<Deferment, Long> {
     Page<Deferment> findAll(Pageable pageable);
 
     Optional<Deferment> findByIdAndUserId(Long defermentId, Long userId);
+
+    Optional<Deferment> findByApplicationId(Long applicationId);
 }
