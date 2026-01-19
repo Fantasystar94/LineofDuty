@@ -1,14 +1,14 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.payment;
 
+import com.example.lineofduty.domain.order.Order;
+import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "payments")
 @Getter
-@Setter
 @NoArgsConstructor
 public class Payment extends BaseEntity {
 
@@ -21,7 +21,11 @@ public class Payment extends BaseEntity {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
+    @Column(name = "total_price", nullable = false)
+    private Long totalPrice;
+
     public Payment(Order order) {
         this.order = order;
+        this.totalPrice = order.getTotalPrice();
     }
 }

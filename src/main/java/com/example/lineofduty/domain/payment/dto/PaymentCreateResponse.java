@@ -1,6 +1,6 @@
 package com.example.lineofduty.domain.payment.dto;
 
-import com.example.lineofduty.entity.Payment;
+import com.example.lineofduty.domain.payment.Payment;
 import lombok.Getter;
 
 import java.time.LocalDateTime;
