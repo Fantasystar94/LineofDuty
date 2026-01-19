@@ -15,6 +15,8 @@ import com.example.lineofduty.domain.user.UserDetailsImpl;
 import com.example.lineofduty.domain.qna.Qna;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.entity.User;
+import com.example.lineofduty.entity.Qna;
+import com.example.lineofduty.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -29,6 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class QnaService {
 
     private final QnaRepository qnaRepository;
+    private final UserRepository userRepository;
 
     // 질문 등록
     public QnaResisterResponse qnaRegistration(UserDetailsImpl userDetails, QnaResisterRequest request) {

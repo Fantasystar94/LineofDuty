@@ -1,0 +1,56 @@
+@baseUrl = http://localhost:8080
+@accessToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwidXNlclJvbGUiOiJST0xFX0FETUlOIiwiaWF0IjoxNzY4Nzg4NTgxLCJleHAiOjE3Njg3OTIxODF9.1ONAN1cyYEkUK9IeOEx2jTKCqijM7yjpoLeFVOdo7YY
+
+### SIGNIN
+POST {{baseUrl}}/api/auth/signup
+Content-Type: application/json
+
+{
+  "email": "testuser3332@example.com",
+  "password": "Test1234!",
+  "username": "test3",
+  "residentNumber": "900101-1234569",
+  "admin": false
+}
+
+
+### LOGIN
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "user@example.com",
+  "password": "1234!"
+}
+
+### 주문 생성
+POST http://localhost:8080/api/orders
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "productId" : 1,
+  "quantity": 2
+}
+
+### 주문 단건 조회
+GET http://localhost:8080/api/orders/1
+Authorization: Bearer {{accessToken}}
+
+### 주문 상품 상세 조회
+GET http://localhost:8080/api/orders/1/orderItems/1
+Authorization: Bearer {{accessToken}}
+
+### 주문 상태 수정
+PATCH http://localhost:8080/api/orders/1/orderItems/1
+Content-Type: application/json
+Authorization: Bearer {{accessToken}}
+
+{
+  "productId" : 1,
+  "quantity": 2
+}
+
+### 주문 취소
+DELETE http://localhost:8080/api/orders/1
+Authorization: Bearer {{accessToken}}

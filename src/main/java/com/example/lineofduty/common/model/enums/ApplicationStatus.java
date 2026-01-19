@@ -23,5 +23,4 @@ public enum ApplicationStatus {
         ON_SALE,
         SOLD_OUT
     }
-
 }

@@ -8,6 +8,4 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface NoticeRepository extends JpaRepository<Notice, Long> {
 
-    @Query("SELECT n FROM Notice n WHERE n.isDeleted = false")
-    Page<Notice> findAllByIsDeletedFalse(Pageable pageable);
 }

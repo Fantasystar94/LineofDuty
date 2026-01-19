@@ -5,7 +5,7 @@ import com.example.lineofduty.common.util.JwtUtil;
 import com.example.lineofduty.domain.auth.dto.request.LoginRequest;
 import com.example.lineofduty.domain.auth.dto.request.SignupRequest;
 import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.entity.User;
+import com.example.lineofduty.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

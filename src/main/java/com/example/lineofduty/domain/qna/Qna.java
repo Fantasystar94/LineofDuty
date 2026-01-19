@@ -1,9 +1,10 @@
-package com.example.lineofduty.domain.qna;
+package com.example.lineofduty.entity;
 
 import com.example.lineofduty.common.exception.ValidationMessage;
 import com.example.lineofduty.entity.BaseEntity;
 import com.example.lineofduty.entity.User;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
+import com.example.lineofduty.domain.user.entity.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -58,5 +59,4 @@ public class Qna extends BaseEntity {
     public void updateAnswer(@NotBlank(message = ValidationMessage.ASK_CONTENT_NOT_BLANK) String askContent) {
         this.askContent = askContent;
     }
-
 }

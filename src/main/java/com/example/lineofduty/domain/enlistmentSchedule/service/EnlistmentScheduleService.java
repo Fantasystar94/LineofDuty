@@ -2,6 +2,8 @@ package com.example.lineofduty.domain.enlistmentSchedule.service;
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
+import com.example.lineofduty.common.model.enums.DefermentStatus;
+import com.example.lineofduty.common.model.enums.Role;
 import com.example.lineofduty.domain.deferment.model.request.DefermentsPostRequest;
 import com.example.lineofduty.domain.deferment.model.response.DefermentsReadResponse;
 import com.example.lineofduty.domain.deferment.repository.DefermentRepository;
@@ -14,10 +16,10 @@ import com.example.lineofduty.domain.enlistmentSchedule.model.response.Enlistmen
 import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.QueryEnlistmentScheduleRepository;
 import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.entity.Deferment;
-import com.example.lineofduty.entity.EnlistmentApplication;
-import com.example.lineofduty.entity.EnlistmentSchedule;
-import com.example.lineofduty.entity.User;
+import com.example.lineofduty.domain.user.entity.User;
+import com.example.lineofduty.domain.deferment.Deferment;
+import com.example.lineofduty.domain.enlistmentApplication.EnlistmentApplication;
+import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentSchedule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,9 +43,7 @@ public class EnlistmentScheduleService {
      * 입영 가능 일정 조회
      * */
     @Transactional
-    public List<EnlistmentScheduleReadResponse> getEnlistmentList(Long userId) {
-
-        userValidate(userId);
+    public List<EnlistmentScheduleReadResponse> getEnlistmentList() {
 
         return queryscheduleRepository.getEnlistmentListSortBy(LocalDate.now());
 
@@ -53,9 +53,7 @@ public class EnlistmentScheduleService {
      * 입영 가능 일정 조회 - 단건
      * */
     @Transactional
-    public EnlistmentScheduleReadResponse getEnlistment(Long userId, Long scheduleId) {
-
-        userValidate(userId);
+    public EnlistmentScheduleReadResponse getEnlistment(Long scheduleId) {
 
         EnlistmentSchedule schedule = scheduleValidate(scheduleId);
 
@@ -237,9 +235,53 @@ public class EnlistmentScheduleService {
         return DefermentsReadResponse.from(deferment);
     }
 
+    /*
+     * 입영 연기 요청 승인 / 반려 - v1
+     * 관리자 전용
+     */
+    @Transactional
+    public EnlistmentApplicationReadResponse processDeferment(
+            Long adminId,
+            Long applicationId,
+            DefermentStatus decisionStatus   // APPROVED / REJECTED
+    ) {
+
+        // 0. 관리자 검증 (v1 스타일)
+        adminValidate(adminId);
+
+        // 1. 신청 조회
+        EnlistmentApplication application = applicationRepository.findById(applicationId)
+                .orElseThrow(() -> new CustomException(ErrorMessage.APPLICATION_NOT_FOUND));
+
+        // 2. 상태 검증
+        if (application.getApplicationStatus() != ApplicationStatus.REQUESTED) {
+            throw new CustomException(ErrorMessage.INVALID_APPLICATION_STATUS);
+        }
+
+        // 3. 연기 요청 조회
+        Deferment deferment = defermentRepository.findByApplicationId(applicationId)
+                .orElseThrow(()-> new CustomException(ErrorMessage.DEFERMENT_NOT_FOUND));
+
+        // 4. 승인 / 반려 처리
+        if (decisionStatus == DefermentStatus.APPROVED) {
+            application.changeStatus(ApplicationStatus.DEFERRED);
+            deferment.approve();
+        } else if (decisionStatus == DefermentStatus.REJECTED) {
+            deferment.reject();
+        } else {
+            throw new CustomException(ErrorMessage.INVALID_DEFERMENT_STATUS);
+        }
+
+        return EnlistmentApplicationReadResponse.from(application);
+    }
+
 
     private User userValidate(Long userId) {
         return userRepository.findById(userId).orElseThrow(()-> new CustomException(ErrorMessage.USER_NOT_FOUND));
+    }
+
+    private User adminValidate(Long adminId) {
+        return userRepository.findByIdAndRole(adminId, Role.ROLE_ADMIN).orElseThrow(()-> new CustomException(ErrorMessage.USER_NOT_FOUND));
     }
 
     private EnlistmentSchedule scheduleValidate(Long scheduleId) {

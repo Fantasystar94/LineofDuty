@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.time.LocalDate;
 import java.util.List;
 
-import static com.example.lineofduty.entity.QEnlistmentSchedule.enlistmentSchedule;
+import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentSchedule.enlistmentSchedule;
 @Repository
 @RequiredArgsConstructor
 public class QueryEnlistmentScheduleRepository {

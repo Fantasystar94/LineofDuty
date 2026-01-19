@@ -24,9 +24,9 @@ public enum ErrorMessage {
 
     // 주문/상품 관련
     MISSING_ORDER_ID(HttpStatus.BAD_REQUEST, "orderId가 누락되었습니다."),
-    MISSING_PRODUCT_NAME(HttpStatus.BAD_REQUEST, "상품명이 입력되지 않았습니다."),
-    INVALID_PRICE(HttpStatus.BAD_REQUEST, "가격은 0원 이상이어야 합니다."),
-    INVALID_STOCK(HttpStatus.BAD_REQUEST, "재고는 0개 이상이어야 합니다."),
+    MISSING_PRODUCT_NAME_OR_DESCRIPTION(HttpStatus.BAD_REQUEST, "상품명과 상품설명은 필수입니다."),
+    INVALID_PRICE(HttpStatus.BAD_REQUEST, "가격은 1원 이상이어야 합니다."),
+    INVALID_STOCK(HttpStatus.BAD_REQUEST, "재고는 1개 이상이어야 합니다."),
 
 
     /* --- 401 Unauthorized --- */
@@ -35,6 +35,7 @@ public enum ErrorMessage {
     INVALID_REFRESH_TOKEN(HttpStatus.UNAUTHORIZED, "유효하지 않은 리프레시 토큰입니다."),
     ACCESS_DENIED(HttpStatus.UNAUTHORIZED, "접근 권한이 없습니다."),
     ADMIN_PERMISSION_REQUIRED(HttpStatus.UNAUTHORIZED, "관리자 권한이 필요합니다."),
+    INVALID_DEFERMENT_STATUS(HttpStatus.UNAUTHORIZED, "없는 연기 상태 입니다."),
 
     /* --- 403 Forbidden --- */
     // 인가 실패 (권한 부족 - 작성자가 아님 등)
