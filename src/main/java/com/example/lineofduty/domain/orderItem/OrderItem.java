@@ -11,7 +11,6 @@ import lombok.Setter;
 @Entity
 @Table(name = "order_items")
 @Getter
-@Setter
 @NoArgsConstructor
 public class OrderItem extends BaseEntity {
 
@@ -38,6 +37,14 @@ public class OrderItem extends BaseEntity {
         this.product = product;
         this.order = order;
         this.orderPrice = orderPrice;
+        this.quantity = quantity;
+    }
+
+    public void updateProduct(Product product) {
+        this.product = product;
+    }
+
+    public void updateQuantity(Long quantity) {
         this.quantity = quantity;
     }
 }

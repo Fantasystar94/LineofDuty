@@ -92,20 +92,18 @@ public class OrderService {
         );
 
         // request대로 주문을 수정해
-        Product product = orderItem.getProduct();
-        long quantity = orderItem.getQuantity();
         if (request.getProductId() != null) {
 
-            product = productRepository.findById(request.getProductId()).orElseThrow(
+            Product product = productRepository.findById(request.getProductId()).orElseThrow(
                     () -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND)
             );
-            orderItem.setProduct(product);
+            orderItem.updateProduct(product);
         }
 
         if (request.getQuantity() != null) {
 
-            quantity = request.getQuantity();
-            orderItem.setQuantity(quantity);
+            long quantity = request.getQuantity();
+            orderItem.updateQuantity(quantity);
         }
 
         // 상품 변경으로 인한 총금액 수정
