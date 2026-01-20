@@ -27,6 +27,7 @@ public enum ErrorMessage {
     MISSING_PRODUCT_NAME_OR_DESCRIPTION(HttpStatus.BAD_REQUEST, "상품명과 상품설명은 필수입니다."),
     INVALID_PRICE(HttpStatus.BAD_REQUEST, "가격은 1원 이상이어야 합니다."),
     INVALID_STOCK(HttpStatus.BAD_REQUEST, "재고는 1개 이상이어야 합니다."),
+    OUT_OF_STOCK(HttpStatus.BAD_REQUEST, "재고가 부족합니다."),
 
 
     /* --- 401 Unauthorized --- */
