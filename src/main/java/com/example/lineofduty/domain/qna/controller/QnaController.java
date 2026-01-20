@@ -49,9 +49,10 @@ public class QnaController {
     @GetMapping
     public ResponseEntity<GlobalResponse> qnaInquiryListApi(@RequestParam(value = "page", defaultValue = "0") int page,
                                                             @RequestParam(value = "size", defaultValue = "10") int size,
-                                                            @RequestParam(value = "sort", defaultValue = "id,desc") String sort) {
+                                                            @RequestParam(value = "sort", defaultValue = "id,desc") String sort,
+                                                            @RequestParam(required = false) String keyword) {
 
-        QnaInquiryListResponse response = qnaService.qnaInquiryListResponse(page, size, sort);
+        QnaInquiryListResponse response = qnaService.qnaInquiryListResponse(page, size, sort,keyword);
 
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.QNA_READ_SUCCESS, response));
     }

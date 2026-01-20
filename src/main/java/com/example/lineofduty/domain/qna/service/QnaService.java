@@ -20,8 +20,6 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Transactional
@@ -54,9 +52,9 @@ public class QnaService {
 
     //질문 목록 조회
     @Transactional(readOnly = true)
-    public QnaInquiryListResponse qnaInquiryListResponse(int page, int size, String sort) {
+    public QnaInquiryListResponse qnaInquiryListResponse(int page, int size, String sort, String keyword) {
 
-        String sortProperty = "creatAt";
+        String sortProperty = "createdAt";
         Sort.Direction sortDirection = Sort.Direction.DESC;
 
         if (sort != null && !sort.isEmpty()) {
@@ -66,9 +64,18 @@ public class QnaService {
                 sortDirection = Sort.Direction.ASC;
             }
         }
+        
         Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sortProperty));
 
-        Page<QnaDto> qnaDtoPage = qnaRepository.findAll(pageable).map(QnaDto::from);
+        Page<Qna> qnaPage;
+
+        if (keyword == null || keyword.trim().isEmpty()) {
+            qnaPage = qnaRepository.findAll(pageable);
+        } else {
+            qnaPage = qnaRepository.searchByKeyword(keyword, pageable);
+        }
+
+        Page<QnaDto> qnaDtoPage = qnaPage.map(QnaDto::from);
 
         return QnaInquiryListResponse.from(qnaDtoPage);
     }
