@@ -1,10 +1,9 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.qna;
 
 import com.example.lineofduty.common.exception.ValidationMessage;
-import com.example.lineofduty.entity.BaseEntity;
-import com.example.lineofduty.entity.User;
-import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import com.example.lineofduty.domain.user.entity.User;
+import com.example.lineofduty.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -12,7 +11,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "qna")
+@Table(name = "qnas")
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor

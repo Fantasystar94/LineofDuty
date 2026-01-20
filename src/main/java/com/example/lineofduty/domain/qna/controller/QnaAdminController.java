@@ -8,7 +8,7 @@ import com.example.lineofduty.domain.qna.dto.request.QnaAdminAnswerRequest;
 import com.example.lineofduty.domain.qna.dto.request.QnaAdminAnswerUpdateRequest;
 import com.example.lineofduty.domain.qna.dto.response.QnaAdminAnswerResponse;
 import com.example.lineofduty.domain.qna.dto.response.QnaAdminAnswerUpdateResponse;
-import com.example.lineofduty.domain.user.UserDetailsImpl;
+import com.example.lineofduty.domain.user.UserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,7 +24,7 @@ public class QnaAdminController {
 
     // 질문 관리자 답변 등록
     @PostMapping("/{qnaId}")
-    public ResponseEntity<GlobalResponse> qnaAdminAnswerApi(@PathVariable Long qnaId, @AuthenticationPrincipal UserDetailsImpl userDetails,
+    public ResponseEntity<GlobalResponse> qnaAdminAnswerApi(@PathVariable Long qnaId, @AuthenticationPrincipal UserDetail userDetails,
                                                             @RequestBody QnaAdminAnswerRequest request) {
 
         QnaAdminAnswerResponse response = qnaAdminService.qnaAdminAnswer(qnaId,userDetails,request);
@@ -34,7 +34,7 @@ public class QnaAdminController {
 
     // 질문 관리자 답변 수정
     @PutMapping("/{qnaId}")
-    public ResponseEntity<GlobalResponse> qnaAdminAnswerUpdateApi(@PathVariable Long qnaId, @AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody QnaAdminAnswerUpdateRequest request) {
+    public ResponseEntity<GlobalResponse> qnaAdminAnswerUpdateApi(@PathVariable Long qnaId, @AuthenticationPrincipal UserDetail userDetails, @RequestBody QnaAdminAnswerUpdateRequest request) {
 
         QnaAdminAnswerUpdateResponse response = qnaAdminService.qnaAdminAnswerUpdate(qnaId,userDetails, request);
 

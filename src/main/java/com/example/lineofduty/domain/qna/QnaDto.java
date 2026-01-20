@@ -2,7 +2,7 @@ package com.example.lineofduty.domain.qna;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
-import lombok.Setter;
+
 
 @Getter
 @AllArgsConstructor

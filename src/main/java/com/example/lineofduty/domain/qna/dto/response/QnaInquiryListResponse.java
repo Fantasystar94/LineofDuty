@@ -1,6 +1,5 @@
 package com.example.lineofduty.domain.qna.dto.response;
 
-import com.example.lineofduty.domain.qna.Qna;
 import com.example.lineofduty.domain.qna.QnaDto;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;

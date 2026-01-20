@@ -3,6 +3,7 @@ package com.example.lineofduty.domain.notice.service;
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.Role;
+import com.example.lineofduty.domain.notice.Notice;
 import com.example.lineofduty.domain.notice.dto.NoticeDto;
 import com.example.lineofduty.domain.notice.dto.response.NoticeInquiryListResponse;
 import com.example.lineofduty.domain.notice.dto.response.NoticeInquiryResponse;
@@ -10,10 +11,8 @@ import com.example.lineofduty.domain.notice.dto.response.NoticeUpdateResponse;
 import com.example.lineofduty.domain.notice.repository.NoticeRepository;
 import com.example.lineofduty.domain.notice.dto.request.NoticeResisterRequest;
 import com.example.lineofduty.domain.notice.dto.response.NoticeResisterResponse;
-import com.example.lineofduty.domain.user.UserDetailsImpl;
-import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.domain.notice.Notice;
-import com.example.lineofduty.entity.User;
+import com.example.lineofduty.domain.user.UserDetail;
+import com.example.lineofduty.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -31,7 +30,7 @@ public class NoticeService {
 
     //공지사항 등록
     @Transactional
-    public NoticeResisterResponse noticeResister(UserDetailsImpl userDetails, NoticeResisterRequest request) {
+    public NoticeResisterResponse noticeResister(UserDetail userDetails, NoticeResisterRequest request) {
 
        User user = userPermissionCheck(userDetails);
 
@@ -77,7 +76,7 @@ public class NoticeService {
 
     //공지사항 수정
     @Transactional
-    public NoticeUpdateResponse noticeUpdate(Long noticeId,UserDetailsImpl userDetails, NoticeResisterRequest request) {
+    public NoticeUpdateResponse noticeUpdate(Long noticeId, UserDetail userDetails, NoticeResisterRequest request) {
 
         userPermissionCheck(userDetails);
 
@@ -91,18 +90,18 @@ public class NoticeService {
 
     //공지사항 삭제
     @Transactional
-    public void noticeDelete(Long noticeId,UserDetailsImpl userDetails) {
+    public void noticeDelete(Long noticeId,UserDetail userDetails) {
 
         userPermissionCheck(userDetails);
 
-        Notice notice = noticeRepository.findById(noticeId).orElseThrow(
+         Notice notice = noticeRepository.findById(noticeId).orElseThrow(
                 () -> new CustomException(ErrorMessage.NOTICE_NOT_FOUND));
 
         noticeRepository.delete(notice);
     }
 
 
-    private User userPermissionCheck (UserDetailsImpl userDetails) {
+    private User userPermissionCheck (UserDetail userDetails) {
 
         User user = userDetails.getUser();
 

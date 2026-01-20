@@ -8,7 +8,7 @@ import com.example.lineofduty.domain.notice.dto.response.NoticeInquiryResponse;
 import com.example.lineofduty.domain.notice.dto.response.NoticeResisterResponse;
 import com.example.lineofduty.domain.notice.dto.response.NoticeUpdateResponse;
 import com.example.lineofduty.domain.notice.service.NoticeService;
-import com.example.lineofduty.domain.user.UserDetailsImpl;
+import com.example.lineofduty.domain.user.UserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -25,7 +25,7 @@ public class NoticeController {
     // 공지사항 등록
     @PostMapping("/admin/notices")
     public ResponseEntity<GlobalResponse> noticeResisterApi(
-            @AuthenticationPrincipal UserDetailsImpl userDetails,
+            @AuthenticationPrincipal UserDetail userDetails,
             @RequestBody NoticeResisterRequest request
     ) {
         NoticeResisterResponse response = noticeService.noticeResister(userDetails, request);
@@ -54,7 +54,7 @@ public class NoticeController {
 
     //공지사항 수정
     @PutMapping("/admin/notices/{noticeId}")
-    public ResponseEntity<GlobalResponse> noticeUpdateApi(@PathVariable Long noticeId, @AuthenticationPrincipal UserDetailsImpl userDetails,
+    public ResponseEntity<GlobalResponse> noticeUpdateApi(@PathVariable Long noticeId, @AuthenticationPrincipal UserDetail userDetails,
                                                           @RequestBody NoticeResisterRequest request) {
 
         NoticeUpdateResponse response = noticeService.noticeUpdate(noticeId,userDetails,request);
@@ -64,7 +64,7 @@ public class NoticeController {
 
     //공지사항 삭제
     @DeleteMapping("/admin/notices/{noticeId}")
-    public ResponseEntity<GlobalResponse> noticeDelete(@PathVariable Long noticeId, @AuthenticationPrincipal UserDetailsImpl userDetails) {
+    public ResponseEntity<GlobalResponse> noticeDelete(@PathVariable Long noticeId, @AuthenticationPrincipal UserDetail userDetails) {
 
         noticeService.noticeDelete(noticeId,userDetails);
 

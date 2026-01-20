@@ -9,17 +9,18 @@ import com.example.lineofduty.domain.qna.dto.response.QnaInquiryResponse;
 import com.example.lineofduty.domain.qna.dto.response.QnaResisterResponse;
 import com.example.lineofduty.domain.qna.dto.response.QnaUpdateResponse;
 import com.example.lineofduty.domain.qna.service.QnaService;
-import com.example.lineofduty.domain.user.UserDetailsImpl;
+import com.example.lineofduty.domain.user.UserDetail;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/qna")
+@RequestMapping("/api/qnas")
 @RequiredArgsConstructor
 public class QnaController {
 
@@ -27,7 +28,7 @@ public class QnaController {
 
     // 질문 등록
     @PostMapping("/{userId}")
-    public ResponseEntity<GlobalResponse> qnaRegistrationApi(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody @Valid QnaResisterRequest request) {
+    public ResponseEntity<GlobalResponse> qnaRegistrationApi(@AuthenticationPrincipal UserDetail userDetails, @RequestBody @Valid QnaResisterRequest request) {
 
         QnaResisterResponse response = qnaService.qnaRegistration(userDetails,request);
 
@@ -57,7 +58,7 @@ public class QnaController {
 
     //질문 수정
     @PutMapping("/{qnaId}")
-    public ResponseEntity<GlobalResponse> qnaUpdateApi(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long qnaId,
+    public ResponseEntity<GlobalResponse> qnaUpdateApi(@AuthenticationPrincipal UserDetail userDetails, @PathVariable Long qnaId,
                                                        @RequestBody @Valid QnaUpdateRequest request) {
 
         QnaUpdateResponse response = qnaService.qnaUpdate(userDetails,qnaId,request);
@@ -67,7 +68,7 @@ public class QnaController {
 
     //질문 삭제
     @DeleteMapping("/{qnaId}")
-    public ResponseEntity<GlobalResponse> qnaDeleteApi(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Long qnaId) {
+    public ResponseEntity<GlobalResponse> qnaDeleteApi(@AuthenticationPrincipal UserDetail userDetails, @PathVariable Long qnaId) {
 
         qnaService.qnaDelete(userDetails,qnaId);
 

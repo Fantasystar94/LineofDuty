@@ -3,14 +3,14 @@ package com.example.lineofduty.domain.qna.service;
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.Role;
+import com.example.lineofduty.domain.qna.Qna;
 import com.example.lineofduty.domain.qna.repository.QnaRepository;
 import com.example.lineofduty.domain.qna.dto.request.QnaAdminAnswerRequest;
 import com.example.lineofduty.domain.qna.dto.request.QnaAdminAnswerUpdateRequest;
 import com.example.lineofduty.domain.qna.dto.response.QnaAdminAnswerResponse;
 import com.example.lineofduty.domain.qna.dto.response.QnaAdminAnswerUpdateResponse;
-import com.example.lineofduty.domain.user.UserDetailsImpl;
-import com.example.lineofduty.domain.qna.Qna;
-import com.example.lineofduty.entity.User;
+import com.example.lineofduty.domain.user.UserDetail;
+import com.example.lineofduty.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,7 +25,7 @@ public class QnaAdminService {
 
     // 질문 관리자 답변 등록
     @Transactional
-    public QnaAdminAnswerResponse qnaAdminAnswer(Long qnaId,UserDetailsImpl userDetails, QnaAdminAnswerRequest request)  {
+    public QnaAdminAnswerResponse qnaAdminAnswer(Long qnaId, UserDetail userDetails, QnaAdminAnswerRequest request)  {
 
         userPermissionCheck(userDetails);
 
@@ -39,7 +39,7 @@ public class QnaAdminService {
 
     // 질문 관리자 답변 수정
     @Transactional
-    public QnaAdminAnswerUpdateResponse qnaAdminAnswerUpdate(Long qnaId,UserDetailsImpl userDetails, QnaAdminAnswerUpdateRequest request) {
+    public QnaAdminAnswerUpdateResponse qnaAdminAnswerUpdate(Long qnaId,UserDetail userDetails, QnaAdminAnswerUpdateRequest request) {
 
         userPermissionCheck(userDetails);
 
@@ -52,7 +52,7 @@ public class QnaAdminService {
     }
 
     //유저 권한,탈퇴 체크
-    private User userPermissionCheck(UserDetailsImpl userDetails) {
+    private User userPermissionCheck(UserDetail userDetails) {
 
         User user = userDetails.getUser();
 
