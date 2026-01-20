@@ -9,15 +9,18 @@ import com.example.lineofduty.domain.qna.dto.response.QnaInquiryResponse;
 import com.example.lineofduty.domain.qna.dto.response.QnaResisterResponse;
 import com.example.lineofduty.domain.qna.dto.response.QnaUpdateResponse;
 import com.example.lineofduty.domain.qna.service.QnaService;
+import com.example.lineofduty.domain.user.UserDetail;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 //import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/qna")
+@RequestMapping("/api/qnas")
 @RequiredArgsConstructor
 public class QnaController {
 
@@ -25,12 +28,9 @@ public class QnaController {
 
     // 질문 등록
     @PostMapping("/{userId}")
-    public ResponseEntity<GlobalResponse> qnaRegistrationApi(
-            @PathVariable Long userId,
-            @RequestBody @Valid QnaResisterRequest request
-    ) {
+    public ResponseEntity<GlobalResponse> qnaRegistrationApi(@AuthenticationPrincipal UserDetail userDetails, @RequestBody @Valid QnaResisterRequest request) {
 
-        QnaResisterResponse response = qnaService.qnaRegistration(userId,request);
+        QnaResisterResponse response = qnaService.qnaRegistration(userDetails,request);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(GlobalResponse.success(SuccessMessage.QNA_CREATE_SUCCESS, response));
     }
@@ -47,35 +47,33 @@ public class QnaController {
 
     //질문 목록 조회
     @GetMapping
-    public ResponseEntity<GlobalResponse> qnaInquiryListApi(
-            @RequestParam(value = "page", defaultValue = "0") int page,
-            @RequestParam(value = "size", defaultValue = "10") int size,
-            @RequestParam(value = "sort", defaultValue = "id,desc") String[] sort
-    ) {
-        QnaInquiryListResponse response = qnaService.qnaInquiryListResponse(page, size, sort);
+    public ResponseEntity<GlobalResponse> qnaInquiryListApi(@RequestParam(value = "page", defaultValue = "0") int page,
+                                                            @RequestParam(value = "size", defaultValue = "10") int size,
+                                                            @RequestParam(value = "sort", defaultValue = "id,desc") String sort,
+                                                            @RequestParam(required = false) String keyword) {
+
+        QnaInquiryListResponse response = qnaService.qnaInquiryListResponse(page, size, sort,keyword);
 
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.QNA_READ_SUCCESS, response));
     }
 
     //질문 수정
     @PutMapping("/{qnaId}")
-    public ResponseEntity<GlobalResponse> qnaUpdateApi(
-            @PathVariable Long qnaId,
-            @RequestBody @Valid QnaUpdateRequest request
-    ) {
-        QnaUpdateResponse response = qnaService.qnaUpdate(qnaId,request);
+    public ResponseEntity<GlobalResponse> qnaUpdateApi(@AuthenticationPrincipal UserDetail userDetails, @PathVariable Long qnaId,
+                                                       @RequestBody @Valid QnaUpdateRequest request) {
+
+        QnaUpdateResponse response = qnaService.qnaUpdate(userDetails,qnaId,request);
 
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.QNA_UPDATE_SUCCESS, response));
     }
 
     //질문 삭제
     @DeleteMapping("/{qnaId}")
-    public ResponseEntity<GlobalResponse> qnaDeleteApi(@PathVariable Long qnaId) {
+    public ResponseEntity<GlobalResponse> qnaDeleteApi(@AuthenticationPrincipal UserDetail userDetails, @PathVariable Long qnaId) {
 
-        qnaService.qnaDelete(qnaId);
+        qnaService.qnaDelete(userDetails,qnaId);
 
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.QNA_DELETE_SUCCESS, null));
-
     }
 
 }

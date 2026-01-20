@@ -1,20 +1,21 @@
 package com.example.lineofduty.entity;
 
 import com.example.lineofduty.common.exception.ValidationMessage;
-import com.example.lineofduty.domain.user.User;
+import com.example.lineofduty.domain.user.entity.User;
+import com.example.lineofduty.entity.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
-@Table(name = "qna")
+@Table(name = "qnas")
 @Getter
-@Setter
 @NoArgsConstructor
 @AllArgsConstructor
+@JsonPropertyOrder({"id", "userId", "title", "questionContent", "askContent", "createdAt", "modifiedAt"})
 public class Qna extends BaseEntity {
 
     @Id

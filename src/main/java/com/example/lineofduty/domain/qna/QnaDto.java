@@ -1,10 +1,8 @@
-package com.example.lineofduty.domain.qna.dto;
+package com.example.lineofduty.domain.qna;
 
-import com.example.lineofduty.entity.Qna;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -15,8 +13,8 @@ public class QnaDto {
     private String title;
     private String questionContent;
     private String askContent;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private String createdAt;
+    private String modifiedAt;
 
     public static QnaDto from(Qna qna) {
         return new QnaDto(
@@ -25,8 +23,7 @@ public class QnaDto {
                 qna.getTitle(),
                 qna.getQuestionContent(),
                 qna.getAskContent(),
-                qna.getCreatedAt(),
-                qna.getModifiedAt()
-        );
+                qna.getCreatedAt().toString(),
+                qna.getModifiedAt().toString());
     }
 }

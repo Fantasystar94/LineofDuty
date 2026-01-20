@@ -1,5 +1,5 @@
 @baseUrl = http://localhost:8080
-@accessToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwidXNlclJvbGUiOiJST0xFX0FETUlOIiwiaWF0IjoxNzY4Nzg4MDQxLCJleHAiOjE3Njg3OTE2NDF9.hQ0pm_LRqA2kAyf_PVRFyR2cDawy0vqscs_YadibOSk
+@accessToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwidXNlclJvbGUiOiJST0xFX1VTRVIiLCJpYXQiOjE3Njg4OTYyMjksImV4cCI6MTc2ODg5OTgyOX0.ATtWGxxhwU1x6L5jJVyzc4kDIOGNWzpAQtUyVAUwzTE
 
 ### SIGNIN
 POST {{baseUrl}}/api/auth/signup
