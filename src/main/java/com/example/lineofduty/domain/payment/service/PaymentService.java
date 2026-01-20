@@ -6,11 +6,11 @@ import com.example.lineofduty.domain.order.repository.OrderRepository;
 import com.example.lineofduty.domain.payment.dto.PaymentCreateRequest;
 import com.example.lineofduty.domain.payment.dto.PaymentCreateResponse;
 import com.example.lineofduty.domain.payment.repository.PaymentRepository;
-import com.example.lineofduty.domain.order.Order;
 import com.example.lineofduty.domain.orderItem.OrderItem;
 import com.example.lineofduty.domain.payment.Payment;
 
 import com.example.lineofduty.domain.product.Product;
+import com.example.lineofduty.entity.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

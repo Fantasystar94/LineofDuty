@@ -1,7 +1,7 @@
 package com.example.lineofduty.domain.user.dto;
 
+import com.example.lineofduty.domain.enlistmentApplication.EnlistmentApplication;
 import com.example.lineofduty.domain.user.User;
-import com.example.lineofduty.entity.EnlistmentApplication;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import java.time.LocalDateTime;

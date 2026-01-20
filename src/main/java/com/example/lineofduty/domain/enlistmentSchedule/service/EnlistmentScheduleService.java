@@ -15,8 +15,8 @@ import com.example.lineofduty.domain.enlistmentSchedule.model.response.Enlistmen
 import com.example.lineofduty.domain.enlistmentSchedule.model.response.EnlistmentScheduleReadResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.QueryEnlistmentScheduleRepository;
+import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.domain.user.entity.User;
 import com.example.lineofduty.domain.deferment.Deferment;
 import com.example.lineofduty.domain.enlistmentApplication.EnlistmentApplication;
 import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentSchedule;
