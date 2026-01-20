@@ -4,7 +4,9 @@ import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import com.example.lineofduty.common.model.enums.DefermentStatus;
 import com.example.lineofduty.common.model.enums.Role;
+import com.example.lineofduty.domain.deferment.model.request.DefermentPatchRequest;
 import com.example.lineofduty.domain.deferment.model.request.DefermentsPostRequest;
+import com.example.lineofduty.domain.deferment.model.response.BulkDefermentProcessResponse;
 import com.example.lineofduty.domain.deferment.model.response.DefermentsReadResponse;
 import com.example.lineofduty.domain.deferment.repository.DefermentRepository;
 import com.example.lineofduty.domain.enlistmentApplication.model.response.EnlistmentApplicationReadResponse;
@@ -37,12 +39,12 @@ public class EnlistmentScheduleService {
     private final EnlistmentApplicationRepository applicationRepository;
     private final QueryEnlistmentApplicationRepository queryEnlistmentApplicationRepository;
     private final UserRepository userRepository;
-    private final LocalDate today = LocalDate.now();
+    LocalDate today = LocalDate.now();
     private final DefermentRepository defermentRepository;
     /*
      * 입영 가능 일정 조회
      * */
-    @Transactional
+    @Transactional(readOnly = true)
     public List<EnlistmentScheduleReadResponse> getEnlistmentList() {
 
         return queryscheduleRepository.getEnlistmentListSortBy(LocalDate.now());
@@ -52,7 +54,7 @@ public class EnlistmentScheduleService {
     /*
      * 입영 가능 일정 조회 - 단건
      * */
-    @Transactional
+    @Transactional(readOnly = true)
     public EnlistmentScheduleReadResponse getEnlistment(Long scheduleId) {
 
         EnlistmentSchedule schedule = scheduleValidate(scheduleId);
@@ -102,7 +104,7 @@ public class EnlistmentScheduleService {
     /*
      * 입영 신청 목록 조회 - v1 / Authentication 없음
      * */
-    @Transactional
+    @Transactional(readOnly = true)
     public List<EnlistmentApplicationReadResponse> getApplicationList() {
 
         return queryEnlistmentApplicationRepository.getApplicationListWithEnlistmentDate();
@@ -112,7 +114,7 @@ public class EnlistmentScheduleService {
     /*
      * 입영 신청 단건 조회 - v1 / Authentication 없음
      * */
-    @Transactional
+    @Transactional(readOnly = true)
     public EnlistmentApplicationReadResponse getApplication(Long scheduleId) {
         EnlistmentApplication application = applicationRepository.findById(scheduleId).orElseThrow(()->new CustomException(ErrorMessage.SCHEDULE_NOT_FOUND));
 
@@ -211,10 +213,8 @@ public class EnlistmentScheduleService {
     /*
      * 입영 연기 다건조회 - v1 / Authentication 없음
      * */
-    @Transactional
-    public Page<DefermentsReadResponse> getDefermentList(Long userId, Pageable pageable) {
-
-        userValidate(userId);
+    @Transactional(readOnly = true)
+    public Page<DefermentsReadResponse> getDefermentList(Pageable pageable) {
 
         Page<Deferment> page = defermentRepository.findAll(pageable);
 
@@ -224,7 +224,7 @@ public class EnlistmentScheduleService {
     /*
      * 입영 연기 단건조회 - v1 / Authentication 없음
      * */
-    @Transactional
+    @Transactional(readOnly = true)
     public DefermentsReadResponse getDeferment(Long userId, Long defermentId) {
 
         Deferment deferment = defermentRepository
@@ -240,14 +240,10 @@ public class EnlistmentScheduleService {
      * 관리자 전용
      */
     @Transactional
-    public EnlistmentApplicationReadResponse processDeferment(
-            Long adminId,
-            Long applicationId,
+    public EnlistmentApplicationReadResponse processDeferment(Long applicationId,
             DefermentStatus decisionStatus   // APPROVED / REJECTED
     ) {
 
-        // 0. 관리자 검증 (v1 스타일)
-        adminValidate(adminId);
 
         // 1. 신청 조회
         EnlistmentApplication application = applicationRepository.findById(applicationId)
@@ -275,14 +271,48 @@ public class EnlistmentScheduleService {
         return EnlistmentApplicationReadResponse.from(application);
     }
 
+    @Transactional(readOnly = true)
+    public Page<EnlistmentScheduleReadResponse> searchEnlistment(LocalDate startDate, LocalDate endDate, Pageable pageable) {
+
+        return queryscheduleRepository.searchEnlistment(startDate, endDate, pageable);
+
+    }
+
+    @Transactional
+    public BulkDefermentProcessResponse processDefermentBulk(DefermentStatus decisionStatus) {
+
+        // 1. 신청 조회
+        List<EnlistmentApplication> lists = applicationRepository
+                .findEnlistmentApplicationByApplicationStatus(ApplicationStatus.REQUESTED);
+
+        if (lists.isEmpty()) {  //하나도 없으면 0, 0 으로 반환
+            return new BulkDefermentProcessResponse(0, 0);
+        }
+        //완료된 카운트 기본값
+        int processedCount = 0;
+
+        for (EnlistmentApplication list : lists) {
+            Deferment deferment = defermentRepository.findByApplicationId(list.getId())
+                    .orElseThrow(() -> new CustomException(ErrorMessage.DEFERMENT_NOT_FOUND));
+
+            if (decisionStatus == DefermentStatus.APPROVED) {
+                if (!(list.getApplicationStatus() == ApplicationStatus.DEFERRED)) {
+                    list.changeStatus(ApplicationStatus.DEFERRED);
+                    deferment.approve();
+                }
+            } else {
+                deferment.reject();
+            }
+            processedCount++;
+        }
+        return new BulkDefermentProcessResponse(lists.size(), processedCount);
+    }
+
 
     private User userValidate(Long userId) {
         return userRepository.findById(userId).orElseThrow(()-> new CustomException(ErrorMessage.USER_NOT_FOUND));
     }
 
-    private User adminValidate(Long adminId) {
-        return userRepository.findByIdAndRole(adminId, Role.ROLE_ADMIN).orElseThrow(()-> new CustomException(ErrorMessage.USER_NOT_FOUND));
-    }
 
     private EnlistmentSchedule scheduleValidate(Long scheduleId) {
         return scheduleRepository.findById(scheduleId).orElseThrow(()-> new CustomException(ErrorMessage.SCHEDULE_NOT_FOUND));

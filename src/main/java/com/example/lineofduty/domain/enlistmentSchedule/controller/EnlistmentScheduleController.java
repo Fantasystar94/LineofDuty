@@ -9,10 +9,14 @@ import com.example.lineofduty.domain.user.UserDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDate;
+
 import static com.example.lineofduty.common.model.enums.SuccessMessage.*;
 
 @RestController
@@ -50,8 +54,7 @@ public class EnlistmentScheduleController {
     /*
      * 입영 신청 목록 조회 - v1
      * */
-    @PreAuthorize("hasRole('ADMIN')")
-    @GetMapping("admin/pending")
+    @GetMapping("/pending")
     public ResponseEntity<GlobalResponse> getApplicationList() {
         return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_LIST_SUCCESS, enlistmentScheduleService.getApplicationList()));
     }
@@ -59,9 +62,9 @@ public class EnlistmentScheduleController {
     /*
      * 입영 신청 단건 조회 - v1
      * */
-    @GetMapping("/pending/{applicationId}")
-    public ResponseEntity<GlobalResponse> getApplication(@PathVariable Long applicationId) {
-        return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_LIST_SUCCESS, enlistmentScheduleService.getApplication(applicationId)));
+    @GetMapping("/pending/{scheduleId}")
+    public ResponseEntity<GlobalResponse> getApplication(@PathVariable Long scheduleId) {
+        return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_LIST_SUCCESS, enlistmentScheduleService.getApplication(scheduleId)));
     }
 
     /*
@@ -76,7 +79,7 @@ public class EnlistmentScheduleController {
      * 입영 신청 승인 - v1 / admin 전용
      * */
     @PreAuthorize("hasRole('ADMIN')")
-    @PatchMapping("/{applicationId}/approve")
+    @PatchMapping("/admin/{applicationId}/approve")
     public ResponseEntity<GlobalResponse> approveApplication(@AuthenticationPrincipal UserDetail userDetails, @PathVariable Long applicationId) {
         return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_APPROVE_SUCCESS, enlistmentScheduleService.approveApplication(userDetails.getUser().getId(), applicationId)));
     }
@@ -94,8 +97,8 @@ public class EnlistmentScheduleController {
      * */
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/deferments")
-    public ResponseEntity<GlobalResponse> getDefermentList(@AuthenticationPrincipal UserDetail userDetails, Pageable pageable) {
-        return ResponseEntity.ok(GlobalResponse.success(DEFERMENTS_GET_SUCCESS, enlistmentScheduleService.getDefermentList(userDetails.getUser().getId(), pageable)));
+    public ResponseEntity<GlobalResponse> getDefermentList(Pageable pageable) {
+        return ResponseEntity.ok(GlobalResponse.success(DEFERMENTS_GET_SUCCESS, enlistmentScheduleService.getDefermentList(pageable)));
     }
 
     /*
@@ -108,22 +111,46 @@ public class EnlistmentScheduleController {
 
     /*
      * 입영 연기 요청 승인 / 반려 - v1
-     * Authentication 없음
+     *
      */
     @PreAuthorize("hasRole('ADMIN')")
-    @PatchMapping("/deferments/{applicationId}")
+    @PatchMapping("admin/deferments/{applicationId}")
     public ResponseEntity<GlobalResponse> processDeferment(
-            @AuthenticationPrincipal UserDetail userDetails,
             @PathVariable Long applicationId,
             @RequestBody DefermentPatchRequest request
     ) {
 
         return ResponseEntity.ok(GlobalResponse.success(DEFERMENTS_PROCEED,
-                enlistmentScheduleService.processDeferment(userDetails.getUser().getId(),
+                enlistmentScheduleService.processDeferment(
                         applicationId,
                         request.getDecisionStatus())
                 )
         );
     }
 
+    /*
+     * 입영 연기 요청 일괄 승인 / 반려 - v1
+     *
+     */
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("admin/deferments/bulk")
+    public ResponseEntity<GlobalResponse> processDefermentBulk(@RequestBody DefermentPatchRequest request) {
+
+        return ResponseEntity.ok(GlobalResponse.success(DEFERMENTS_PROCEED,
+                enlistmentScheduleService.processDefermentBulk(request.getDecisionStatus())
+                )
+        );
+    }
+
+    /*
+     * 입영 일정 조회 기능 startDate ~ end Date
+     *
+     */
+    @GetMapping("/search")
+    public ResponseEntity<GlobalResponse> searchEnlistment(@RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate startDate,
+                                                           @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
+                                                           Pageable pageable
+    ) {
+        return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_LIST_SUCCESS, enlistmentScheduleService.searchEnlistment(startDate, endDate, pageable)));
+    }
 }
