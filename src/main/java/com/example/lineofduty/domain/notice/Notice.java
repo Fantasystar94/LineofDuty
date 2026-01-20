@@ -1,17 +1,16 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.notice;
 
 import com.example.lineofduty.common.exception.ValidationMessage;
 import com.example.lineofduty.domain.user.entity.User;
+import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 
 @Entity
 @Table(name = "notices")
 @Getter
-@Setter
 @NoArgsConstructor
 public class Notice extends BaseEntity {
 
@@ -35,7 +34,6 @@ public class Notice extends BaseEntity {
         this.title = title;
         this.content = content;
         this.author = user;
-
     }
 
     public void update(@NotBlank(message = ValidationMessage.NOTICE_TITLE_CONTENT_NOT_BLANK) String title, @NotBlank(message = ValidationMessage.NOTICE_TITLE_CONTENT_NOT_BLANK) String content) {

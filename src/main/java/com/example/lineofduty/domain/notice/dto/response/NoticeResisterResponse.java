@@ -1,10 +1,11 @@
 package com.example.lineofduty.domain.notice.dto.response;
 
-import com.example.lineofduty.domain.notice.dto.NoticeDto;
-import com.example.lineofduty.entity.Notice;
+import com.example.lineofduty.domain.notice.Notice;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
+import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
@@ -14,15 +15,16 @@ public class NoticeResisterResponse {
     private final Long id;
     private final String title;
     private final String content;
-    private final String createdAt;
-    private final String modifiedAt;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime modifiedAt;
 
-
-    public NoticeResisterResponse(NoticeDto from) {
-        this.id = from.getId();
-        this.title = from.getTitle();
-        this.content = from.getContent();
-        this.createdAt = from.getCreatedAt().toString();
-        this.modifiedAt = from.getModifiedAt().toString();
+    public static NoticeResisterResponse from(Notice notice) {
+        return new NoticeResisterResponse(
+                notice.getId(),
+                notice.getTitle(),
+                notice.getContent(),
+                notice.getCreatedAt(),
+                notice.getModifiedAt()
+        );
     }
 }

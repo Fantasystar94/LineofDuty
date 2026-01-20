@@ -7,12 +7,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.ArrayList;
 import java.util.Collection;
 
 @Getter
 @RequiredArgsConstructor
-public class UserDetail implements UserDetails {
+public class  UserDetail implements UserDetails {
 
     private final User user;
 
