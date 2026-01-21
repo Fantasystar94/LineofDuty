@@ -54,6 +54,11 @@ public class SecurityConfig {
 
                         // 관리자 전용 페이지
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        //swagger-ui 추가
+                        .requestMatchers(
+                                "/swagger-ui/**",
+                                "/v3/api-docs/**"
+                        ).permitAll()
 
                         // 그 외 요청은 로그인 된 사람만 가능
                         .anyRequest().authenticated()

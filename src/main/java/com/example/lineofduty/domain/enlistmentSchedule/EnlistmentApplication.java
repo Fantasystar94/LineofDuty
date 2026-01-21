@@ -8,7 +8,14 @@ import lombok.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "enlistment_applications")
+@Table(name = "enlistment_applications",
+    indexes = {
+            @Index(
+                    name = "idx_app_status",
+                    columnList = "application_status, schedule_id"
+            )
+    }
+)
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class EnlistmentApplication extends BaseEntity {
