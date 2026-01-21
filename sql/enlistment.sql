@@ -1,42 +1,45 @@
 #
-# DELIMITER $$
-#
-# CREATE PROCEDURE insert_2026_tuesday_schedules()
-# BEGIN
-#     DECLARE year INT DEFAULT 2026;
-#     DECLARE month INT DEFAULT 1;
-#     DECLARE i INT;
-#     DECLARE first_tuesday DATE;
-#     DECLARE enlistment_date DATE;
-#
-#     WHILE month <= 12 DO
-#
-#             SET first_tuesday =
-#                     DATE_ADD(
-#                             DATE(CONCAT(year, '-', LPAD(month, 2, '0'), '-01')),
-#                             INTERVAL ( (9 - DAYOFWEEK(DATE(CONCAT(year, '-', LPAD(month, 2, '0'), '-01')))) % 7 ) DAY
-#                     );
-#
-#             SET i = 0;
-#             WHILE i < 4 DO
-#                     SET enlistment_date = DATE_ADD(first_tuesday, INTERVAL i WEEK);
-#
-#                     INSERT INTO enlistment_schedules
-#                     (enlistment_date, capacity, remaining_slots, created_at, modified_at)
-#                     VALUES
-#                         (enlistment_date, 100, 100, NOW(), NOW());
-#
-#                     SET i = i + 1;
-#                 END WHILE;
-#
-#             SET month = month + 1;
-#         END WHILE;
-#
-# END$$
-#
-# DELIMITER ;
+ DELIMITER $$
+
+ CREATE PROCEDURE insert_2030_tuesday_schedules()
+ BEGIN
+     DECLARE year INT DEFAULT 2030;
+     DECLARE month INT DEFAULT 1;
+     DECLARE i INT;
+     DECLARE first_tuesday DATE;
+     DECLARE enlistment_date DATE;
+
+   WHILE month <= 12 DO
+
+           SET first_tuesday =
+                     DATE_ADD(
+                          DATE(CONCAT(year, '-', LPAD(month, 2, '0'), '-01')),
+                         INTERVAL ( (9 - DAYOFWEEK(DATE(CONCAT(year, '-', LPAD(month, 2, '0'), '-01')))) % 7 ) DAY
+                   );
+
+            SET i = 0;
+            WHILE i < 4 DO
+                    SET enlistment_date = DATE_ADD(first_tuesday, INTERVAL i WEEK);
+                    INSERT INTO enlistment_schedules
+                        (enlistment_date, capacity, remaining_slots, created_at, modified_at)
+                     VALUES
+                         (enlistment_date, 100, 100, NOW(), NOW());
+
+                     SET i = i + 1;
+                END WHILE;
+
+          SET month = month + 1;
+       END WHILE;
+
+ END$$
+
+ DELIMITER ;
 
 CALL insert_2026_tuesday_schedules();
+CALL insert_2027_tuesday_schedules();
+CALL insert_2028_tuesday_schedules();
+CALL insert_2029_tuesday_schedules();
+CALL insert_2030_tuesday_schedules();
 INSERT INTO enlistment_applications
 (application_id, application_status, user_id, schedule_id,enlistment_date, created_at, modified_at)
 VALUES
@@ -66,3 +69,9 @@ VALUES
     (11, 10, 10, '가족 사유', 'ILLNESS', '2026-12-01', NOW(), NOW());
 
 
+select count(*) from enlistment_schedules;
+
+CREATE INDEX idx_schedule_date
+    ON enlistment_schedules(enlistment_date);
+
+DROP INDEX idx_schedule_date ON enlistment_schedules;
