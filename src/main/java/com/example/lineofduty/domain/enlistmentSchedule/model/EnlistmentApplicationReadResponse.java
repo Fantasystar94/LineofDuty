@@ -1,15 +1,17 @@
-package com.example.lineofduty.domain.enlistmentApplication.model.response;
+package com.example.lineofduty.domain.enlistmentSchedule.model;
 
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
-import com.example.lineofduty.domain.enlistmentApplication.EnlistmentApplication;
+import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
+@NoArgsConstructor
 public class EnlistmentApplicationReadResponse {
     private Long applicationId;
     private LocalDate enlistmentDate;

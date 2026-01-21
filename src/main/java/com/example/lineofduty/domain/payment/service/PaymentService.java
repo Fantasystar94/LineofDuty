@@ -56,10 +56,10 @@ public class PaymentService {
             product.updateStock(product.getStock() - orderItem.getQuantity());
         }
 
-        // 결제 기록(Payment) 남기고 결제 끝난 주문서는 삭제해
+        // 결제 기록(Payment) 남기고 결제 끝난 주문서는 사용 종료 처리
         Payment payment = new Payment(order);
         paymentRepository.save(payment);
-        orderRepository.delete(order);
+        order.updateStatus(false);
         return PaymentCreateResponse.from(payment);
     }
 }

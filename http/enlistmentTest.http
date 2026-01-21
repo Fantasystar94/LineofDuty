@@ -1,15 +1,15 @@
 @baseUrl = http://localhost:8080
-@accessToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwidXNlclJvbGUiOiJST0xFX0FETUlOIiwiaWF0IjoxNzY4Nzg4MDQxLCJleHAiOjE3Njg3OTE2NDF9.hQ0pm_LRqA2kAyf_PVRFyR2cDawy0vqscs_YadibOSk
+#@accessToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwidXNlclJvbGUiOiJST0xFX0FETUlOIiwiaWF0IjoxNzY4Nzg4MDQxLCJleHAiOjE3Njg3OTE2NDF9.hQ0pm_LRqA2kAyf_PVRFyR2cDawy0vqscs_YadibOSk
 
 ### SIGNIN
 POST {{baseUrl}}/api/auth/signup
 Content-Type: application/json
 
 {
-  "email": "testuser3332@example.com",
+  "email": "testuser32333332@example.com",
   "password": "Test1234!",
   "username": "test3",
-  "residentNumber": "900101-1234569",
+  "residentNumber": "910101-1234169",
   "admin": false
 }
 
@@ -19,9 +19,13 @@ POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "user@example.com",
-  "password": "1234!"
+  "email": "testuser32333332@example.com",
+  "password": "Test1234!"
 }
+
+> {%
+    client.global.set("accessToken", response.body.data.token);
+%}
 
 ### GET ENLISTMENT LIST
 GET {{baseUrl}}/api/enlistment
@@ -36,11 +40,11 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "scheduleId": 4
+  "scheduleId": 5
 }
 
 ### GET APPLICATION LIST
-GET {{baseUrl}}/api/enlistment/admin/pending
+GET {{baseUrl}}/api/enlistment/pending
 Authorization: Bearer {{accessToken}}
 
 ### GET APPLICATION DETAIL
@@ -80,10 +84,39 @@ GET {{baseUrl}}/api/enlistment/deferments/1
 Authorization: Bearer {{accessToken}}
 
 ### PATCH DEFERMENT APPROVE/REJECT
-PATCH {{baseUrl}}/api/enlistment/deferments/1
+PATCH {{baseUrl}}/api/enlistment/admin/deferments/5
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
- "decisionStatus": "REJECTED"
+ "decisionStatus": "APPROVED"
 }
+
+### PATCH DEFERMENTBULK APPROVE/REJECT
+PATCH {{baseUrl}}/api/enlistment/admin/deferments/bulk
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+ "decisionStatus": "APPROVED"
+}
+
+### GET DASHBOARDSUMMARY
+GET {{baseUrl}}/api/admin/dashboard/summary
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+### GET DASHBOARDENLISTMENTSUMMARY
+GET {{baseUrl}}/api/admin/dashboard/enlistment-schedule
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+### GET DASHBOARDENLISTMENTSUMMARY
+GET {{baseUrl}}/api/admin/dashboard/pending
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+### GET DASHBOARDENLISTMENTSUMMARY
+GET {{baseUrl}}/api/admin/dashboard/deferments
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json

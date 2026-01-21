@@ -29,7 +29,7 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.CREATED).body(GlobalResponse.success(SuccessMessage.ORDER_CREATE_SUCCESS, response));
     }
 
-    // 주문 목록 조회
+    // 주문 조회
     @GetMapping("/{orderId}")
     public ResponseEntity<GlobalResponse> getOrder(@PathVariable Long orderId) {
 

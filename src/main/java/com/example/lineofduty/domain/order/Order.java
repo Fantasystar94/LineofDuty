@@ -30,6 +30,10 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
+    // (status == true) => 사용 중, (status == false) => 사용됨(soft-delete)
+    @Column(name = "status", nullable = false)
+    private boolean status = true;
+
     public Order(User user, Long totalPrice, List<OrderItem> orderItems) {
         this.user = user;
         this.totalPrice = totalPrice;
@@ -44,6 +48,10 @@ public class Order extends BaseEntity {
 
     public void updateTotalPrice(Long changedTotalPrice) {
         this.totalPrice = changedTotalPrice;
+    }
+
+    public void updateStatus(boolean status) {
+        this.status = status;
     }
 
 }
