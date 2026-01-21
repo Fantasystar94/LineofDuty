@@ -3,6 +3,7 @@ import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import com.example.lineofduty.common.model.enums.DefermentStatus;
+import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
 import com.example.lineofduty.domain.enlistmentSchedule.model.DefermentsPostRequest;
 import com.example.lineofduty.domain.enlistmentSchedule.model.BulkDefermentProcessResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.model.DefermentsReadResponse;
@@ -18,7 +19,6 @@ import com.example.lineofduty.domain.enlistmentSchedule.repository.QueryEnlistme
 import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.domain.enlistmentSchedule.Deferment;
-import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
 import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentSchedule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

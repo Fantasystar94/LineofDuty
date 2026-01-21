@@ -17,7 +17,7 @@ import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentSchedule.enlistmentSchedule;
 import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentApplication.enlistmentApplication;
-import static com.example.lineofduty.domain.user.entity.QUser.user;
+import static com.example.lineofduty.domain.user.QUser.user;
 import static com.example.lineofduty.domain.enlistmentSchedule.QDeferment.deferment;
 
 @Repository
