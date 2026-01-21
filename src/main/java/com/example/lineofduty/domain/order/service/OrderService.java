@@ -38,10 +38,10 @@ public class OrderService {
 
         /*
          만들어져있는 주문서가 있는지 확인해
-         1. 주문서가 있다면 그 주문서를 사용해
+         1. 사용 가능한 주문서가 있다면 그 주문서를 사용해
          2. 주문서가 없다면 주문서를 새로 만들어
         */
-        Order order = orderRepository.findOrderByUserId(userId).orElseGet(
+        Order order = orderRepository.findOrderByUserIdAndStatusTrue(userId).orElseGet(
                 () -> createNewOrder(userId)    // 빈 주문서 생성
         );
 
@@ -82,7 +82,7 @@ public class OrderService {
     public OrderUpdateResponse updateOrderService(Long orderId, Long orderItemId, OrderUpdateRequest request) {
 
         // 주문서를 찾아
-        Order order = orderRepository.findById(orderId).orElseThrow(
+        Order order = orderRepository.findByIdAndStatusTrue(orderId).orElseThrow(
                 () -> new CustomException(ErrorMessage.ORDER_NOT_FOUND)
         );
 
