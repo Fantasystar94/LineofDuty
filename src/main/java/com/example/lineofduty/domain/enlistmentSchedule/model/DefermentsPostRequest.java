@@ -1,4 +1,4 @@
-package com.example.lineofduty.domain.deferment.model.request;
+package com.example.lineofduty.domain.enlistmentSchedule.model;
 
 import com.example.lineofduty.common.model.enums.DefermentStatus;
 import lombok.AllArgsConstructor;

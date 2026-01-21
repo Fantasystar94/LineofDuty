@@ -1,6 +1,5 @@
 package com.example.lineofduty.domain.enlistmentSchedule.repository;
-import com.example.lineofduty.domain.enlistmentApplication.model.response.EnlistmentApplicationReadResponse;
-import com.example.lineofduty.domain.enlistmentSchedule.model.response.EnlistmentScheduleReadResponse;
+import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentScheduleReadResponse;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
