@@ -21,8 +21,3 @@ spring:
 
 # AES-256 암호화 키 - 주민번호 암호화
 AES_SECRET_KEY: "9f2a7d3c8e1b5a6f4d0c9e7b2a1f8c6e"
-
-## error - info - debug 순서로 되어잇음
-logging:
-  level:
-    root: info
