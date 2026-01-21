@@ -1,7 +1,7 @@
 package com.example.lineofduty.domain.order.dto;
 
-import com.example.lineofduty.domain.order.Order;
 import com.example.lineofduty.domain.orderItem.OrderItem;
+import com.example.lineofduty.domain.order.Order;
 import lombok.Getter;
 
 import java.time.LocalDateTime;

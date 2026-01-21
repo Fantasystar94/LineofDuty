@@ -37,11 +37,13 @@ public enum ErrorMessage {
     ACCESS_DENIED(HttpStatus.UNAUTHORIZED, "접근 권한이 없습니다."),
     ADMIN_PERMISSION_REQUIRED(HttpStatus.UNAUTHORIZED, "관리자 권한이 필요합니다."),
     INVALID_DEFERMENT_STATUS(HttpStatus.UNAUTHORIZED, "없는 연기 상태 입니다."),
+    PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
 
     /* --- 403 Forbidden --- */
     // 인가 실패 (권한 부족 - 작성자가 아님 등)
     NO_MODIFY_PERMISSION(HttpStatus.FORBIDDEN, "수정 권한이 없습니다."),
     NO_DELETE_PERMISSION(HttpStatus.FORBIDDEN, "삭제 권한이 없습니다."),
+    USER_WITHDRAWN(HttpStatus.FORBIDDEN, "탈퇴한 회원입니다."),
 
 
     /* --- 404 Not Found --- */
@@ -54,13 +56,14 @@ public enum ErrorMessage {
     SCHEDULE_NOT_FOUND(HttpStatus.NOT_FOUND, "입영 일정이 존재하지 않습니다."),
     NOTICE_NOT_FOUND(HttpStatus.NOT_FOUND, "공지를 찾을 수 없습니다."),
     DEFERMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "연기 일정을 찾을 수 없습니다"),
-    USER_DELETED_NOT_FOUND(HttpStatus.NOT_FOUND, "탈퇴한 사용자입니다."),
+    USER_DELETED_NOT_FOUND(HttpStatus.NOT_FOUND, "이미 탈퇴한 사용자입니다."),
 
 
 
     /* --- 409 Conflict --- */
     // 데이터 충돌
     DUPLICATE_EMAIL(HttpStatus.CONFLICT, "이미 존재하는 이메일입니다."),
+    DUPLICATE_RESIDENT_NUMBER(HttpStatus.CONFLICT, "이미 등록된 주민등록번호입니다."),
     ALREADY_PAID_ORDER(HttpStatus.CONFLICT, "이미 결제된 주문입니다."),
     DUPLICATE_SCHEDULE(HttpStatus.CONFLICT, "이미 신청된 유저입니다"),
     INVALID_APPLICATION_STATUS(HttpStatus.CONFLICT,"승인 할 수 없습니다");

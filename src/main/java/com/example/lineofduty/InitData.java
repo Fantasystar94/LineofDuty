@@ -3,12 +3,12 @@ import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import com.example.lineofduty.common.model.enums.Role;
-import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentSchedule;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository;
-import com.example.lineofduty.domain.product.Product;
 import com.example.lineofduty.domain.product.repository.ProductRepository;
-import com.example.lineofduty.domain.user.entity.User;
 import com.example.lineofduty.domain.user.repository.UserRepository;
+import com.example.lineofduty.entity.EnlistmentSchedule;
+import com.example.lineofduty.entity.Product;
+import com.example.lineofduty.entity.User;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -74,36 +74,35 @@ public class InitData {
             for (int i = 0; i < 4; i++) {
                 LocalDate enlistmentDate = firstTuesday.plusWeeks(i);
 
-                EnlistmentSchedule schedule = new EnlistmentSchedule(enlistmentDate, 100, 100);
+                EnlistmentSchedule schedule = new EnlistmentSchedule();
+                schedule.setEnlistmentDate(enlistmentDate);
+                schedule.setCapacity(100);
+                schedule.setRemainingSlots(100);
 
                 enlistmentScheduleRepository.save(schedule);
             }
         }
 
-//        // 판매자 = 관리자
-//        User productAdmin = userRepository.findByEmail(("admin@example.com")).orElseThrow(
-//                ()-> new CustomException(ErrorMessage.USER_NOT_FOUND)
-//        );
-//
-//        productRepository.save(
-//                new Product(
-//                        "왕고무링",
-//                        "짬의 상징 왕 고무링, 훈련소에서부터 착용해보세요",
-//                        10000,
-//                        100,
-//                        ApplicationStatus.ProductStatus.ON_SALE
-//                )
-//        );
-//
-//        productRepository.save(
-//                new Product(
-//                        "물집 안생기는 깔창",
-//                        "물집은 자랑이 아닙니다. 미리 예방하세요",
-//                        6000,
-//                        100,
-//                        ApplicationStatus.ProductStatus.ON_SALE
-//                )
-//        );
+
+        productRepository.save(
+                new Product(
+                        "왕고무링",
+                        "짬의 상징 왕 고무링, 훈련소에서부터 착용해보세요",
+                        10000,
+                        100,
+                        ApplicationStatus.ProductStatus.ON_SALE
+                )
+        );
+
+        productRepository.save(
+                new Product(
+                        "물집 안생기는 깔창",
+                        "물집은 자랑이 아닙니다. 미리 예방하세요",
+                        6000,
+                        100,
+                        ApplicationStatus.ProductStatus.ON_SALE
+                )
+        );
 
     }
 }

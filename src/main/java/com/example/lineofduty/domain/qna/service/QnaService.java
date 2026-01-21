@@ -11,7 +11,7 @@ import com.example.lineofduty.domain.qna.dto.response.QnaInquiryListResponse;
 import com.example.lineofduty.domain.qna.dto.response.QnaInquiryResponse;
 import com.example.lineofduty.domain.qna.dto.response.QnaResisterResponse;
 import com.example.lineofduty.domain.qna.dto.response.QnaUpdateResponse;
-import com.example.lineofduty.domain.user.UserDetail;
+import com.example.lineofduty.domain.user.dto.UserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
