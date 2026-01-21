@@ -19,8 +19,8 @@ POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "testuser32333332@example.com",
-  "password": "Test1234!"
+  "email": "admin@example.com",
+  "password": "1234!"
 }
 
 > {%
@@ -57,6 +57,10 @@ Authorization: Bearer {{accessToken}}
 
 ### APPROVE APPLICATION (ADMIN)
 PATCH {{baseUrl}}/api/enlistment/1/approve
+Authorization: Bearer {{accessToken}}
+
+### GET APPLICATION LIST
+GET {{baseUrl}}/api/enlistment/search?startDate=2026-01-01&endDate=2029-12-01&page=0&size=10
 Authorization: Bearer {{accessToken}}
 
 ### DEFER ENLISTMENT
@@ -115,6 +119,7 @@ Content-Type: application/json
 GET {{baseUrl}}/api/admin/dashboard/pending
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
+
 
 ### GET DASHBOARDENLISTMENTSUMMARY
 GET {{baseUrl}}/api/admin/dashboard/deferments
