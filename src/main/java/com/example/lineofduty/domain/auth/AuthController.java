@@ -1,15 +1,17 @@
 package com.example.lineofduty.domain.auth;
 
-import com.example.lineofduty.common.exception.GlobalExceptionHandler;
 import com.example.lineofduty.common.model.enums.SuccessMessage;
 import com.example.lineofduty.common.model.response.GlobalResponse;
-import com.example.lineofduty.common.util.JwtUtil;
 import com.example.lineofduty.domain.auth.dto.request.LoginRequest;
 import com.example.lineofduty.domain.auth.dto.request.SignupRequest;
+import com.example.lineofduty.domain.token.TokenRequest;
+import com.example.lineofduty.domain.token.TokenResponse;
+import com.example.lineofduty.domain.user.UserDetail;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,11 +43,23 @@ public class AuthController {
     @PostMapping("/login")
     public ResponseEntity<GlobalResponse> login(@Valid @RequestBody LoginRequest request) {
 
-        String token = authService.login(request);
+        TokenResponse tokenResponse = authService.login(request);
 
-        return ResponseEntity.ok()
-                .header(JwtUtil.AUTHORIZATION, token)
-                .body(GlobalResponse.success(SuccessMessage.AUTH_LOGIN_SUCCESS, Map.of("token", token)));
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.AUTH_LOGIN_SUCCESS, tokenResponse));
+    }
+
+    // 재발급
+    @PostMapping("/reissue")
+    public ResponseEntity<GlobalResponse> reissue(@RequestBody TokenRequest request) {
+        TokenResponse response = authService.reissue(request.getRefreshToken());
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.AUTH_REISSUE_SUCCESS, response));
+    }
+
+    // 로그아웃
+    @PostMapping("/logout")
+    public ResponseEntity<GlobalResponse> logout(@AuthenticationPrincipal UserDetail userDetail) {
+        authService.logout(userDetail.getUser().getId());
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.AUTH_LOGOUT_SUCCESS, null));
     }
 
 }

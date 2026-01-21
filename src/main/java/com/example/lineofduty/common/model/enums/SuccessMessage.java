@@ -13,6 +13,8 @@ public enum SuccessMessage {
     USER_UPDATE_SUCCESS("내 정보 수정 성공"),
     USER_ALL_READ_SUCCESS("회원 전체 조회 성공"),
     USER_READ_ADMIN_SUCCESS("회원 정보 조회 성공"),
+    AUTH_LOGOUT_SUCCESS("로그아웃 성공"),
+    AUTH_REISSUE_SUCCESS("토큰 재발급 성공"),
 
     PRODUCT_GET_ONE_SUCCESS("상품 단건 조회 성공"),
     PRODUCT_GET_ALL_SUCCESS("상품 목록 조회 성공"),

@@ -22,4 +22,6 @@ public interface EnlistmentApplicationRepository extends JpaRepository<Enlistmen
     List<EnlistmentApplication> findEnlistmentApplicationByApplicationStatus(ApplicationStatus applicationStatus);
 
     Optional<EnlistmentApplication> findByScheduleId(Long scheduleId);
+
+    Optional<EnlistmentApplication> findByUserId(Long userId);
 }

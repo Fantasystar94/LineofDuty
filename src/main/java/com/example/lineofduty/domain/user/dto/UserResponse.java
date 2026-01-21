@@ -6,7 +6,7 @@ import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-public class UserResponse{
+public class UserResponse {
     private final Long id;
     private final String username;
     private final String email;

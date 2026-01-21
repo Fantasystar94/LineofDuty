@@ -1,8 +1,7 @@
 package com.example.lineofduty.entity;
 
 import com.example.lineofduty.common.exception.ValidationMessage;
-import com.example.lineofduty.domain.user.entity.User;
-import com.example.lineofduty.entity.BaseEntity;
+import com.example.lineofduty.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;

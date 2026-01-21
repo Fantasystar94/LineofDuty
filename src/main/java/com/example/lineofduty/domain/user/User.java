@@ -4,7 +4,9 @@ import com.example.lineofduty.common.model.enums.Role;
 import com.example.lineofduty.common.util.AesUtil;
 import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity

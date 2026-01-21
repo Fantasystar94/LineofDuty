@@ -4,6 +4,7 @@ import com.example.lineofduty.domain.enlistmentApplication.EnlistmentApplication
 import com.example.lineofduty.domain.user.User;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Getter
@@ -18,7 +19,7 @@ public class UserAdminResponse {
     private final String role;
 
     @JsonProperty("enlistment_application")
-    private Object enlistmentApplication;
+    private EnlistmentInfo enlistmentApplication;
 
     @JsonProperty("created_at")
     private LocalDateTime createdAt;
@@ -42,6 +43,12 @@ public class UserAdminResponse {
         return origin.substring(0, 8) + "******";
     }
 
+    public void setEnlistmentInfo(EnlistmentApplication application) {
+        if (application != null) {
+            this.enlistmentApplication = new EnlistmentInfo(application);
+        }
+    }
+
     @Getter
     static class EnlistmentInfo {
         private final Long id;
@@ -50,6 +57,8 @@ public class UserAdminResponse {
         @JsonProperty("user_id")
         private final Long userId;
         private final String status;
+        @JsonProperty("enlistment_date")
+        private final LocalDate enlistmentDate;
         @JsonProperty("created_at")
         private final LocalDateTime createdAt;
         @JsonProperty("modified_at")
@@ -60,7 +69,7 @@ public class UserAdminResponse {
             this.enlistmentScheduleId = application.getScheduleId();
             this.userId = application.getUserId();
             this.status = application.getApplicationStatus().name();
-                    // TODO : application enlistmentDate 받아와서 쓸수있게 추가할것
+            this.enlistmentDate = application.getEnlistmentDate();
             this.createdAt = application.getCreatedAt();
             this.modifiedAt = application.getModifiedAt();
         }

@@ -2,12 +2,13 @@ package com.example.lineofduty.domain.user.service;
 
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
-import com.example.lineofduty.domain.user.dto.UserUpdateRequest;
+import com.example.lineofduty.domain.enlistmentApplication.repository.EnlistmentApplicationRepository;
+import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.dto.UserAdminResponse;
 import com.example.lineofduty.domain.user.dto.UserResponse;
+import com.example.lineofduty.domain.user.dto.UserUpdateRequest;
 import com.example.lineofduty.domain.user.dto.UserWithdrawResponse;
 import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.domain.user.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -24,6 +25,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EnlistmentApplicationRepository enlistmentApplicationRepository;
 
     // 1. 내 정보 조회
     public UserResponse getMyProfile(Long userId) {
@@ -58,7 +60,7 @@ public class UserService {
         if (user.isDeleted()) {
             throw new CustomException(ErrorMessage.USER_WITHDRAWN);
         }
-        user.updateIsDeleted(); // BaseEntity 메서드
+        user.updateIsDeleted();
     }
 
     // ------------------ [관리자] ------------------
@@ -66,13 +68,20 @@ public class UserService {
     // 4. 회원 전체 조회
     public List<UserAdminResponse> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(UserAdminResponse::new)
+                .map(user -> {
+                    UserAdminResponse response = new UserAdminResponse(user);
+                    fillEnlistmentInfo(response, user.getId());
+                    return response;
+                })
                 .collect(Collectors.toList());
     }
 
     // 5. 상세 조회
     public UserAdminResponse getUserById(Long userId) {
-        return new UserAdminResponse(findUserById(userId));
+        User user = findUserById(userId);
+        UserAdminResponse response= new UserAdminResponse(user);
+        fillEnlistmentInfo(response, user.getId());
+        return response;
     }
 
     // 6. 관리자 본인 탈퇴
@@ -82,9 +91,15 @@ public class UserService {
         if (user.isDeleted()) {
             throw new CustomException(ErrorMessage.USER_WITHDRAWN);
         }
-        user.updateIsDeleted(); // BaseEntity 메서드
+        user.updateIsDeleted();
 
         return new UserWithdrawResponse(user.getId(), true, LocalDateTime.now());
+    }
+
+
+    private void fillEnlistmentInfo(UserAdminResponse response, Long userId) {
+        enlistmentApplicationRepository.findByUserId(userId)
+                .ifPresent(response::setEnlistmentInfo);
     }
 
     private User findUserById(Long userId) {

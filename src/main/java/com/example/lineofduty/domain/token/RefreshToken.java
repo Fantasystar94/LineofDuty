@@ -1,4 +1,4 @@
-package com.example.lineofduty.domain.refreshtoken;
+package com.example.lineofduty.domain.token;
 
 import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
