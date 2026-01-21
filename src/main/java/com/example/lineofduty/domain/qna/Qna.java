@@ -1,4 +1,4 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.qna;
 
 import com.example.lineofduty.common.exception.ValidationMessage;
 import com.example.lineofduty.domain.user.User;
