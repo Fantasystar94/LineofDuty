@@ -1,7 +1,7 @@
-package com.example.lineofduty.domain.deferment.model.response;
+package com.example.lineofduty.domain.enlistmentSchedule.model;
 
 import com.example.lineofduty.common.model.enums.DefermentStatus;
-import com.example.lineofduty.domain.deferment.Deferment;
+import com.example.lineofduty.domain.enlistmentSchedule.Deferment;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 

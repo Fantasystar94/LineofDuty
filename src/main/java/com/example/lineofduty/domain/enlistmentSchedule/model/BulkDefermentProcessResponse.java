@@ -1,4 +1,4 @@
-package com.example.lineofduty.domain.deferment.model.response;
+package com.example.lineofduty.domain.enlistmentSchedule.model;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

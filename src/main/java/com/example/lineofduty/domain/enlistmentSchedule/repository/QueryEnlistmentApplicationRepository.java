@@ -1,12 +1,12 @@
-package com.example.lineofduty.domain.enlistmentApplication.repository;
+package com.example.lineofduty.domain.enlistmentSchedule.repository;
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
-import com.example.lineofduty.domain.enlistmentApplication.model.response.EnlistmentApplicationReadResponse;
+import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentApplicationReadResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 import java.util.List;
-import static com.example.lineofduty.domain.enlistmentApplication.QEnlistmentApplication.enlistmentApplication;
+import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentApplication.enlistmentApplication;
 import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentSchedule.enlistmentSchedule;
 
 @Repository
