@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import java.util.List;
+import java.util.Optional;
 
 
 public interface EnlistmentApplicationRepository extends JpaRepository<EnlistmentApplication, Long> {
@@ -18,4 +19,6 @@ public interface EnlistmentApplicationRepository extends JpaRepository<Enlistmen
     boolean existsByUserIdAndScheduleId(@Param("userId") Long UserId, @Param("scheduleId") Long ScheduleId);
 
     List<EnlistmentApplication> findEnlistmentApplicationByApplicationStatus(ApplicationStatus applicationStatus);
+
+    Optional<EnlistmentApplication> findByUserId(Long userId);
 }

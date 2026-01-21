@@ -1,7 +1,7 @@
 package com.example.lineofduty.common.filter;
 
 import com.example.lineofduty.common.util.JwtUtil;
-import com.example.lineofduty.domain.user.UserDetailService;
+import com.example.lineofduty.domain.user.service.UserDetailService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -34,8 +34,6 @@ public class JwtFilter extends OncePerRequestFilter {
     ) throws ServletException, IOException {
 
         String url = request.getRequestURI();
-
-
 
         // 헤더에서 토큰 꺼내기
         String tokenValue = request.getHeader(JwtUtil.AUTHORIZATION);

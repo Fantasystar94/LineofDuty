@@ -4,7 +4,7 @@ import com.example.lineofduty.domain.enlistmentSchedule.model.DefermentPatchRequ
 import com.example.lineofduty.domain.enlistmentSchedule.model.DefermentsPostRequest;
 import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentScheduleCreateRequest;
 import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentScheduleService;
-import com.example.lineofduty.domain.user.UserDetail;
+import com.example.lineofduty.domain.user.dto.UserDetail;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Pageable;
