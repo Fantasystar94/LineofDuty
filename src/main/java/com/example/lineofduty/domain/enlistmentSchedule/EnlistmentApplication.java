@@ -1,4 +1,4 @@
-package com.example.lineofduty.domain.enlistmentApplication;
+package com.example.lineofduty.domain.enlistmentSchedule;
 
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import com.example.lineofduty.entity.BaseEntity;

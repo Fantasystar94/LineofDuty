@@ -1,9 +1,8 @@
 package com.example.lineofduty.domain.enlistmentSchedule.controller;
 import com.example.lineofduty.common.model.response.GlobalResponse;
-import com.example.lineofduty.domain.deferment.model.request.DefermentPatchRequest;
-import com.example.lineofduty.domain.deferment.model.request.DefermentsPostRequest;
-import com.example.lineofduty.domain.enlistmentApplication.model.response.EnlistmentApplicationReadResponse;
-import com.example.lineofduty.domain.enlistmentSchedule.model.request.EnlistmentScheduleCreateRequest;
+import com.example.lineofduty.domain.enlistmentSchedule.model.DefermentPatchRequest;
+import com.example.lineofduty.domain.enlistmentSchedule.model.DefermentsPostRequest;
+import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentScheduleCreateRequest;
 import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentScheduleService;
 import com.example.lineofduty.domain.user.UserDetail;
 import lombok.RequiredArgsConstructor;
