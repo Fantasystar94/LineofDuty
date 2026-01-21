@@ -8,7 +8,14 @@ import lombok.NoArgsConstructor;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "enlistment_schedules")
+@Table(name = "enlistment_schedules",
+    indexes = {
+        @Index(
+                name = "idx_schedule_date",
+                columnList = "enlistment_date"
+        )
+    }
+)
 @Getter
 @NoArgsConstructor
 public class EnlistmentSchedule extends BaseEntity {
