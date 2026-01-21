@@ -5,7 +5,7 @@ import com.example.lineofduty.common.model.response.GlobalResponse;
 import com.example.lineofduty.domain.payment.dto.PaymentCreateRequest;
 import com.example.lineofduty.domain.payment.dto.PaymentCreateResponse;
 import com.example.lineofduty.domain.payment.service.PaymentService;
-import com.example.lineofduty.domain.user.UserDetail;
+import com.example.lineofduty.domain.user.dto.UserDetail;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
