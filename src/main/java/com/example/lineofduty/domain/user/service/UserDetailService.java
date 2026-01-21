@@ -1,4 +1,4 @@
-package com.example.lineofduty.domain.user.dto;
+package com.example.lineofduty.domain.user.service;
 
 import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.UserDetail;

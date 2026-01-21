@@ -79,7 +79,7 @@ public class UserService {
     // 5. 상세 조회
     public UserAdminResponse getUserById(Long userId) {
         User user = findUserById(userId);
-        UserAdminResponse response= new UserAdminResponse(user);
+        UserAdminResponse response = new UserAdminResponse(user);
         fillEnlistmentInfo(response, user.getId());
         return response;
     }

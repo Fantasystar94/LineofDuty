@@ -2,6 +2,7 @@ package com.example.lineofduty.domain.order.service;
 
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
+import com.example.lineofduty.domain.order.Order;
 import com.example.lineofduty.domain.order.dto.*;
 import com.example.lineofduty.domain.order.repository.OrderRepository;
 import com.example.lineofduty.domain.orderItem.repository.OrderItemRepository;
@@ -10,7 +11,6 @@ import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.domain.orderItem.OrderItem;
 import com.example.lineofduty.domain.product.Product;
-import com.example.lineofduty.entity.Order;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
