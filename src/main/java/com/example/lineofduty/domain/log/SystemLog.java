@@ -1,15 +1,15 @@
-package com.example.lineofduty.entity;
+package com.example.lineofduty.domain.log;
 
-import com.example.lineofduty.domain.user.entity.User;
+import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
+
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "system_logs")
 @Getter
-@Setter
 @NoArgsConstructor
 public class SystemLog extends BaseEntity {
 
@@ -18,10 +18,11 @@ public class SystemLog extends BaseEntity {
     @Column(name = "log_id")
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
-    private User user;
+    @Column(name = "content")
+    private String content;
 
-    @Column(nullable = false)
-    private String action;
+    @Column(name = "created_at")
+    private LocalDateTime createdAt;
+
+
 }
