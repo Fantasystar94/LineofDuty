@@ -1,6 +1,7 @@
-package com.example.lineofduty.domain.user;
+package com.example.lineofduty.domain.user.dto;
 
 import com.example.lineofduty.common.model.enums.Role;
+import com.example.lineofduty.domain.user.User;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;

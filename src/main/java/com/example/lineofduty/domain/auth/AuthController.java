@@ -6,7 +6,7 @@ import com.example.lineofduty.domain.auth.dto.request.LoginRequest;
 import com.example.lineofduty.domain.auth.dto.request.SignupRequest;
 import com.example.lineofduty.domain.token.TokenRequest;
 import com.example.lineofduty.domain.token.TokenResponse;
-import com.example.lineofduty.domain.user.UserDetail;
+import com.example.lineofduty.domain.user.dto.UserDetail;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

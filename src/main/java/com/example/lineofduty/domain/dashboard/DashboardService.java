@@ -6,7 +6,7 @@ import com.example.lineofduty.domain.dashboard.model.DashboardDefermentsSummaryR
 import com.example.lineofduty.domain.dashboard.model.DashboardPendingSummaryResponse;
 import com.example.lineofduty.domain.dashboard.model.DashboardScheduleSummaryResponse;
 import com.example.lineofduty.domain.dashboard.model.DashboardSummaryResponse;
-import com.example.lineofduty.domain.user.UserDetail;
+import com.example.lineofduty.domain.user.dto.UserDetail;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
