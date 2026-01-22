@@ -1,6 +1,5 @@
 package com.example.lineofduty.domain.log;
 
-import com.example.lineofduty.domain.user.dto.UserDetail;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -52,10 +51,10 @@ public class LogAspect {
         } catch (Exception e) {
             // 실패 로그 DB 저장
             logService.saveLog(userId, method + " " + uri, "FAIL", e.getMessage(), args);
-            
+
             // 에러 로그 파일 저장
             log.error("API Request Failed - UserID: {}, Method: {}, URI: {}, Error: {}", userId, method, uri, e.getMessage(), e);
-            
+
             throw e;
         } finally {
             long endTime = System.currentTimeMillis();
