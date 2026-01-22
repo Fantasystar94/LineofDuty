@@ -12,6 +12,7 @@ public enum ErrorMessage {
     // 공통/입력값 오류
     INVALID_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
     MISSING_REQUIRED_FIELD(HttpStatus.BAD_REQUEST, "필수 필드값이 누락되었습니다."),
+    SEARCH_REQUIRED_FIELD(HttpStatus.BAD_REQUEST, "검색어를 입력해주세요."),
 
     // 유저 관련
     INVALID_EMAIL_FORMAT(HttpStatus.BAD_REQUEST, "이메일 형식이 올바르지 않습니다."),
@@ -66,7 +67,11 @@ public enum ErrorMessage {
     DUPLICATE_RESIDENT_NUMBER(HttpStatus.CONFLICT, "이미 등록된 주민등록번호입니다."),
     ALREADY_PAID_ORDER(HttpStatus.CONFLICT, "이미 결제된 주문입니다."),
     DUPLICATE_SCHEDULE(HttpStatus.CONFLICT, "이미 신청된 유저입니다"),
-    INVALID_APPLICATION_STATUS(HttpStatus.CONFLICT,"승인 할 수 없습니다");
+    INVALID_APPLICATION_STATUS(HttpStatus.CONFLICT,"승인 할 수 없습니다"),
+
+    /* --- 500 Internal Server Error --- */
+    // 외부 API 관련
+    WEATHER_API_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "기상청 API 호출 중 오류가 발생했습니다.");
 
     private final HttpStatus status;
     private final String message;

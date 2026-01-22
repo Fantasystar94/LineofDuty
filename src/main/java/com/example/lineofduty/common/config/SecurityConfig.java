@@ -43,6 +43,7 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/notices/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/qnas/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
+                        .requestMatchers(HttpMethod.GET,"/api/weather/**").permitAll()
 
                         // 관리자 전용 페이지
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
