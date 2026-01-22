@@ -1,5 +1,6 @@
 package com.example.lineofduty.domain.log;
 
+import com.example.lineofduty.domain.user.dto.UserDetail;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
