@@ -39,6 +39,7 @@ public class EnlistmentScheduleService {
     private final UserRepository userRepository;
     private final LocalDate today = LocalDate.now();
     private final DefermentRepository defermentRepository;
+
     /*
      * 입영 가능 일정 조회
      * */
@@ -62,7 +63,7 @@ public class EnlistmentScheduleService {
 
 
     /*
-     * 입영 신청 - v1 / Authentication 없음
+     * 입영 신청 - v2 / 동시성 비관락
      * */
     @Transactional
     public EnlistmentScheduleCreateResponse applyEnlistment(Long userId, EnlistmentScheduleCreateRequest request) {
@@ -70,15 +71,13 @@ public class EnlistmentScheduleService {
         User user = userValidate(userId);
         //유저엔티티에 입영일을 가지고있다면 쿼리 하나 줄일 수 있음.
 
-        //유저가 하나라도 점유하고 있는지 검증
-        if (applicationRepository.existsByUserIdAndStatus(userId)) {
-            throw new CustomException(ErrorMessage.DUPLICATE_SCHEDULE);
+        EnlistmentSchedule schedule = scheduleLockValidate(request.getScheduleId());
+
+        if (schedule.getRemainingSlots() <= 0) {
+            throw new CustomException(ErrorMessage.NO_REMAINING_SLOTS);
         }
 
-        EnlistmentSchedule schedule = scheduleValidate(request.getScheduleId());
-
-        //신청 이력이 있는지
-        if (applicationRepository.existsByUserIdAndScheduleId(userId, request.getScheduleId())) {
+        if (applicationRepository.existsByUserIdAndScheduleId(userId, schedule.getId())) {
             throw new CustomException(ErrorMessage.DUPLICATE_SCHEDULE);
         }
 
@@ -87,16 +86,49 @@ public class EnlistmentScheduleService {
             throw new CustomException(ErrorMessage.SCHEDULE_NOT_FOUND);
         }
 
-        //신청 저장
+        //신청 생성
         EnlistmentApplication enlistmentApplication = new EnlistmentApplication(ApplicationStatus.PENDING,user.getId(),schedule.getId(),schedule.getEnlistmentDate());
 
         applicationRepository.save(enlistmentApplication);
 
         //슬롯 차감
         schedule.slotDeduct();
-        scheduleRepository.save(schedule);
 
         return EnlistmentScheduleCreateResponse.from(enlistmentApplication);
+    }
+
+
+    /*
+     * 입영 신청 - v2 / 동시성 비관락
+     * */
+    @Transactional
+    public EnlistmentScheduleCreateResponse applyEnlistmentTest(
+            Long userId,
+            EnlistmentScheduleCreateRequest request
+    ) {
+        EnlistmentSchedule schedule = scheduleLockValidate(request.getScheduleId());
+
+        if (schedule.getRemainingSlots() <= 0) {
+            throw new CustomException(ErrorMessage.NO_REMAINING_SLOTS);
+        }
+
+        if (applicationRepository.existsByUserIdAndScheduleId(userId, schedule.getId())) {
+            throw new CustomException(ErrorMessage.DUPLICATE_SCHEDULE);
+        }
+
+        EnlistmentApplication application =
+                new EnlistmentApplication(
+                        ApplicationStatus.PENDING,
+                        userId,
+                        schedule.getId(),
+                        schedule.getEnlistmentDate()
+                );
+
+        schedule.slotDeduct();
+
+        applicationRepository.save(application);
+
+        return EnlistmentScheduleCreateResponse.from(application);
     }
 
     /*
@@ -312,5 +344,9 @@ public class EnlistmentScheduleService {
 
     private EnlistmentSchedule scheduleValidate(Long scheduleId) {
         return scheduleRepository.findById(scheduleId).orElseThrow(()-> new CustomException(ErrorMessage.SCHEDULE_NOT_FOUND));
+    }
+
+    private EnlistmentSchedule scheduleLockValidate(Long scheduleId) {
+        return scheduleRepository.findByIdWithLock(scheduleId).orElseThrow(()-> new CustomException(ErrorMessage.SCHEDULE_NOT_FOUND));
     }
 }
