@@ -2,6 +2,7 @@ package com.example.lineofduty.domain.product.service;
 
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
+import com.example.lineofduty.common.lock.DistributedLock;
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import com.example.lineofduty.domain.product.dto.request.ProductRequest;
 import com.example.lineofduty.domain.product.dto.response.ProductResponse;
@@ -11,6 +12,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -51,6 +53,7 @@ public class ProductService {
     }
 
     // 상품 목록 조회
+    @DistributedLock(key = "'product:' + #productId", waitTime = 5, leaseTime = 3)
     @Transactional(readOnly = true)
     public Page<ProductResponse> getProductList(Pageable pageable) {
         Page<Product> products = productRepository.findAll(pageable);
@@ -58,7 +61,8 @@ public class ProductService {
         return products.map(ProductResponse::from);
     }
 
-    // 상품 수정
+    // 상품 수정 (분산 락 적용)
+    @DistributedLock(key = "'product:' + #productId", waitTime = 5, leaseTime = 3)
     @Transactional
     public ProductResponse updateProduct(ProductRequest request, Long productId) {
         Product product = productRepository.findById(productId)
@@ -70,7 +74,7 @@ public class ProductService {
         return ProductResponse.from(product);
     }
 
-    // 상품 삭제
+    // 상품 삭제 (분산 락 적용)
     @Transactional
     public void deleteProduct(Long productId) {
         if (!productRepository.existsById(productId)) {
@@ -80,5 +84,30 @@ public class ProductService {
         productRepository.deleteById(productId);
     }
 
+    // 재고 감소 (분산 락 적용 - 주문 시 사용)
+    @DistributedLock(key = "'product:stock:' + #productId", waitTime = 10, leaseTime = 5)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void decreaseStock(Long productId, Long quantity) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND));
+
+        if (product.getStock() < quantity) {
+            throw new CustomException(ErrorMessage.OUT_OF_STOCK);
+        }
+
+        product.updateStock(product.getStock() - quantity);
+        productRepository.saveAndFlush(product);
+    }
+
+    // 재고 증가 (분산 락 적용 - 주문 취소 시 사용)
+    @DistributedLock(key = "'product:stock:' + #productId", waitTime = 10, leaseTime = 5)
+    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    public void increaseStock(Long productId, Long quantity) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND));
+
+        product.updateStock(product.getStock() + quantity);
+        productRepository.saveAndFlush(product);
+    }
 }
 

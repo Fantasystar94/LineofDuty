@@ -10,6 +10,7 @@ import com.example.lineofduty.domain.order.Order;
 import com.example.lineofduty.domain.orderItem.OrderItem;
 import com.example.lineofduty.domain.payment.Payment;
 import com.example.lineofduty.domain.product.Product;
+import com.example.lineofduty.domain.product.service.ProductService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,6 +23,7 @@ public class PaymentService {
 
     private final OrderRepository orderRepository;
     private final PaymentRepository paymentRepository;
+    private final ProductService productService;
 
     @Transactional
     public PaymentCreateResponse createPaymentService(PaymentCreateRequest request, Long userId) {
@@ -46,13 +48,10 @@ public class PaymentService {
 
         // 주문 내역(List<orderItem>)에 맞추어서 재고(product) 차감해
         for (OrderItem orderItem : orderItemList) {
-            Product product = orderItem.getProduct();
-
-            // 재고가 부족하면 예외 출력
-            if (product.getStock() < orderItem.getQuantity()) {
-                throw new CustomException(ErrorMessage.OUT_OF_STOCK);
-            }
-            product.updateStock(product.getStock() - orderItem.getQuantity());
+            productService.decreaseStock(
+                    orderItem.getProduct().getId(),
+                    orderItem.getQuantity()
+            );
         }
 
         // 결제 기록(Payment) 남기고 결제 끝난 주문서는 사용 종료 처리
