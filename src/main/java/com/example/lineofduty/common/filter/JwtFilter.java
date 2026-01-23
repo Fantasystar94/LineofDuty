@@ -1,7 +1,7 @@
 package com.example.lineofduty.common.filter;
 
 import com.example.lineofduty.common.util.JwtUtil;
-import com.example.lineofduty.domain.user.UserDetailService;
+import com.example.lineofduty.domain.user.service.UserDetailService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

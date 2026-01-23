@@ -1,10 +1,12 @@
-package com.example.lineofduty.domain.user.entity;
+package com.example.lineofduty.domain.user;
 
 import com.example.lineofduty.common.model.enums.Role;
 import com.example.lineofduty.common.util.AesUtil;
 import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 
 @Entity
@@ -45,6 +47,7 @@ public class User extends BaseEntity {
         this.password = password;
         this.role = role;
         this.residentNumber = residentNumber;
+        this.isDeleted = false;
     }
 
     public void updateProfile(String email, String username, String password) {

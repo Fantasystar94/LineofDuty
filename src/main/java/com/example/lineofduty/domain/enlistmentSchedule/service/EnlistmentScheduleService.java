@@ -3,6 +3,7 @@ import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.ApplicationStatus;
 import com.example.lineofduty.common.model.enums.DefermentStatus;
+import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
 import com.example.lineofduty.domain.enlistmentSchedule.model.DefermentsPostRequest;
 import com.example.lineofduty.domain.enlistmentSchedule.model.BulkDefermentProcessResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.model.DefermentsReadResponse;
@@ -15,10 +16,9 @@ import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentSchedule
 import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentScheduleReadResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.QueryEnlistmentScheduleRepository;
+import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.domain.user.entity.User;
 import com.example.lineofduty.domain.enlistmentSchedule.Deferment;
-import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
 import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentSchedule;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -37,7 +37,7 @@ public class EnlistmentScheduleService {
     private final EnlistmentApplicationRepository applicationRepository;
     private final QueryEnlistmentApplicationRepository queryEnlistmentApplicationRepository;
     private final UserRepository userRepository;
-    LocalDate today = LocalDate.now();
+    private final LocalDate today = LocalDate.now();
     private final DefermentRepository defermentRepository;
 
     /*

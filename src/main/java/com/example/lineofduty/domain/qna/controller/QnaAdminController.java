@@ -8,7 +8,7 @@ import com.example.lineofduty.domain.qna.dto.request.QnaAdminAnswerRequest;
 import com.example.lineofduty.domain.qna.dto.request.QnaAdminAnswerUpdateRequest;
 import com.example.lineofduty.domain.qna.dto.response.QnaAdminAnswerResponse;
 import com.example.lineofduty.domain.qna.dto.response.QnaAdminAnswerUpdateResponse;
-import com.example.lineofduty.domain.user.UserDetail;
+import com.example.lineofduty.domain.user.dto.UserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

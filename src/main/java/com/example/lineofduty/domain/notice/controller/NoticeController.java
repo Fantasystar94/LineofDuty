@@ -8,7 +8,7 @@ import com.example.lineofduty.domain.notice.dto.response.NoticeInquiryResponse;
 import com.example.lineofduty.domain.notice.dto.response.NoticeResisterResponse;
 import com.example.lineofduty.domain.notice.dto.response.NoticeUpdateResponse;
 import com.example.lineofduty.domain.notice.service.NoticeService;
-import com.example.lineofduty.domain.user.UserDetail;
+import com.example.lineofduty.domain.user.dto.UserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

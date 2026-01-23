@@ -1,17 +1,19 @@
 package com.example.lineofduty.domain.user.service;
 
-import com.example.lineofduty.domain.user.UserUpdateRequest;
-import com.example.lineofduty.domain.user.UserAdminResponse;
-import com.example.lineofduty.domain.user.UserResponse;
-import com.example.lineofduty.domain.user.UserWithdrawResponse;
+import com.example.lineofduty.common.exception.CustomException;
+import com.example.lineofduty.common.exception.ErrorMessage;
+import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentApplicationRepository;
+import com.example.lineofduty.domain.user.User;
+import com.example.lineofduty.domain.user.dto.UserAdminResponse;
+import com.example.lineofduty.domain.user.dto.UserResponse;
+import com.example.lineofduty.domain.user.dto.UserUpdateRequest;
+import com.example.lineofduty.domain.user.dto.UserWithdrawResponse;
 import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
-
 import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -23,6 +25,7 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final EnlistmentApplicationRepository enlistmentApplicationRepository;
 
     // 1. 내 정보 조회
     public UserResponse getMyProfile(Long userId) {
@@ -36,7 +39,7 @@ public class UserService {
 
         if (StringUtils.hasText(request.getEmail()) && !user.getEmail().equals(request.getEmail())) {
             if (userRepository.existsByEmail(request.getEmail())) {
-                throw new IllegalArgumentException("이미 사용 중인 이메일입니다.");
+                throw new CustomException(ErrorMessage.DUPLICATE_EMAIL);
             }
         }
 
@@ -54,7 +57,10 @@ public class UserService {
     @Transactional
     public void withdrawUser(Long userId) {
         User user = findUserById(userId);
-        user.updateIsDeleted(); // BaseEntity 메서드
+        if (user.isDeleted()) {
+            throw new CustomException(ErrorMessage.USER_WITHDRAWN);
+        }
+        user.updateIsDeleted();
     }
 
     // ------------------ [관리자] ------------------
@@ -62,26 +68,42 @@ public class UserService {
     // 4. 회원 전체 조회
     public List<UserAdminResponse> getAllUsers() {
         return userRepository.findAll().stream()
-                .map(UserAdminResponse::new)
+                .map(user -> {
+                    UserAdminResponse response = new UserAdminResponse(user);
+                    fillEnlistmentInfo(response, user.getId());
+                    return response;
+                })
                 .collect(Collectors.toList());
     }
 
     // 5. 상세 조회
     public UserAdminResponse getUserById(Long userId) {
-        return new UserAdminResponse(findUserById(userId));
+        User user = findUserById(userId);
+        UserAdminResponse response = new UserAdminResponse(user);
+        fillEnlistmentInfo(response, user.getId());
+        return response;
     }
 
     // 6. 관리자 본인 탈퇴
     @Transactional
     public UserWithdrawResponse withdrawAdmin(Long adminId) {
         User user = findUserById(adminId);
-        user.updateIsDeleted(); // BaseEntity 메서드
+        if (user.isDeleted()) {
+            throw new CustomException(ErrorMessage.USER_WITHDRAWN);
+        }
+        user.updateIsDeleted();
 
         return new UserWithdrawResponse(user.getId(), true, LocalDateTime.now());
     }
 
+
+    private void fillEnlistmentInfo(UserAdminResponse response, Long userId) {
+        enlistmentApplicationRepository.findByUserId(userId)
+                .ifPresent(response::setEnlistmentInfo);
+    }
+
     private User findUserById(Long userId) {
         return userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("사용자를 찾을 수 없습니다."));
+                .orElseThrow(() -> new CustomException(ErrorMessage.USER_NOT_FOUND));
     }
 }
