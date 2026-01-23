@@ -44,12 +44,19 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/qnas/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
 
+                        // 에러 페이지 요청 추가
+                        .requestMatchers("/error").permitAll()
+
                         // 관리자 전용 페이지
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         //swagger-ui 추가
                         .requestMatchers(
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
+                        ).permitAll()
+                        //test 컨트롤러단
+                        .requestMatchers(
+                                "/api/test/**"
                         ).permitAll()
 
                         // 그 외 요청은 로그인 된 사람만 가능
