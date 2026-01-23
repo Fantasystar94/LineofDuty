@@ -2,8 +2,7 @@ package com.example.lineofduty.domain.payment.controller;
 
 import com.example.lineofduty.common.model.enums.SuccessMessage;
 import com.example.lineofduty.common.model.response.GlobalResponse;
-import com.example.lineofduty.domain.payment.dto.PaymentCreateRequest;
-import com.example.lineofduty.domain.payment.dto.PaymentCreateResponse;
+import com.example.lineofduty.domain.payment.dto.*;
 import com.example.lineofduty.domain.payment.service.PaymentService;
 import com.example.lineofduty.domain.user.dto.UserDetail;
 import jakarta.validation.Valid;
@@ -11,10 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -29,6 +25,42 @@ public class PaymentController {
 
         long userId = userDetail.getUser().getId();
         PaymentCreateResponse response = paymentService.createPaymentService(request, userId);
-        return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.PAYMENT_CREATE_SUCCESS, response));
+        return ResponseEntity.status(HttpStatus.CREATED).body(GlobalResponse.success(SuccessMessage.PAYMENT_CREATE_SUCCESS, response));
     }
+
+    // 결제 승인
+    @PostMapping("/confirm")
+    public ResponseEntity<GlobalResponse> confirmPayment(@Valid @RequestBody PaymentConfirmRequest request) {
+
+        PaymentConfirmResponse response = paymentService.confirmPaymentService(request);
+        return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.PAYMENT_CONFIRM_SUCCESS, response));
+    }
+
+    // 결제 조회 (paymentKey)
+    @GetMapping("/{paymentKey}")
+    public ResponseEntity<GlobalResponse> getPaymentByPaymentKey(@PathVariable String paymentKey, @AuthenticationPrincipal UserDetail userDetail) {
+
+        long userId = userDetail.getUser().getId();
+        getPaymentResponse response = paymentService.getPaymentByPaymentKeyService(paymentKey, userId);
+        return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.PAYMENT_GET_SUCCESS, response));
+    }
+
+    // 결제 조회 (orderIdString)
+    @GetMapping("/orders/{orderIdString}")
+    public ResponseEntity<GlobalResponse> getPaymentByOrderId(@PathVariable String orderIdString, @AuthenticationPrincipal UserDetail userDetail) {
+
+        long userId = userDetail.getUser().getId();
+        getPaymentResponse response = paymentService.getPaymentByOrderIdService(orderIdString, userId);
+        return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.PAYMENT_GET_SUCCESS, response));
+    }
+
+    // 결제 취소
+    @PostMapping("/{paymentKey}/cancel")
+    public ResponseEntity<GlobalResponse> cancelPayment(@PathVariable String paymentKey, @AuthenticationPrincipal UserDetail userDetail) {
+
+        long userId = userDetail.getUser().getId();
+        CancelPaymentResponse response = paymentService.cancelPaymentService(paymentKey, userId);
+        return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.PAYMENT_CANCEL_SUCCESS, response));
+    }
+
 }
