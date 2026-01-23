@@ -33,6 +33,11 @@ public enum ErrorMessage {
     LOCK_INTERRUPTED(HttpStatus.INTERNAL_SERVER_ERROR, "요청 처리 중 오류가 발생했습니다."),
     OUT_OF_STOCK(HttpStatus.BAD_REQUEST, "재고가 부족합니다."),
 
+    // 결제 관련
+    ALREADY_CANCELED_PAYMENT(HttpStatus.BAD_REQUEST, "이미 취소된 결제 입니다."),
+    NOT_YET_CONFIRM(HttpStatus.BAD_REQUEST, "아직 승인되지않은 결제입니다."),
+    ALREADY_PROCESSED_PAYMENT(HttpStatus.BAD_REQUEST, "이미 처리된 결제 입니다."),
+
 
     /* --- 401 Unauthorized --- */
     // 인증 실패 (로그인 필요)
@@ -48,6 +53,7 @@ public enum ErrorMessage {
     NO_MODIFY_PERMISSION(HttpStatus.FORBIDDEN, "수정 권한이 없습니다."),
     NO_DELETE_PERMISSION(HttpStatus.FORBIDDEN, "삭제 권한이 없습니다."),
     USER_WITHDRAWN(HttpStatus.FORBIDDEN, "탈퇴한 회원입니다."),
+    REJECT_PAYMENT(HttpStatus.FORBIDDEN, "결제 승인이 거절되었습니다."),
 
 
     /* --- 404 Not Found --- */
@@ -61,8 +67,7 @@ public enum ErrorMessage {
     NOTICE_NOT_FOUND(HttpStatus.NOT_FOUND, "공지를 찾을 수 없습니다."),
     DEFERMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "연기 일정을 찾을 수 없습니다"),
     USER_DELETED_NOT_FOUND(HttpStatus.NOT_FOUND, "이미 탈퇴한 사용자입니다."),
-
-
+    NOT_FOUND_PAYMENT(HttpStatus.NOT_FOUND, "존재하지 않는 결제 정보 입니다."),
 
     /* --- 409 Conflict --- */
     // 데이터 충돌
@@ -70,7 +75,10 @@ public enum ErrorMessage {
     DUPLICATE_RESIDENT_NUMBER(HttpStatus.CONFLICT, "이미 등록된 주민등록번호입니다."),
     ALREADY_PAID_ORDER(HttpStatus.CONFLICT, "이미 결제된 주문입니다."),
     DUPLICATE_SCHEDULE(HttpStatus.CONFLICT, "이미 신청된 유저입니다"),
-    INVALID_APPLICATION_STATUS(HttpStatus.CONFLICT,"승인 할 수 없습니다");
+    INVALID_APPLICATION_STATUS(HttpStatus.CONFLICT,"승인 할 수 없습니다"),
+    NO_REMAINING_SLOTS(HttpStatus.CONFLICT,"입영 일정이 모두 소진 되었습니다"),
+    INVALID_AMOUNT_PAYMENT(HttpStatus.CONFLICT, "결제할 금액 정보가 일치하지 않습니다.");
+
 
     private final HttpStatus status;
     private final String message;

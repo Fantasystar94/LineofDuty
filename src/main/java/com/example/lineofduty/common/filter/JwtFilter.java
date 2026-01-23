@@ -33,26 +33,15 @@ public class JwtFilter extends OncePerRequestFilter {
             FilterChain filterChain
     ) throws ServletException, IOException {
 
-        String url = request.getRequestURI();
+        // 토큰 추출
+        String token = resolveToken(request);
 
-        // 헤더에서 토큰 꺼내기
-        String tokenValue = request.getHeader(JwtUtil.AUTHORIZATION);
+        // DB에러 등 났을 때 EntryPoint로 넘어가지 않게
+        try {
+            // 토큰 유효성 검사
+            if (token != null & jwtUtil.validateToken(token)) {
 
-        System.out.println("----------------------------------------");
-        System.out.println("1. 요청 URL: " + url);
-        System.out.println("2. 헤더 값 확인: " + tokenValue);
-
-        if (StringUtils.hasText(tokenValue) && tokenValue.startsWith(jwtUtil.BEARER_PREFIX)) {
-
-            // 2. Bearer 제거
-            String token = tokenValue.substring(7);
-            System.out.println("3. 추출된 토큰: " + token);
-
-            // 3. 토큰 검증
-            if (jwtUtil.validateToken(token)) {
                 Long userId = jwtUtil.extractUserId(token);
-                System.out.println("4. 토큰 검증 성공 ID: " + userId);
-
                 UserDetails userDetails = userDetailService.loadUserById(userId);
 
                 Authentication authentication = new UsernamePasswordAuthenticationToken(
@@ -64,19 +53,23 @@ public class JwtFilter extends OncePerRequestFilter {
                 SecurityContext context = SecurityContextHolder.createEmptyContext();
                 context.setAuthentication(authentication);
                 SecurityContextHolder.setContext(context);
-                System.out.println("5. SecurityContext에 인증 정보 저장 완료");
 
                 log.info("인증 성공 : userId : {}", userId);
-            } else {
-                log.error("인증 실패 : 유효하지 않은 토큰");
             }
-
-        } else {
-            System.out.println("헤더가 없거나 'Bearer '로 시작하지 않음");
+        } catch (Exception e) {
+            log.error("JWT 필터 내부 오류 발생 : {} ", e.getMessage());
         }
-        System.out.println("----------------------------------------");
 
         filterChain.doFilter(request, response);
+    }
 
+    // 토큰만 꺼내는 메서드
+    private String resolveToken(HttpServletRequest request) {
+        String bearerToken = request.getHeader(JwtUtil.AUTHORIZATION);
+
+        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith(jwtUtil.BEARER_PREFIX)) {
+            return bearerToken.substring(7);
+        }
+        return null;
     }
 }

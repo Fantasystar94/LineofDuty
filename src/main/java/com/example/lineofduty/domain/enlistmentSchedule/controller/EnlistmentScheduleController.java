@@ -27,7 +27,7 @@ public class EnlistmentScheduleController {
     private final EnlistmentScheduleService enlistmentScheduleService;
 
     /*
-     * 입영 가능 일정 조회 - v1
+     * 입영 가능 일정 조회
      * */
     @GetMapping
     public ResponseEntity<GlobalResponse> getEnlistmentList() {
@@ -35,7 +35,7 @@ public class EnlistmentScheduleController {
     }
 
     /*
-     * 입영 가능 일정 단건 조회 - v1
+     * 입영 가능 일정 단건 조회
      * */
     @GetMapping("/{scheduleId}")
     public ResponseEntity<GlobalResponse> getEnlistment(@PathVariable Long scheduleId) {
@@ -43,7 +43,7 @@ public class EnlistmentScheduleController {
     }
 
     /*
-     * 입영 신청 - v1
+     * 입영 신청 - 비관락
      * */
     @PostMapping
     public ResponseEntity<GlobalResponse> applyEnlistment(@AuthenticationPrincipal UserDetail userDetails, @RequestBody EnlistmentScheduleCreateRequest request) {
@@ -51,7 +51,7 @@ public class EnlistmentScheduleController {
     }
 
     /*
-     * 입영 신청 목록 조회 - v1
+     * 입영 신청 목록 조회
      * */
     @GetMapping("/pending")
     public ResponseEntity<GlobalResponse> getApplicationList() {
@@ -59,7 +59,7 @@ public class EnlistmentScheduleController {
     }
 
     /*
-     * 입영 신청 단건 조회 - v1
+     * 입영 신청 단건 조회
      * */
     @GetMapping("/pending/{scheduleId}")
     public ResponseEntity<GlobalResponse> getApplication(@PathVariable Long scheduleId) {
@@ -67,7 +67,7 @@ public class EnlistmentScheduleController {
     }
 
     /*
-     * 입영 신청 취소 - v1
+     * 입영 신청 취소
      * */
     @PatchMapping("/{applicationId}/cancel")
     public ResponseEntity<GlobalResponse> cancelApplication(@AuthenticationPrincipal UserDetail userDetails, @PathVariable Long applicationId) {
@@ -75,7 +75,7 @@ public class EnlistmentScheduleController {
     }
 
     /*
-     * 입영 신청 승인 - v1 / admin 전용
+     * 입영 신청 승인 / admin 전용
      * */
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("/admin/{applicationId}/approve")
@@ -84,7 +84,7 @@ public class EnlistmentScheduleController {
     }
 
     /*
-     * 입영 신청 연기 - v1
+     * 입영 신청 연기
      * */
     @PostMapping("/deferments")
     public ResponseEntity<GlobalResponse> defermentsSchedule(@AuthenticationPrincipal UserDetail userDetails, @RequestBody DefermentsPostRequest request) {
@@ -92,7 +92,7 @@ public class EnlistmentScheduleController {
     }
 
     /*
-     * 입영 신청 연기 다건조회/어드민 - v1
+     * 입영 신청 연기 다건조회/어드민
      * */
     @PreAuthorize("hasRole('ADMIN')")
     @GetMapping("/deferments")
@@ -101,7 +101,7 @@ public class EnlistmentScheduleController {
     }
 
     /*
-     * 입영 신청 연기 단건조회 - v1
+     * 입영 신청 연기 단건조회
      * */
     @GetMapping("/deferments/{defermentsId}")
     public ResponseEntity<GlobalResponse> getDeferment(@AuthenticationPrincipal UserDetail userDetails, @PathVariable Long defermentsId) {
@@ -109,7 +109,7 @@ public class EnlistmentScheduleController {
     }
 
     /*
-     * 입영 연기 요청 승인 / 반려 - v1
+     * 입영 연기 요청 승인 / 반려
      *
      */
     @PreAuthorize("hasRole('ADMIN')")
@@ -128,7 +128,7 @@ public class EnlistmentScheduleController {
     }
 
     /*
-     * 입영 연기 요청 일괄 승인 / 반려 - v1
+     * 입영 연기 요청 일괄 승인 / 반려
      *
      */
     @PreAuthorize("hasRole('ADMIN')")

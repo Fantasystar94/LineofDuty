@@ -2,11 +2,11 @@ package com.example.lineofduty.common.exception;
 
 import com.example.lineofduty.common.model.response.GlobalResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-
 import java.util.Objects;
 
 @RestControllerAdvice
@@ -30,4 +30,14 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.status(ex.getErrorMessage().getStatus()).body(GlobalResponse.exception(ex.getErrorMessage().getMessage()));
     }
+
+    // 그 외 모든 예외 처리
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<GlobalResponse> handleException(Exception e) {
+        log.error("알 수 없는 에러 발생 : ", e);
+        return ResponseEntity
+                .status(HttpStatus.INTERNAL_SERVER_ERROR)
+                .body(GlobalResponse.exception("서버 내부 오류 발생 : " + e.getMessage()));
+    }
+
 }
