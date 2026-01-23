@@ -54,6 +54,10 @@ public class SecurityConfig {
                                 "/swagger-ui/**",
                                 "/v3/api-docs/**"
                         ).permitAll()
+                        //test 컨트롤러단
+                        .requestMatchers(
+                                "/api/test/**"
+                        ).permitAll()
 
                         // 그 외 요청은 로그인 된 사람만 가능
                         .anyRequest().authenticated()
