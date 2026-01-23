@@ -1,6 +1,6 @@
 package com.example.lineofduty.user;
 import com.example.lineofduty.common.model.enums.Role;
-import com.example.lineofduty.domain.user.entity.User;
+import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.repository.UserBatchRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
