@@ -44,6 +44,9 @@ public class SecurityConfig {
                         .requestMatchers(HttpMethod.GET, "/api/qnas/**").permitAll()
                         .requestMatchers(HttpMethod.GET, "/api/products/**").permitAll()
 
+                        // 에러 페이지 요청 추가
+                        .requestMatchers("/error").permitAll()
+
                         // 관리자 전용 페이지
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         //swagger-ui 추가
