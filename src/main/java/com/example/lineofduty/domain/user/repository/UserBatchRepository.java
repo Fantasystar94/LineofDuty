@@ -1,6 +1,6 @@
 package com.example.lineofduty.domain.user.repository;
 
-import com.example.lineofduty.domain.user.User;
+import com.example.lineofduty.domain.user.entity.User;
 import lombok.RequiredArgsConstructor;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
