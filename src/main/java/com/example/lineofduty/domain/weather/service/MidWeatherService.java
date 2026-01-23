@@ -1,8 +1,9 @@
+
 package com.example.lineofduty.domain.weather.service;
 
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
-import com.example.lineofduty.domain.weather.dto.WeatherResponse;
+import com.example.lineofduty.domain.weather.dto.MidWeatherResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
@@ -17,7 +18,7 @@ import java.time.format.DateTimeFormatter;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class WeatherService {
+public class MidWeatherService {
 
     @Value("${weather.api.key}")
     private String serviceKey;
@@ -30,15 +31,15 @@ public class WeatherService {
 
     private final RestClient restClient = RestClient.create();
 
-    public WeatherResponse.Item getMidFcst(String landRegId, String tempRegId) {
+    public MidWeatherResponse.Item getMidFcst(String landRegId, String tempRegId) {
         // 발표 시각 계산
         String tmFc = calculateTmFc();
 
         // 1. 중기육상예보 조회 (강수확률, 날씨)
-        WeatherResponse.Item landItem = callApi(landApiUrl, landRegId, tmFc);
+        MidWeatherResponse.Item landItem = callApi(landApiUrl, landRegId, tmFc);
 
         // 2. 중기기온예보 조회 (최저/최고기온)
-        WeatherResponse.Item tempItem = callApi(tempApiUrl, tempRegId, tmFc);
+        MidWeatherResponse.Item tempItem = callApi(tempApiUrl, tempRegId, tmFc);
 
         // 3. 데이터 병합 (육상예보 객체에 기온 정보 추가)
         if (landItem != null && tempItem != null) {
@@ -48,7 +49,7 @@ public class WeatherService {
         return landItem;
     }
 
-    private WeatherResponse.Item callApi(String url, String regId, String tmFc) {
+    private MidWeatherResponse.Item callApi(String url, String regId, String tmFc) {
         URI uri = UriComponentsBuilder.fromHttpUrl(url)
                 .queryParam("ServiceKey", serviceKey)
                 .queryParam("pageNo", 1)
@@ -62,10 +63,10 @@ public class WeatherService {
         log.info("Weather API Request: {}", uri);
 
         try {
-            WeatherResponse response = restClient.get()
+            MidWeatherResponse response = restClient.get()
                     .uri(uri)
                     .retrieve()
-                    .body(WeatherResponse.class);
+                    .body(MidWeatherResponse.class);
 
             if (response == null || response.getResponse() == null || response.getResponse().getBody() == null) {
                 throw new CustomException(ErrorMessage.WEATHER_API_ERROR);

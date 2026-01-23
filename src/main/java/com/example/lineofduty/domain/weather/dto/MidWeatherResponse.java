@@ -1,6 +1,7 @@
 package com.example.lineofduty.domain.weather.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
@@ -11,14 +12,12 @@ import java.util.List;
 @NoArgsConstructor
 @ToString
 @JsonIgnoreProperties(ignoreUnknown = true)
-public class WeatherResponse {
+public class MidWeatherResponse {
 
     private Response response;
 
     @Getter
     @NoArgsConstructor
-    @ToString
-    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Response {
         private Header header;
         private Body body;
@@ -26,8 +25,6 @@ public class WeatherResponse {
 
     @Getter
     @NoArgsConstructor
-    @ToString
-    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Header {
         private String resultCode;
         private String resultMsg;
@@ -35,8 +32,6 @@ public class WeatherResponse {
 
     @Getter
     @NoArgsConstructor
-    @ToString
-    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Body {
         private String dataType;
         private Items items;
@@ -47,16 +42,13 @@ public class WeatherResponse {
 
     @Getter
     @NoArgsConstructor
-    @ToString
-    @JsonIgnoreProperties(ignoreUnknown = true)
     public static class Items {
         private List<Item> item;
     }
 
     @Getter
     @NoArgsConstructor
-    @ToString
-    @JsonIgnoreProperties(ignoreUnknown = true)
+    @JsonPropertyOrder({"rnSt4Am", "rnSt4Pm", "wf4Am", "wf4Pm", "taMin4", "taMax4", "rnSt5Am", "rnSt5Pm", "wf5Am", "wf5Pm","taMin5", "taMax5", "rnSt6Am", "rnSt6Pm", "wf6Am", "wf6Pm", "taMin6", "taMax6" ,"rnSt7Am", "rnSt7Pm", "wf7Am", "wf7Pm", "taMin7", "taMax7","rnSt8", "wf8", "rnSt9", "wf9", "rnSt10", "wf10"})
     public static class Item {
         private String regId; // 예보구역코드
 
@@ -84,7 +76,7 @@ public class WeatherResponse {
         private int rnSt7Pm;
         private String wf7Am;
         private String wf7Pm;
-        
+
         // 8~10일 후
         private int rnSt8;
         private String wf8;
@@ -122,7 +114,6 @@ public class WeatherResponse {
         private int taMin10;
         private int taMax10;
 
-        // 데이터 병합을 위한 메서드
         public void mergeTemperature(Item tempItem) {
             this.taMin4 = tempItem.taMin4;
             this.taMax4 = tempItem.taMax4;
