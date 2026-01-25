@@ -22,6 +22,10 @@ public enum SuccessMessage {
     ORDER_GET_SUCCESS("주문이 성공적으로 조회되었습니다."),
     ORDER_UPDATE_SUCCESS("주문이 수정되었습니다."),
 
+    PAYMENT_CONFIRM_SUCCESS("결제 승인 완료"),
+    PAYMENT_GET_SUCCESS("결제 조회 완료"),
+    PAYMENT_CANCEL_SUCCESS("결제 취소 완료"),
+
     QNA_CREATE_SUCCESS("질문이 생성되었습니다."),
     QNA_READ_SUCCESS("질문 단건 조회 성공"),
     QNA_UPDATE_SUCCESS("질문이 수정되었습니다"),
@@ -29,7 +33,6 @@ public enum SuccessMessage {
     NOTICE_UPDATE_SUCCESS("공지가 수정되었습니다."),
 
     // 201 CREATED
-
     NOTICE_CREATE_SUCCESS("공지사항이 등록되었습니다."),
     USER_CREATE_SUCCESS("회원가입이 완료되었습니다."),
     PRODUCT_CREATE_SUCCESS("상품 등록 완료"),

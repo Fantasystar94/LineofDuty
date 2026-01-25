@@ -5,11 +5,12 @@ import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 
 @Getter
-public class PaymentCreateRequest {
+public class PaymentConfirmRequest {
 
-    @NotNull(message = ValidationMessage.NOT_SELECTED_ORDER_ID)
-    private Long orderId;
-
+    @NotNull(message = ValidationMessage.NOT_BLANK_PAYMENT_KEY)
+    private String paymentKey;
+    @NotNull(message = ValidationMessage.NOT_BLANK_AMOUNT)
+    private int amount;
     @NotNull(message = ValidationMessage.NOT_BLANK_ORDER_ID_STRING)
-    private String orderIdString;
+    private String orderId;
 }
