@@ -31,6 +31,7 @@ public enum SuccessMessage {
     QNA_UPDATE_SUCCESS("질문이 수정되었습니다"),
     NOTICE_READ_SUCCESS("공지사항 상세 조회 성공"),
     NOTICE_UPDATE_SUCCESS("공지가 수정되었습니다."),
+    LOG_READ_SUCCESS("로그 조회 성공"),
 
     // 201 CREATED
     NOTICE_CREATE_SUCCESS("공지사항이 등록되었습니다."),
