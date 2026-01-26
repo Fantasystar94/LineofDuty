@@ -15,8 +15,8 @@ public class UserBatchRepository {
 
     private static final String INSERT_SQL = """
         INSERT INTO users
-        (username, email, password, role, resident_number, is_deleted, created_at, modified_at)
-        VALUES (?, ?, ?, ?, ?, false, now(), now())
+        (username, email, password, role, is_deleted, created_at, modified_at)
+        VALUES (?, ?, ?, ?, false, now(), now())
     """;
 
     public void batchInsert(List<User> users) {
@@ -30,7 +30,6 @@ public class UserBatchRepository {
                     ps.setString(2, user.getEmail());
                     ps.setString(3, user.getPassword());
                     ps.setString(4, user.getRole().name());
-                    ps.setString(5, user.getResidentNumber());
                 }
         );
     }
