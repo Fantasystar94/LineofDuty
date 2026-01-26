@@ -2,7 +2,8 @@ package com.example.lineofduty.common.exception;
 
 public final class ValidationMessage {
 
-    private ValidationMessage() {}
+    private ValidationMessage() {
+    }
 
     // --- 공통 메시지 ---
     public static final String NOT_BLANK_DEFAULT = "값은 필수입니다.";

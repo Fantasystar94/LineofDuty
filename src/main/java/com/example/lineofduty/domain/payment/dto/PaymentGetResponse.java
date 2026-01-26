@@ -5,9 +5,8 @@ import com.example.lineofduty.domain.payment.PaymentStatus;
 
 import java.time.OffsetDateTime;
 
-public class getPaymentResponse {
+public class PaymentGetResponse {
 
-    private final Long paymentId;
     private final PaymentStatus status;
     private final String orderId;
     private final String paymentKey;
@@ -15,8 +14,7 @@ public class getPaymentResponse {
     private final OffsetDateTime requestedAt;
     private final OffsetDateTime approvedAt;
 
-    public getPaymentResponse(Long paymentId, PaymentStatus status, String orderId, String paymentKey, Long amount, OffsetDateTime requestedAt, OffsetDateTime approvedAt) {
-        this.paymentId = paymentId;
+    public PaymentGetResponse(PaymentStatus status, String orderId, String paymentKey, Long amount, OffsetDateTime requestedAt, OffsetDateTime approvedAt) {
         this.status = status;
         this.orderId = orderId;
         this.paymentKey = paymentKey;
@@ -25,9 +23,8 @@ public class getPaymentResponse {
         this.approvedAt = approvedAt;
     }
 
-    public static getPaymentResponse from(Payment payment) {
-        return new getPaymentResponse(
-                payment.getId(),
+    public static PaymentGetResponse from(Payment payment) {
+        return new PaymentGetResponse(
                 payment.getStatus(),
                 payment.getOrderId(),
                 payment.getPaymentKey(),

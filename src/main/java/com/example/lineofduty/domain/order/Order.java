@@ -31,7 +31,7 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItems = new ArrayList<>();
 
-    // (status == true) => 사용 중, (status == false) => 사용됨(soft-delete)
+    // (status == true) => 주문서 사용 중임, (status == false) => 주문서 사용됨(soft-delete)
     @Column(name = "status", nullable = false)
     private boolean status = true;
 
