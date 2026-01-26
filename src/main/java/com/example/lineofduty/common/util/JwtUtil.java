@@ -16,7 +16,7 @@ import java.util.Date;
 public class JwtUtil {
     public static final String BEARER_PREFIX = "Bearer ";
     public static final String AUTHORIZATION = "Authorization";
-    public static final long TOKEN_TIME = 10 * 60 * 1000L;  // 10분
+    public static final long TOKEN_TIME = 50 * 60 * 1000L;  // 10분
     public static final long REFREST_TOKEN_TIME = 7 * 24 * 60 * 60 * 1000L; // 7일
 
     @Value("${JWT_SECRET}")
