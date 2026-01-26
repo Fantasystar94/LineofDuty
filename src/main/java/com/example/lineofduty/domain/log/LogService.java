@@ -13,7 +13,9 @@ public class LogService {
 
     @Transactional(propagation = Propagation.REQUIRES_NEW)
     public void saveLog(Long userId, String action, String status, String errorMessage, String requestData) {
-        SystemLog log = new SystemLog(userId, action, status, errorMessage, requestData);
+
+        SystemLog log = new SystemLog(userId, action, errorMessage, requestData);
+
         logRepository.save(log);
     }
 }

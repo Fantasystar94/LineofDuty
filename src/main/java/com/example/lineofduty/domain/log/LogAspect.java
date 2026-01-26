@@ -35,6 +35,7 @@ public class LogAspect {
         String method = request.getMethod();
         String uri = request.getRequestURI();
         String args = Arrays.toString(joinPoint.getArgs());
+        String className = joinPoint.getTarget().getClass().getName(); // 클래스명(패키지 포함)
 
         Long userId = null;
         try {
@@ -42,26 +43,35 @@ public class LogAspect {
             if (authentication != null && authentication.getPrincipal() instanceof UserDetail) {
                 userId = ((UserDetail) authentication.getPrincipal()).getUser().getId();
             }
-        } catch (Exception e) {
-            // 인증 정보 가져오기 실패 시 무시 (비로그인 요청 등)
+        } catch (Exception ignored) {
+
         }
 
         try {
-            // 성공 시에는 DB 저장 없이 결과만 반환
             return joinPoint.proceed();
-        } catch (Exception e) {
-            // 실패 로그 DB 저장
-            logService.saveLog(userId, method + " " + uri, "FAIL", e.getMessage(), args);
 
-            // 에러 로그 파일 저장
-            log.error("API Request Failed - UserID: {}, Method: {}, URI: {}, Error: {}", userId, method, uri, e.getMessage(), e);
+        } catch (Exception e) {
+            // 1. 에러 관련 로그 저장
+            log.error("API Request Failed - UserID: {}, Method: {}, URI: {}, Error: {}", userId, method, uri, e.getMessage());
+
+            // 2. 데이터베이스에 저장
+            if (isCriticalDomain(className)) {
+                log.error("=== Error DB Logging {} ===", className);
+                logService.saveLog(userId, method + " " + uri, "FAIL", e.getMessage(), args);
+            }
 
             throw e;
+
         } finally {
             long endTime = System.currentTimeMillis();
             long executionTime = endTime - startTime;
             // 일반 로그 파일 저장 (성공/실패 여부와 관계없이 실행 시간 등 기록)
             log.info("Request: {} {} | Time: {}ms", method, uri, executionTime);
         }
+    }
+
+
+    private boolean isCriticalDomain(String className) {
+        return className.contains(".payment.") || className.contains(".enlistmentSchedule.");
     }
 }

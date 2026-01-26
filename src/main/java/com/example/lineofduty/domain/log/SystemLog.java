@@ -22,10 +22,8 @@ public class SystemLog extends BaseEntity {
     private Long userId;
 
     @Column(name = "action")
-    private String action; // "입영 신청", "입영 취소"
+    private String action;
 
-    @Column(name = "status")
-    private String status; // "SUCCESS", "FAIL"
 
     @Column(name = "error_message")
     private String errorMessage;
@@ -33,10 +31,9 @@ public class SystemLog extends BaseEntity {
     @Column(name = "request_data", columnDefinition = "TEXT")
     private String requestData;
 
-    public SystemLog(Long userId, String action, String status, String errorMessage, String requestData) {
+    public SystemLog(Long userId, String action, String errorMessage, String requestData) {
         this.userId = userId;
         this.action = action;
-        this.status = status;
         this.errorMessage = errorMessage;
         this.requestData = requestData;
     }
