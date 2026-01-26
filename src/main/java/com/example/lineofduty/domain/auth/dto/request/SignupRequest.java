@@ -22,8 +22,5 @@ public class SignupRequest {
     @NotBlank(message = "이름은 필수입니다.")
     private String username;
 
-    @NotBlank(message = "주민번호는 필수입니다.")
-    private String residentNumber;
-
     private boolean admin = true;  // 테스트용으로 만듬
 }

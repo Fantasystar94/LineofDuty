@@ -33,9 +33,6 @@ public class AuthService {
         if (userRepository.existsByEmail(request.getEmail())) {
             throw new CustomException(ErrorMessage.DUPLICATE_EMAIL);
         }
-        if (userRepository.existsByResidentNumber(request.getResidentNumber())) {
-            throw new CustomException(ErrorMessage.DUPLICATE_RESIDENT_NUMBER);
-        }
 
         String encodedPassword = passwordEncoder.encode(request.getPassword());
         Role role = request.isAdmin() ? Role.ROLE_ADMIN : Role.ROLE_USER;
@@ -44,8 +41,7 @@ public class AuthService {
                 request.getUsername(),
                 request.getEmail(),
                 encodedPassword,
-                role,
-                request.getResidentNumber()
+                role
         );
 
         return userRepository.save(user).getId();
