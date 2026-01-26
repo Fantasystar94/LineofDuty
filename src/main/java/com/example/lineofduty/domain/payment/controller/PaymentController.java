@@ -38,28 +38,26 @@ public class PaymentController {
 
     // 결제 조회 (paymentKey)
     @GetMapping("/{paymentKey}")
-    public ResponseEntity<GlobalResponse> getPaymentByPaymentKey(@PathVariable String paymentKey, @AuthenticationPrincipal UserDetail userDetail) {
+    public ResponseEntity<GlobalResponse> getPaymentByPaymentKey(@PathVariable String paymentKey) {
 
-        long userId = userDetail.getUser().getId();
-        getPaymentResponse response = paymentService.getPaymentByPaymentKeyService(paymentKey, userId);
+        PaymentGetResponse response = paymentService.getPaymentByPaymentKeyService(paymentKey);
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.PAYMENT_GET_SUCCESS, response));
     }
 
     // 결제 조회 (orderIdString)
     @GetMapping("/orders/{orderIdString}")
-    public ResponseEntity<GlobalResponse> getPaymentByOrderId(@PathVariable String orderIdString, @AuthenticationPrincipal UserDetail userDetail) {
+    public ResponseEntity<GlobalResponse> getPaymentByOrderId(@PathVariable String orderIdString) {
 
-        long userId = userDetail.getUser().getId();
-        getPaymentResponse response = paymentService.getPaymentByOrderIdService(orderIdString, userId);
+        PaymentGetResponse response = paymentService.getPaymentByOrderIdService(orderIdString);
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.PAYMENT_GET_SUCCESS, response));
     }
 
     // 결제 취소
     @PostMapping("/{paymentKey}/cancel")
-    public ResponseEntity<GlobalResponse> cancelPayment(@PathVariable String paymentKey, @AuthenticationPrincipal UserDetail userDetail) {
+    public ResponseEntity<GlobalResponse> cancelPayment(@Valid @RequestBody PaymentCancelRequest request, @PathVariable String paymentKey, @AuthenticationPrincipal UserDetail userDetail) {
 
         long userId = userDetail.getUser().getId();
-        CancelPaymentResponse response = paymentService.cancelPaymentService(paymentKey, userId);
+        CancelPaymentResponse response = paymentService.cancelPaymentService(request, paymentKey, userId);
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.PAYMENT_CANCEL_SUCCESS, response));
     }
 

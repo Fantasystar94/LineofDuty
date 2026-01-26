@@ -12,7 +12,5 @@ public interface PaymentRepository extends JpaRepository<Payment, Long> {
 
     boolean existsByOrder(Order order);
 
-    Optional<Payment> findPaymentByPaymentKey(@NotNull(message = ValidationMessage.NOT_BLANK_PAYMENT_KEY) String paymentKey);
-
     Optional<Payment> findPaymentByOrderId(String orderIdString);
 }
