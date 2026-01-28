@@ -45,13 +45,10 @@ public class User extends BaseEntity {
         this.role = role;
     }
 
-    public void updateProfile(String email, String username, String password) {
+    public void updateProfile(String email, String password) {
 
         if (email != null && !email.isEmpty()) {
             this.email = email;
-        }
-        if (username != null && !username.isEmpty()) {
-            this.username = username;
         }
         if (password != null && !password.isEmpty()) {
             this.password = password;

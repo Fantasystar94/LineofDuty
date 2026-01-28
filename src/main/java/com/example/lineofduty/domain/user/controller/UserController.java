@@ -5,7 +5,9 @@ import com.example.lineofduty.common.model.response.GlobalResponse;
 import com.example.lineofduty.domain.user.dto.UserDetail;
 import com.example.lineofduty.domain.user.dto.UserResponse;
 import com.example.lineofduty.domain.user.dto.UserUpdateRequest;
+import com.example.lineofduty.domain.user.dto.UserWithdrawRequest;
 import com.example.lineofduty.domain.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -36,8 +38,13 @@ class UserController {
 
     // 탈퇴
     @DeleteMapping("/{userId}")
-    public ResponseEntity<GlobalResponse> withdrawUser(@AuthenticationPrincipal UserDetail userDetails) {
-        userService.withdrawUser(userDetails.getUser().getId());
+    public ResponseEntity<GlobalResponse> withdrawUser(
+            @AuthenticationPrincipal UserDetail userDetails,
+            @RequestBody @Valid UserWithdrawRequest request
+            ) {
+
+        userService.withdrawUser(userDetails.getUser().getId(), request.getPassword());
+
         return ResponseEntity.ok(GlobalResponse.successNodata(SuccessMessage.USER_DELETE_SUCCESS));
     }
 }

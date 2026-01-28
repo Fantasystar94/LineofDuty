@@ -47,30 +47,42 @@ public class UserService {
     // 내 정보 수정
     @Transactional
     public UserResponse updateProfile(Long userId, UserUpdateRequest request) {
+
         User user = findUserById(userId);
 
-        // 이메일 중복 검사 (이메일 변경시에만)
+        // 기존 비밀번호 검증
+        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+            throw new CustomException(ErrorMessage.INVALID_AUTH_INFO);
+        }
+
+        // 이메일 중복 검사
         if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
             if (userRepository.existsByEmail(request.getEmail())) {
                 throw new CustomException(ErrorMessage.DUPLICATE_EMAIL);
             }
         }
 
-        // 비밀번호 암호화 (입력된 경우에만)
+        // 새 비밀번호 암호화
         String encodedPassword = null;
-        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
-            encodedPassword = passwordEncoder.encode(request.getPassword());
+        if (request.getNewPassword() != null && !request.getNewPassword().isEmpty()) {
+            encodedPassword = passwordEncoder.encode(request.getNewPassword());
         }
 
-        user.updateProfile(request.getEmail(), request.getUsername(), encodedPassword);
+        user.updateProfile(request.getEmail(), encodedPassword);
 
         return new UserResponse(user);
     }
 
     // 회원 탈퇴
     @Transactional
-    public void withdrawUser(Long userId) {
+    public void withdrawUser(Long userId, String password) {
         User user = findUserById(userId);
+
+        // 비밀번호 불일치 시 예외처리
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new CustomException(ErrorMessage.PASSWORD_MISMATCH);
+        }
+
         user.withdrawUser();
     }
 
@@ -101,9 +113,15 @@ public class UserService {
 
     // 관리자 본인 탈퇴
     @Transactional
-    public UserWithdrawResponse withdrawAdmin(Long adminId) {
+    public UserWithdrawResponse withdrawAdmin(Long adminId, String password) {
         User user = findUserById(adminId);
+
+        if (!passwordEncoder.matches(password, user.getPassword())) {
+            throw new CustomException(ErrorMessage.PASSWORD_MISMATCH);
+        }
+
         user.withdrawUser();
+
         return new UserWithdrawResponse(
                 user.getId(),
                 user.getEmail(),
