@@ -1,19 +1,13 @@
 package com.example.lineofduty.domain.enlistmentSchedule.service;
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
-import com.example.lineofduty.common.model.enums.ApplicationStatus;
+import com.example.lineofduty.domain.enlistmentSchedule.ApplicationStatus;
 import com.example.lineofduty.common.model.enums.DefermentStatus;
 import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
-import com.example.lineofduty.domain.enlistmentSchedule.model.DefermentsPostRequest;
-import com.example.lineofduty.domain.enlistmentSchedule.model.BulkDefermentProcessResponse;
-import com.example.lineofduty.domain.enlistmentSchedule.model.DefermentsReadResponse;
+import com.example.lineofduty.domain.enlistmentSchedule.model.*;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.DefermentRepository;
-import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentApplicationReadResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentApplicationRepository;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.QueryEnlistmentApplicationRepository;
-import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentScheduleCreateRequest;
-import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentScheduleCreateResponse;
-import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentScheduleReadResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.QueryEnlistmentScheduleRepository;
 import com.example.lineofduty.domain.user.User;
@@ -21,6 +15,7 @@ import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.domain.enlistmentSchedule.Deferment;
 import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentSchedule;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,6 +25,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class EnlistmentScheduleService {
 
     private final EnlistmentScheduleRepository scheduleRepository;
@@ -44,9 +40,9 @@ public class EnlistmentScheduleService {
      * 입영 가능 일정 조회
      * */
     @Transactional(readOnly = true)
-    public List<EnlistmentScheduleReadResponse> getEnlistmentList() {
+    public Page<EnlistmentScheduleReadResponse> getEnlistmentList(Pageable pageable) {
 
-        return queryscheduleRepository.getEnlistmentListSortBy(LocalDate.now());
+        return queryscheduleRepository.getEnlistmentListSortBy(pageable, LocalDate.now());
 
     }
 
@@ -73,12 +69,15 @@ public class EnlistmentScheduleService {
 
         EnlistmentSchedule schedule = scheduleLockValidate(request.getScheduleId());
 
-        if (schedule.getRemainingSlots() <= 0) {
-            throw new CustomException(ErrorMessage.NO_REMAINING_SLOTS);
+        if (applicationRepository.existsByUserIdAndApplicationStatusIn(
+                userId,
+                List.of(ApplicationStatus.REQUESTED, ApplicationStatus.CONFIRMED)
+        )) {
+            throw new CustomException(ErrorMessage.DUPLICATE_SCHEDULE);
         }
 
-        if (applicationRepository.existsByUserIdAndScheduleId(userId, schedule.getId())) {
-            throw new CustomException(ErrorMessage.DUPLICATE_SCHEDULE);
+        if (schedule.getRemainingSlots() <= 0) {
+            throw new CustomException(ErrorMessage.NO_REMAINING_SLOTS);
         }
 
         //선택한 입영일자가 오늘 이전인지, 슬롯이 아직 남아있는지
@@ -87,7 +86,7 @@ public class EnlistmentScheduleService {
         }
 
         //신청 생성
-        EnlistmentApplication enlistmentApplication = new EnlistmentApplication(ApplicationStatus.PENDING,user.getId(),schedule.getId(),schedule.getEnlistmentDate());
+        EnlistmentApplication enlistmentApplication = new EnlistmentApplication(user.getId(),schedule.getId(),schedule.getEnlistmentDate());
 
         applicationRepository.save(enlistmentApplication);
 
@@ -108,17 +107,20 @@ public class EnlistmentScheduleService {
     ) {
         EnlistmentSchedule schedule = scheduleLockValidate(request.getScheduleId());
 
+        if (applicationRepository.existsByUserIdAndApplicationStatusIn(
+                userId,
+                List.of(ApplicationStatus.REQUESTED, ApplicationStatus.CONFIRMED)
+        )) {
+            throw new CustomException(ErrorMessage.DUPLICATE_SCHEDULE);
+        }
+
         if (schedule.getRemainingSlots() <= 0) {
             throw new CustomException(ErrorMessage.NO_REMAINING_SLOTS);
         }
 
-        if (applicationRepository.existsByUserIdAndScheduleId(userId, schedule.getId())) {
-            throw new CustomException(ErrorMessage.DUPLICATE_SCHEDULE);
-        }
 
         EnlistmentApplication application =
                 new EnlistmentApplication(
-                        ApplicationStatus.PENDING,
                         userId,
                         schedule.getId(),
                         schedule.getEnlistmentDate()
@@ -145,14 +147,15 @@ public class EnlistmentScheduleService {
      * 입영 신청 단건 조회 - v1 / Authentication 없음
      * */
     @Transactional(readOnly = true)
-    public EnlistmentApplicationReadResponse getApplication(Long scheduleId) {
-        EnlistmentApplication application = applicationRepository.findById(scheduleId).orElseThrow(()->new CustomException(ErrorMessage.SCHEDULE_NOT_FOUND));
+    public EnlistmentApplicationReadResponse getApplication(Long userId, Long applicationId) {
 
-        return EnlistmentApplicationReadResponse.from(application);
+        applicationValidate(applicationId);
+
+        return queryEnlistmentApplicationRepository.getApplicationWithUser(userId, applicationId);
     }
 
     /*
-     * 입영 신청 취소 - v1 / Authentication 없음
+     * 입영 신청 취소 - v1
      * */
     @Transactional
     public EnlistmentApplicationReadResponse cancelApplication(Long userId, Long applicationId) {
@@ -168,12 +171,12 @@ public class EnlistmentScheduleService {
         }
 
         // 3. 상태 검증
-        if (application.getApplicationStatus() != ApplicationStatus.PENDING) {
-            throw new CustomException(ErrorMessage.SCHEDULE_NOT_FOUND);
+        if (application.isRequested())  {
+            throw new CustomException(ErrorMessage.INVALID_APPLICATION_STATUS);
         }
 
         // 4. 상태 변경
-        application.changeStatus(ApplicationStatus.CANCELED);
+        application.cancel();
 
         // 5. 슬롯 복구
         EnlistmentSchedule schedule = scheduleRepository.findById(application.getScheduleId())
@@ -181,11 +184,11 @@ public class EnlistmentScheduleService {
 
         schedule.restoreSlot();
 
-        return EnlistmentApplicationReadResponse.from(application);
+        return queryEnlistmentApplicationRepository.getApplicationWithUser(userId, applicationId);
     }
 
     /*
-     * 입영 신청 승인 - v1 / Authentication 없음
+     * 입영 신청 승인 - v1
      * */
     @Transactional
     public EnlistmentApplicationReadResponse approveApplication(Long userId, Long applicationId) {
@@ -197,35 +200,34 @@ public class EnlistmentScheduleService {
                 .orElseThrow(() -> new CustomException(ErrorMessage.APPLICATION_NOT_FOUND));
 
         // 2. 상태 검증
-        if (application.getApplicationStatus() != ApplicationStatus.PENDING) {
+        if (application.isRequested()) {
             throw new CustomException(ErrorMessage.INVALID_APPLICATION_STATUS);
         }
 
         // 3. 상태 변경
-        application.changeStatus(ApplicationStatus.CONFIRMED);
+        application.confirm();
 
-        return EnlistmentApplicationReadResponse.from(application);
+        return queryEnlistmentApplicationRepository.getApplicationWithUser(userId, applicationId);
     }
 
     /*
-     * 입영 연기 요청 - v1 / Authentication 없음
+     * 입영 연기 요청 - v1
      * */
     @Transactional
-    public EnlistmentApplicationReadResponse defermentsSchedule(Long userId, DefermentsPostRequest request) {
+    public DefermentsReadResponse defermentsSchedule(Long userId, DefermentsPostRequest request) {
 
-        userValidate(userId);
+        User user = userValidate(userId);
 
         // 1. 신청 조회
         EnlistmentApplication application = applicationRepository.findById(request.getApplicationId())
                 .orElseThrow(() -> new CustomException(ErrorMessage.APPLICATION_NOT_FOUND));
 
         // 2. 상태 검증
-        if (application.getApplicationStatus() != ApplicationStatus.PENDING) {
+        if (application.isRequested()) {
             throw new CustomException(ErrorMessage.INVALID_APPLICATION_STATUS);
         }
 
-        // 3. 상태 변경
-        application.changeStatus(ApplicationStatus.REQUESTED);
+        EnlistmentSchedule schedule = scheduleValidate(request.getScheduleId());
 
         // 4. 저장
         Deferment deferment = new Deferment(
@@ -233,36 +235,34 @@ public class EnlistmentScheduleService {
                 userId,
                 request.getReasonDetail(),
                 request.getDefermentStatus(),
-                request.getRequestedUntil()
+                schedule.getEnlistmentDate()
         );
         defermentRepository.save(deferment);
 
-        return EnlistmentApplicationReadResponse.from(application);
+        return DefermentsReadResponse.from(deferment,user);
     }
 
     /*
-     * 입영 연기 다건조회 - v1 / Authentication 없음
+     * 입영 연기 다건조회 - v1
      * */
     @Transactional(readOnly = true)
     public Page<DefermentsReadResponse> getDefermentList(Pageable pageable) {
 
-        Page<Deferment> page = defermentRepository.findAll(pageable);
-
-        return page.map(DefermentsReadResponse::from);
+        return defermentRepository.findDefermentList(pageable);
     }
 
     /*
-     * 입영 연기 단건조회 - v1 / Authentication 없음
+     * 입영 연기 단건조회 - v1
      * */
     @Transactional(readOnly = true)
     public DefermentsReadResponse getDeferment(Long userId, Long defermentId) {
-
+        User user = userValidate(userId);
         Deferment deferment = defermentRepository
                 .findByIdAndUserId(defermentId, userId).orElseThrow(
                         ()-> new CustomException(ErrorMessage.DEFERMENT_NOT_FOUND)
                 );
 
-        return DefermentsReadResponse.from(deferment);
+        return DefermentsReadResponse.from(deferment, user);
     }
 
     /*
@@ -270,35 +270,52 @@ public class EnlistmentScheduleService {
      * 관리자 전용
      */
     @Transactional
-    public EnlistmentApplicationReadResponse processDeferment(Long applicationId,
-            DefermentStatus decisionStatus   // APPROVED / REJECTED
-    ) {
+    public EnlistmentApplicationReadResponse processDeferment(Long defermentsId, DefermentPatchRequest request) {
+
+        // 1. 연기 요청 조회
+        Deferment deferment = defermentRepository.findById(defermentsId)
+                .orElseThrow(()-> new CustomException(ErrorMessage.DEFERMENT_NOT_FOUND));
 
 
-        // 1. 신청 조회
-        EnlistmentApplication application = applicationRepository.findById(applicationId)
+        // 2. 신청 조회
+        EnlistmentApplication application = applicationRepository.findById(deferment.getApplicationId())
                 .orElseThrow(() -> new CustomException(ErrorMessage.APPLICATION_NOT_FOUND));
 
+        User user = userValidate(application.getUserId());
+
         // 2. 상태 검증
-        if (application.getApplicationStatus() != ApplicationStatus.REQUESTED) {
+        if (application.isConfirmed()) {
             throw new CustomException(ErrorMessage.INVALID_APPLICATION_STATUS);
         }
 
-        // 3. 연기 요청 조회
-        Deferment deferment = defermentRepository.findByApplicationId(applicationId)
-                .orElseThrow(()-> new CustomException(ErrorMessage.DEFERMENT_NOT_FOUND));
-
         // 4. 승인 / 반려 처리
-        if (decisionStatus == DefermentStatus.APPROVED) {
-            application.changeStatus(ApplicationStatus.DEFERRED);
-            deferment.approve();
-        } else if (decisionStatus == DefermentStatus.REJECTED) {
-            deferment.reject();
+        if (request.getDecisionStatus() == DefermentStatus.APPROVED) {
+
+            //바뀔 입영 스케쥴
+            EnlistmentSchedule schedule = scheduleRepository.findByEnlistmentDate(deferment.getChangedDate());
+            //슬롯 차감
+            schedule.slotDeduct();
+
+            //이전 스케쥴
+            EnlistmentSchedule preSchedule = scheduleValidate(application.getScheduleId());
+            //슬롯 되돌리기
+            preSchedule.restoreSlot();
+
+            application.applyDeferredDate(schedule.getEnlistmentDate());
+
+            application.confirm();
+
+        } else if (request.getDecisionStatus() == DefermentStatus.REJECTED) {
+
+            application.reject();
+
         } else {
+
             throw new CustomException(ErrorMessage.INVALID_DEFERMENT_STATUS);
+
         }
 
-        return EnlistmentApplicationReadResponse.from(application);
+        return queryEnlistmentApplicationRepository.getApplicationWithUser(user.getId(), application.getId());
     }
 
     @Transactional(readOnly = true)
@@ -315,31 +332,50 @@ public class EnlistmentScheduleService {
         List<EnlistmentApplication> lists = applicationRepository
                 .findEnlistmentApplicationByApplicationStatus(ApplicationStatus.REQUESTED);
 
-        if (lists.isEmpty()) {  //하나도 없으면 0, 0 으로 반환
+        if (lists.isEmpty()) {
             return new BulkDefermentProcessResponse(0, 0);
         }
-        //완료된 카운트 기본값
+
         int processedCount = 0;
 
-        for (EnlistmentApplication list : lists) {
-            Deferment deferment = defermentRepository.findByApplicationId(list.getId())
+        for (EnlistmentApplication application : lists) {
+            Deferment deferment = defermentRepository.findByApplicationId(application.getId())
                     .orElseThrow(() -> new CustomException(ErrorMessage.DEFERMENT_NOT_FOUND));
 
             if (decisionStatus == DefermentStatus.APPROVED) {
-                if (!(list.getApplicationStatus() == ApplicationStatus.DEFERRED)) {
-                    list.changeStatus(ApplicationStatus.DEFERRED);
-                    deferment.approve();
+
+                if (application.isRequested()) {
+                    // 바뀔 입영 스케쥴
+                    EnlistmentSchedule schedule = scheduleRepository.findByEnlistmentDate(deferment.getChangedDate());
+                    schedule.slotDeduct();
+
+                    // 이전 스케쥴
+                    EnlistmentSchedule preSchedule = scheduleValidate(application.getScheduleId());
+                    preSchedule.restoreSlot();
+
+                    // 신청에 반영
+                    application.applyDeferredDate(schedule.getEnlistmentDate());
+                    application.confirm();
                 }
+
+            } else if (decisionStatus == DefermentStatus.REJECTED) {
+                application.reject();
             } else {
-                deferment.reject();
+                throw new CustomException(ErrorMessage.INVALID_DEFERMENT_STATUS);
             }
+
             processedCount++;
         }
+
         return new BulkDefermentProcessResponse(lists.size(), processedCount);
     }
 
     private User userValidate(Long userId) {
         return userRepository.findById(userId).orElseThrow(()-> new CustomException(ErrorMessage.USER_NOT_FOUND));
+    }
+
+    private void applicationValidate(Long applicationId) {
+        applicationRepository.findById(applicationId).orElseThrow(() -> new CustomException(ErrorMessage.APPLICATION_NOT_FOUND));
     }
 
     private EnlistmentSchedule scheduleValidate(Long scheduleId) {

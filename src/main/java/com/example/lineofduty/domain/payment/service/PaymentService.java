@@ -14,6 +14,7 @@ import com.example.lineofduty.domain.product.Product;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -25,9 +26,12 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.time.OffsetDateTime;
 import java.util.List;
+import java.util.Base64;
+import java.nio.charset.StandardCharsets;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class PaymentService {
 
     private final OrderRepository orderRepository;
@@ -81,7 +85,9 @@ public class PaymentService {
     // 결제 승인
     @Transactional
     public PaymentConfirmResponse confirmPaymentService(PaymentConfirmRequest request) {
-
+        log.info(request.getOrderId());
+        log.info(request.getPaymentKey());
+        log.info(String.valueOf(request.getAmount()));
         // 승인할 결제(Payment) 찾아
         Payment payment = paymentRepository.findPaymentByOrderId(request.getOrderId()).orElseThrow(
                 () -> new CustomException(ErrorMessage.NOT_FOUND_PAYMENT)
@@ -116,9 +122,12 @@ public class PaymentService {
         );
 
         try {
+
+            String encodedKey = Base64.getEncoder()
+                    .encodeToString((secretKey + ":").getBytes(StandardCharsets.UTF_8));
             HttpRequest httpRequest = HttpRequest.newBuilder()
                     .uri(URI.create(TOSS_CONFIRM_URL))
-                    .header("Authorization", "Basic " + secretKey)
+                    .header("Authorization", "Basic " + encodedKey)
                     .header("Content-Type", "application/json")
                     .method("POST", HttpRequest.BodyPublishers.ofString(body)
                     )
@@ -131,7 +140,7 @@ public class PaymentService {
             JsonNode rootNode = objectMapper.readTree(response.body());
 
             // toss에서 에러를 출력할 시 에러 반환
-            if (rootNode.get("message").asText() != null) {
+            if (rootNode.has("message")) {
                 throw new CustomTossResponseException(rootNode.get("message").asText());
             }
 

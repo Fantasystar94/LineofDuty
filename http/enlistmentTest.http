@@ -1,20 +1,35 @@
 @baseUrl = http://localhost:8080
-#@accessToken = eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIyIiwidXNlclJvbGUiOiJST0xFX0FETUlOIiwiaWF0IjoxNzY4Nzg4MDQxLCJleHAiOjE3Njg3OTE2NDF9.hQ0pm_LRqA2kAyf_PVRFyR2cDawy0vqscs_YadibOSk
+#@accessToken = 초기값 (로그인 후 자동 세팅됨)
 
-### SIGNIN
+################################
+### AUTH
+################################
+
+### SIGNUP
 POST {{baseUrl}}/api/auth/signup
 Content-Type: application/json
 
 {
-  "email": "testuser32333332@example.com",
+  "email": "test44444@example.com",
   "password": "Test1234!",
   "username": "test3",
-  "residentNumber": "910101-1234169",
   "admin": false
 }
 
-
 ### LOGIN
+POST {{baseUrl}}/api/auth/login
+Content-Type: application/json
+
+{
+  "email": "test44444@example.com",
+  "password": "Test1234!"
+}
+
+> {%
+    client.global.set("accessToken", response.body.data.accessToken);
+%}
+
+### ADMINLOGIN
 POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
@@ -24,18 +39,31 @@ Content-Type: application/json
 }
 
 > {%
-    client.global.set("accessToken", response.body.data.token);
+    client.global.set("accessToken", response.body.data.accessToken);
 %}
 
+################################
+### ENLISTMENT SCHEDULE (입영 가능 일정)
+################################
+
 ### GET ENLISTMENT LIST
-GET {{baseUrl}}/api/enlistment
+GET {{baseUrl}}/api/enlistment?page=0&size=5
 Authorization: Bearer {{accessToken}}
 
 ### GET ENLISTMENT DETAIL
-GET {{baseUrl}}/api/enlistment/3
+GET {{baseUrl}}/api/enlistment/5
 Authorization: Bearer {{accessToken}}
+
+### SEARCH ENLISTMENT (기간 조회)
+GET {{baseUrl}}/api/enlistment/search?startDate=2026-01-01&endDate=2029-12-01&page=0&size=10
+Authorization: Bearer {{accessToken}}
+
+################################
+### ENLISTMENT APPLICATION (입영 신청)
+################################
+
 ### APPLY ENLISTMENT
-POST {{baseUrl}}/api/enlistment
+POST {{baseUrl}}/api/enlistment-applications
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
@@ -44,84 +72,87 @@ Content-Type: application/json
 }
 
 ### GET APPLICATION LIST
-GET {{baseUrl}}/api/enlistment/pending
+GET {{baseUrl}}/api/enlistment-applications
 Authorization: Bearer {{accessToken}}
 
 ### GET APPLICATION DETAIL
-GET {{baseUrl}}/api/enlistment/pending/1
+GET {{baseUrl}}/api/enlistment-applications/8525
 Authorization: Bearer {{accessToken}}
 
 ### CANCEL APPLICATION
-PATCH {{baseUrl}}/api/enlistment/2/cancel
+PATCH {{baseUrl}}/api/enlistment-applications/8525/cancel
 Authorization: Bearer {{accessToken}}
+
+################################
+### DEFERMENT (연기 신청 / 사용자)
+################################
+
+### APPLY DEFERMENT
+POST {{baseUrl}}/api/deferments
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json
+
+{
+  "applicationId": 8526,
+  "defermentStatus": "ILLNESS",
+  "reasonDetail": "다리가 부러져서 치료 후 입대 예정",
+  "scheduleId": 25
+}
+
+### GET DEFERMENT DETAIL (USER)
+GET {{baseUrl}}/api/deferments/1
+Authorization: Bearer {{accessToken}}
+
+################################
+### ADMIN – ENLISTMENT APPLICATION
+################################
 
 ### APPROVE APPLICATION (ADMIN)
-PATCH {{baseUrl}}/api/enlistment/1/approve
+PATCH {{baseUrl}}/api/admin/enlistment-applications/1/approve
 Authorization: Bearer {{accessToken}}
 
-### GET APPLICATION LIST
-GET {{baseUrl}}/api/enlistment/search?startDate=2026-01-01&endDate=2029-12-01&page=0&size=10
+################################
+### ADMIN – DEFERMENT
+################################
+
+### GET DEFERMENT LIST (ADMIN)
+GET {{baseUrl}}/api/admin/deferments?page=0&size=10
 Authorization: Bearer {{accessToken}}
 
-### DEFER ENLISTMENT
-#private Long applicationId;
-#private DefermentStatus defermentStatus;
-#private String reasonDetail;
-#private LocalDate requestedUntil;
-POST {{baseUrl}}/api/enlistment/deferments
-Authorization: Bearer {{accessToken}}
-Content-Type: application/json
-
-{
-  "applicationId": 1,
-  "defermentStatus": "ILLNESS",
-  "reasonDetail": "존나아픔",
-  "requestedUntil": "2026-03-01"
-}
-
-### GET DEFERMENT LIST
-GET {{baseUrl}}/api/enlistment/deferments?page=0&size=10
-Authorization: Bearer {{accessToken}}
-
-### GET DEFERMENT DETAIL
-GET {{baseUrl}}/api/enlistment/deferments/1
-Authorization: Bearer {{accessToken}}
-
-### PATCH DEFERMENT APPROVE/REJECT
-PATCH {{baseUrl}}/api/enlistment/admin/deferments/5
+### PROCESS DEFERMENT (APPROVE / REJECT)
+PATCH {{baseUrl}}/api/admin/deferments/15
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
- "decisionStatus": "APPROVED"
+  "decisionStatus": "REJECTED"
 }
 
-### PATCH DEFERMENTBULK APPROVE/REJECT
-PATCH {{baseUrl}}/api/enlistment/admin/deferments/bulk
+### PROCESS DEFERMENT BULK
+PATCH {{baseUrl}}/api/admin/deferments/bulk
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
- "decisionStatus": "APPROVED"
+  "decisionStatus": "APPROVED"
 }
 
-### GET DASHBOARDSUMMARY
+################################
+### ADMIN – DASHBOARD
+################################
+
+### GET DASHBOARD SUMMARY
 GET {{baseUrl}}/api/admin/dashboard/summary
 Authorization: Bearer {{accessToken}}
-Content-Type: application/json
 
-### GET DASHBOARDENLISTMENTSUMMARY
+### GET DASHBOARD ENLISTMENT SUMMARY
 GET {{baseUrl}}/api/admin/dashboard/enlistment-schedule
 Authorization: Bearer {{accessToken}}
-Content-Type: application/json
 
-### GET DASHBOARDENLISTMENTSUMMARY
-GET {{baseUrl}}/api/admin/dashboard/pending
+### GET DASHBOARD PENDING
+GET {{baseUrl}}/api/admin/dashboard/requested
 Authorization: Bearer {{accessToken}}
-Content-Type: application/json
 
-
-### GET DASHBOARDENLISTMENTSUMMARY
+### GET DASHBOARD DEFERMENTS
 GET {{baseUrl}}/api/admin/dashboard/deferments
 Authorization: Bearer {{accessToken}}
-Content-Type: application/json
