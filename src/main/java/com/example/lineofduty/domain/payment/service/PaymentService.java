@@ -86,7 +86,7 @@ public class PaymentService {
     public PaymentConfirmResponse confirmPaymentService(PaymentConfirmRequest request) {
 
         // 승인할 결제(Payment) 찾아
-        Payment payment = paymentRepository.findByOrderNumber(request.getOrderNumber()).orElseThrow(
+        Payment payment = paymentRepository.findByPaymentKey(request.getPaymentKey()).orElseThrow(
                 () -> new CustomException(ErrorMessage.NOT_FOUND_PAYMENT)
         );
 
@@ -109,7 +109,7 @@ public class PaymentService {
                         }
                         """,
                 payment.getPaymentKey(),
-                request.getOrderNumber(),
+                payment.getOrderNumber(),
                 payment.getTotalPrice()
         );
 
@@ -170,7 +170,7 @@ public class PaymentService {
             JsonNode rootNode = objectMapper.readTree(response.body());
 
             // toss에서 에러를 출력할 시 에러 반환
-            if (rootNode.get("message").asText() != null) {
+            if (rootNode.has("message")) {
                 throw new CustomTossResponseException(rootNode.get("message").asText());
             }
 
@@ -193,14 +193,14 @@ public class PaymentService {
         }
     }
 
-    // 결제 조회 (orderIdString)
+    // 결제 조회 (orderNumber)
     @Transactional(readOnly = true)
-    public PaymentGetResponse getPaymentByOrderIdService(String orderIdString) {
+    public PaymentGetResponse getPaymentByOrderIdService(String orderNumber) {
 
         // 토스로 결제 요청 보내
         try {
             HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(TOSS_GET_BY_ORDERID_URL + orderIdString))
+                    .uri(URI.create(TOSS_GET_BY_ORDERID_URL + orderNumber))
                     .header("Authorization", "Basic " + encodeSecretKey(secretKey))
                     .method("GET", HttpRequest.BodyPublishers.noBody())
                     .build();
@@ -211,14 +211,13 @@ public class PaymentService {
             JsonNode rootNode = objectMapper.readTree(response.body());
 
             // toss에서 에러를 출력할 시 에러 반환
-            if (rootNode.get("message").asText() != null) {
+            if (rootNode.has("message")) {
                 throw new CustomTossResponseException(rootNode.get("message").asText());
             }
 
             // toss에서 정상 값을 반환할 시 값 추출
             String paymentKey = rootNode.get("paymentKey").asText();
             String orderName = rootNode.get("orderName").asText();
-            String orderNumber = rootNode.get("orderId").asText();
 
             Order order = orderRepository.findByOrderNumber(orderNumber).orElseThrow(
                     () -> new CustomException(ErrorMessage.ORDER_NOT_FOUND)
@@ -287,7 +286,7 @@ public class PaymentService {
             JsonNode rootNode = objectMapper.readTree(response.body());
 
             // toss에서 에러를 출력할 시 에러 반환
-            if (rootNode.get("message").asText() != null) {
+            if (rootNode.has("message")) {
                 throw new CustomTossResponseException(rootNode.get("message").asText());
             }
 
