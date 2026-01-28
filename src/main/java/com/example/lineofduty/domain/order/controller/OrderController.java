@@ -37,14 +37,6 @@ public class OrderController {
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.ORDER_GET_SUCCESS, response));
     }
 
-    // 주문 상세 조회
-    @GetMapping("/{orderId}/orderItems/{orderItemId}")
-    public ResponseEntity<GlobalResponse> getOrderItem(@PathVariable Long orderId, @PathVariable Long orderItemId) {
-
-        OrderItemGetResponse response = orderService.getOrderItemService(orderId, orderItemId);
-        return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.ORDER_GET_SUCCESS, response));
-    }
-
     // 주문 상태 수정
     @PatchMapping("/{orderId}/orderItems/{orderItemId}")
     public ResponseEntity<GlobalResponse> updateOrder(@PathVariable Long orderId, @PathVariable Long orderItemId,@Valid @RequestBody OrderUpdateRequest request) {
