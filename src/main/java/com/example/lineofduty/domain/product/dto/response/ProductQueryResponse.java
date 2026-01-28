@@ -4,23 +4,24 @@ import com.example.lineofduty.common.model.enums.ProductStatus;
 import com.example.lineofduty.domain.product.Product;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+
 import java.time.LocalDateTime;
 
-@AllArgsConstructor
 @Getter
-public class ProductResponse {
+@AllArgsConstructor
+public class ProductQueryResponse {
 
-    private Long productId;
-    private String name;
-    private String description;
-    private Long price;
-    private Long stock;
-    private ProductStatus status;
-    private LocalDateTime createdAt;
-    private LocalDateTime modifiedAt;
+    private final Long id;
+    private final String name;
+    private final String description;
+    private final Long price;
+    private final Long stock;
+    private final ProductStatus status;
+    private final LocalDateTime createdAt;
+    private final LocalDateTime modifiedAt;
 
-    public static ProductResponse from(Product product) {
-        return new ProductResponse(
+    public static ProductQueryResponse from(Product product) {
+        return new ProductQueryResponse(
                 product.getId(),
                 product.getName(),
                 product.getDescription(),

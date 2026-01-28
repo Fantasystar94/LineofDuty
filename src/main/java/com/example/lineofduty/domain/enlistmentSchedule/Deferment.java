@@ -34,22 +34,13 @@ public class Deferment extends BaseEntity {
     @Column(nullable = false)
     private DefermentStatus status;
 
-    private LocalDate requestedUntil;
+    private LocalDate changedDate;
 
-    public Deferment(Long applicationId, Long userId, String reason, DefermentStatus status, LocalDate requestedUntil) {
+    public Deferment(Long applicationId, Long userId, String reason, DefermentStatus status, LocalDate changedDate) {
         this.applicationId = applicationId;
         this.userId = userId;
         this.reason = reason;
         this.status = status;
-        this.requestedUntil = requestedUntil;
+        this.changedDate = changedDate;
     }
-
-    public void approve() {
-        this.status = DefermentStatus.APPROVED;
-    }
-
-    public void reject() {
-        this.status = DefermentStatus.REJECTED;
-    }
-
 }

@@ -24,4 +24,6 @@ public interface EnlistmentScheduleRepository extends JpaRepository<EnlistmentSc
     @Lock(LockModeType.PESSIMISTIC_WRITE)
     @Query("select s from EnlistmentSchedule s where s.id = :id")
     Optional<EnlistmentSchedule> findByIdWithLock(@Param("id") Long id);
+
+    EnlistmentSchedule findByEnlistmentDate(LocalDate enlistmentDate);
 }

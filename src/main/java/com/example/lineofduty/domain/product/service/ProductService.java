@@ -3,14 +3,16 @@ package com.example.lineofduty.domain.product.service;
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.lock.DistributedLock;
-import com.example.lineofduty.common.model.enums.ApplicationStatus;
+import com.example.lineofduty.common.model.enums.ProductStatus;
 import com.example.lineofduty.domain.product.dto.request.ProductRequest;
 import com.example.lineofduty.domain.product.dto.response.ProductResponse;
 import com.example.lineofduty.domain.product.repository.ProductRepository;
 import com.example.lineofduty.domain.product.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -37,7 +39,7 @@ public class ProductService {
             throw new CustomException(ErrorMessage.INVALID_STOCK);
         }
 
-        Product product = new Product(request.getName(), request.getDescription(), request.getPrice(), request.getStock(), ApplicationStatus.ProductStatus.ON_SALE);
+        Product product = new Product(request.getName(), request.getDescription(), request.getPrice(), request.getStock(), ProductStatus.ON_SALE);
         Product savedProduct = productRepository.save(product);
 
         return ProductResponse.from(savedProduct);
@@ -55,8 +57,17 @@ public class ProductService {
     // 상품 목록 조회
     @DistributedLock(key = "'product:' + #productId", waitTime = 5, leaseTime = 3)
     @Transactional(readOnly = true)
-    public Page<ProductResponse> getProductList(Pageable pageable) {
-        Page<Product> products = productRepository.findAll(pageable);
+    public Page<ProductResponse> getProductList(int page, int size, String sort, String direction, String keyword) {
+        Sort.Direction sortDirection = direction.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sort));
+
+        Page<Product> products;
+
+        if (keyword == null || keyword.trim().isEmpty()) {
+            products = productRepository.findAll(pageable);
+        } else {
+            products = productRepository.searchByKeyword(keyword, pageable);
+        }
 
         return products.map(ProductResponse::from);
     }
