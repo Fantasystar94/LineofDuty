@@ -8,6 +8,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.Optional;
 
 public interface EnlistmentScheduleRepository extends JpaRepository<EnlistmentSchedule, Long> {
@@ -26,4 +27,5 @@ public interface EnlistmentScheduleRepository extends JpaRepository<EnlistmentSc
     Optional<EnlistmentSchedule> findByIdWithLock(@Param("id") Long id);
 
     EnlistmentSchedule findByEnlistmentDate(LocalDate enlistmentDate);
+
 }

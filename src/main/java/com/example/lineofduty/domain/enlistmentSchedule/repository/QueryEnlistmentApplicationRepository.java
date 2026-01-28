@@ -1,5 +1,6 @@
 package com.example.lineofduty.domain.enlistmentSchedule.repository;
 import com.example.lineofduty.domain.enlistmentSchedule.ApplicationStatus;
+import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
 import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentApplicationReadResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;

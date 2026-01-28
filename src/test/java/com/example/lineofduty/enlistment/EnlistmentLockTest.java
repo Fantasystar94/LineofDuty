@@ -27,8 +27,6 @@ public class EnlistmentLockTest {
 
     private int exceptionCount = 0;
     private final Long scheduleId = 17L;
-    AtomicInteger noSlot = new AtomicInteger();
-    AtomicInteger duplicate = new AtomicInteger();
     @Test
     void 비관락_테스트_정상작동() {
 
@@ -81,29 +79,41 @@ public class EnlistmentLockTest {
 
     @Test
     void 비관락_대량_테스트() throws InterruptedException {
-        int threadCount = 50;   //스레드
-        int requestCount = 500; //총 요청
+
+        int threadCount = 50;
+        int requestCount = 500;
 
         ExecutorService executor = Executors.newFixedThreadPool(threadCount);
         CountDownLatch startLatch = new CountDownLatch(1);
         CountDownLatch endLatch = new CountDownLatch(requestCount);
 
+        AtomicInteger success = new AtomicInteger();
+        AtomicInteger noSlot = new AtomicInteger();
+        AtomicInteger duplicate = new AtomicInteger();
+        AtomicInteger exceptionCount = new AtomicInteger();
+
+        long startTime = System.currentTimeMillis();
+
         for (int i = 0; i < requestCount; i++) {
-            Long userId = 10000L + i; // 유저는 전부 다르게
+            Long userId = 10000L + i;
 
             executor.submit(() -> {
                 try {
+
                     startLatch.await();
+
                     enlistmentScheduleService.applyEnlistmentTest(
                             userId,
                             new EnlistmentScheduleCreateRequest(scheduleId)
                     );
+
+                    success.incrementAndGet();
+
                 } catch (Exception e) {
-                    exceptionCount++;
-                    System.out.println("예외 발생: " + e.getMessage());
-                    if (Objects.equals(e.getMessage(), NO_REMAINING_SLOTS.getMessage())) {
+                    exceptionCount.incrementAndGet();
+                    if (e.getMessage().equals(NO_REMAINING_SLOTS.getMessage())) {
                         noSlot.incrementAndGet();
-                    } else if (Objects.equals(e.getMessage(), DUPLICATE_SCHEDULE.getMessage())) {
+                    } else if (e.getMessage().equals(DUPLICATE_SCHEDULE.getMessage())) {
                         duplicate.incrementAndGet();
                     }
                 } finally {
@@ -113,18 +123,24 @@ public class EnlistmentLockTest {
         }
 
         startLatch.countDown();
-
         endLatch.await();
-
         executor.shutdown();
+
+        long endTime = System.currentTimeMillis();
 
         EnlistmentSchedule schedule =
                 enlistmentScheduleRepository.findById(scheduleId).orElseThrow();
-        System.out.println("발생한 예외처리 : "+exceptionCount);
-        System.out.println("noSlot : " + noSlot);
-        System.out.println("duplicate : "+ duplicate);
-        System.out.println("남은 슬롯: " + schedule.getRemainingSlots());
 
+        System.out.println("====== JUnit 동시성 테스트 결과 ======");
+        System.out.println("전략: 비관락");
+        System.out.println("총 요청: " + requestCount);
+        System.out.println("성공: " + success.get());
+        System.out.println("실패: " + exceptionCount.get());
+        System.out.println("noSlot: " + noSlot.get());
+        System.out.println("duplicate: " + duplicate.get());
+        System.out.println("남은 슬롯: " + schedule.getRemainingSlots());
+        System.out.println("총 소요 시간(ms): " + (endTime - startTime));
     }
+
 
 }

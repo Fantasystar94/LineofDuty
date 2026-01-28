@@ -21,8 +21,9 @@ public class Deferment extends BaseEntity {
     @Column(name = "deferment_id")
     private Long id;
 
-    @Column(name = "application_id", nullable = false)
-    private Long applicationId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "application_id", nullable = false, unique = true)
+    private EnlistmentApplication application;
 
     @Column(name = "user_id", nullable = false)
     private Long userId;
@@ -36,8 +37,10 @@ public class Deferment extends BaseEntity {
 
     private LocalDate changedDate;
 
-    public Deferment(Long applicationId, Long userId, String reason, DefermentStatus status, LocalDate changedDate) {
-        this.applicationId = applicationId;
+
+
+    public Deferment(EnlistmentApplication application, Long userId, String reason, DefermentStatus status, LocalDate changedDate) {
+        this.application = application;
         this.userId = userId;
         this.reason = reason;
         this.status = status;
