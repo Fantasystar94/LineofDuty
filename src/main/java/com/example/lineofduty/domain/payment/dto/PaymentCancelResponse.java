@@ -5,7 +5,7 @@ import com.example.lineofduty.domain.payment.PaymentStatus;
 import lombok.Getter;
 
 @Getter
-public class CancelPaymentResponse {
+public class PaymentCancelResponse {
 
     private final Long paymentId;
     private final String paymentKey;
@@ -14,7 +14,7 @@ public class CancelPaymentResponse {
     private final Long canceledPrice;
     private final PaymentStatus paymentStatus;
 
-    public CancelPaymentResponse(Long paymentId, String paymentKey, String orderNumber, String orderName, Long totalPrice, PaymentStatus paymentStatus) {
+    public PaymentCancelResponse(Long paymentId, String paymentKey, String orderNumber, String orderName, Long totalPrice, PaymentStatus paymentStatus) {
         this.paymentId = paymentId;
         this.paymentKey = paymentKey;
         this.orderNumber = orderNumber;
@@ -23,8 +23,8 @@ public class CancelPaymentResponse {
         this.paymentStatus = paymentStatus;
     }
 
-    public static CancelPaymentResponse from(Payment payment) {
-        return new CancelPaymentResponse(
+    public static PaymentCancelResponse from(Payment payment) {
+        return new PaymentCancelResponse(
                 payment.getId(),
                 payment.getPaymentKey(),
                 payment.getOrder().getOrderNumber(),

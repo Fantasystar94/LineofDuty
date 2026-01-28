@@ -57,7 +57,7 @@ public class PaymentController {
     public ResponseEntity<GlobalResponse> cancelPayment(@Valid @RequestBody PaymentCancelRequest request, @PathVariable String paymentKey, @AuthenticationPrincipal UserDetail userDetail) {
 
         long userId = userDetail.getUser().getId();
-        CancelPaymentResponse response = paymentService.cancelPaymentService(request, paymentKey, userId);
+        PaymentCancelResponse response = paymentService.cancelPaymentService(request, paymentKey, userId);
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.PAYMENT_CANCEL_SUCCESS, response));
     }
 

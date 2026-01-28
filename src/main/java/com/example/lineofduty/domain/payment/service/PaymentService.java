@@ -238,7 +238,7 @@ public class PaymentService {
 
     // 결제 취소
     @Transactional
-    public CancelPaymentResponse cancelPaymentService(PaymentCancelRequest request, String paymentKey, long userId) {
+    public PaymentCancelResponse cancelPaymentService(PaymentCancelRequest request, String paymentKey, long userId) {
 
         Payment payment = paymentRepository.findByPaymentKey(paymentKey).orElseThrow(
                 () -> new CustomException(ErrorMessage.NOT_FOUND_PAYMENT)
@@ -297,7 +297,7 @@ public class PaymentService {
 
             // toss 반환 값에 맞추어 결제 정보 업데이트
             payment.updateByResponse(PaymentStatus.valueOf(status), paymentKey, totalPrice, requestedAt, approvedAt);
-            return CancelPaymentResponse.from(payment);
+            return PaymentCancelResponse.from(payment);
         } catch (IOException | InterruptedException ie) {
             throw new RuntimeException(ie);
         }
