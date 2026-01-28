@@ -13,8 +13,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -27,45 +25,58 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final EnlistmentApplicationRepository enlistmentApplicationRepository;
 
-    // 1. 내 정보 조회
-    public UserResponse getMyProfile(Long userId) {
-        return new UserResponse(findUserById(userId));
+    // userId로 조회
+    private User findUserById(Long userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorMessage.USER_NOT_FOUND));
+
+        // 탈퇴한 유저 조회 불가
+        if (user.isDeleted()) {
+            throw new CustomException(ErrorMessage.USER_WITHDRAWN);
+        }
+
+        return user;
     }
 
-    // 2. 내 정보 수정
+    // 내 정보 조회
+    public UserResponse getMyProfile(Long userId) {
+        User user = findUserById(userId);
+        return new UserResponse(user);
+    }
+
+    // 내 정보 수정
     @Transactional
     public UserResponse updateProfile(Long userId, UserUpdateRequest request) {
         User user = findUserById(userId);
 
-        if (StringUtils.hasText(request.getEmail()) && !user.getEmail().equals(request.getEmail())) {
+        // 이메일 중복 검사 (이메일 변경시에만)
+        if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
             if (userRepository.existsByEmail(request.getEmail())) {
                 throw new CustomException(ErrorMessage.DUPLICATE_EMAIL);
             }
         }
 
-        String newPassword = user.getPassword();
-        if (StringUtils.hasText(request.getPassword())) {
-            newPassword = passwordEncoder.encode(request.getPassword());
+        // 비밀번호 암호화 (입력된 경우에만)
+        String encodedPassword = null;
+        if (request.getPassword() != null && !request.getPassword().isEmpty()) {
+            encodedPassword = passwordEncoder.encode(request.getPassword());
         }
 
-        user.updateProfile(request.getEmail(), request.getUsername(), newPassword);
+        user.updateProfile(request.getEmail(), request.getUsername(), encodedPassword);
 
         return new UserResponse(user);
     }
 
-    // 3. 회원 탈퇴
+    // 회원 탈퇴
     @Transactional
     public void withdrawUser(Long userId) {
         User user = findUserById(userId);
-        if (user.isDeleted()) {
-            throw new CustomException(ErrorMessage.USER_WITHDRAWN);
-        }
-        user.updateIsDeleted();
+        user.withdrawUser();
     }
 
     // ------------------ [관리자] ------------------
 
-    // 4. 회원 전체 조회
+    // 회원 전체 조회
     public List<UserAdminResponse> getAllUsers() {
         return userRepository.findAll().stream()
                 .map(user -> {
@@ -76,34 +87,35 @@ public class UserService {
                 .collect(Collectors.toList());
     }
 
-    // 5. 상세 조회
+    // 특정 회원 상세 조회 (탈퇴한 유저도 확인 가능)
     public UserAdminResponse getUserById(Long userId) {
-        User user = findUserById(userId);
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new CustomException(ErrorMessage.USER_NOT_FOUND));
+
         UserAdminResponse response = new UserAdminResponse(user);
+
         fillEnlistmentInfo(response, user.getId());
+
         return response;
     }
 
-    // 6. 관리자 본인 탈퇴
+    // 관리자 본인 탈퇴
     @Transactional
     public UserWithdrawResponse withdrawAdmin(Long adminId) {
         User user = findUserById(adminId);
-        if (user.isDeleted()) {
-            throw new CustomException(ErrorMessage.USER_WITHDRAWN);
-        }
-        user.updateIsDeleted();
-
-        return new UserWithdrawResponse(user.getId(), true, LocalDateTime.now());
+        user.withdrawUser();
+        return new UserWithdrawResponse(
+                user.getId(),
+                user.getEmail(),
+                user.isDeleted(),
+                user.getDeletedAt()
+        );
     }
 
-
+    // 입영 정보
     private void fillEnlistmentInfo(UserAdminResponse response, Long userId) {
         enlistmentApplicationRepository.findByUserId(userId)
                 .ifPresent(response::setEnlistmentInfo);
     }
 
-    private User findUserById(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(() -> new CustomException(ErrorMessage.USER_NOT_FOUND));
-    }
 }

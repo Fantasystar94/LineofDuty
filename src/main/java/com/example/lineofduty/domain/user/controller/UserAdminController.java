@@ -22,21 +22,21 @@ public class UserAdminController {
     // 전체 조회
     @GetMapping
     public ResponseEntity<GlobalResponse> getAllUsers() {
-        List<UserAdminResponse> data = userService.getAllUsers();
-        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_ALL_READ_SUCCESS, data));
+        List<UserAdminResponse> responseList = userService.getAllUsers();
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_ALL_READ_SUCCESS, responseList));
     }
 
     // 상세 조회
     @GetMapping("/{userId}")
     public ResponseEntity<GlobalResponse> getUser(@PathVariable Long userId) {
-        UserAdminResponse data = userService.getUserById(userId);
-        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_READ_ADMIN_SUCCESS, data));
+        UserAdminResponse response = userService.getUserById(userId);
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_READ_SUCCESS, response));
     }
 
     // 관리자 본인 탈퇴
     @DeleteMapping("/{userId}")
     public ResponseEntity<GlobalResponse> withdrawAdmin(@AuthenticationPrincipal UserDetail userDetails) {
-        UserWithdrawResponse data = userService.withdrawAdmin(userDetails.getUser().getId());
-        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_DELETE_ADMIN_SUCCESS, data));
+        UserWithdrawResponse response = userService.withdrawAdmin(userDetails.getUser().getId());
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_DELETE_ADMIN_SUCCESS, response));
     }
 }

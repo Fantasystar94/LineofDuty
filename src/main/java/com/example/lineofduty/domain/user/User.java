@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
@@ -19,11 +19,11 @@ public class User extends BaseEntity {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false, length = 30)
-    private String username;
-
     @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false, length = 30)
+    private String username;
 
     @Column(nullable = false)
     private String password;
@@ -32,16 +32,17 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private Role role;
 
-    @ColumnDefault("0")
-    @Column(nullable = false, columnDefinition = "TINYINT(1)")
-    private boolean isDeleted;
+    @Column(name = "is_deleted", nullable = false)
+    private boolean isDeleted = false;
 
-    public User(String username, String email, String password, Role role) {
-        this.username = username;
+    @Column(name = "deleted_at")
+    private LocalDateTime deletedAt;
+
+    public User(String email, String username, String password, Role role) {
         this.email = email;
+        this.username = username;
         this.password = password;
         this.role = role;
-        this.isDeleted = false;
     }
 
     public void updateProfile(String email, String username, String password) {
@@ -49,18 +50,26 @@ public class User extends BaseEntity {
         if (email != null && !email.isEmpty()) {
             this.email = email;
         }
-
         if (username != null && !username.isEmpty()) {
             this.username = username;
         }
-
         if (password != null && !password.isEmpty()) {
             this.password = password;
         }
     }
 
-    public void updateIsDeleted() {
+    public void withdrawUser() {
         this.isDeleted = true;
+        this.deletedAt = LocalDateTime.now();
+    }
+
+    // 재가입 시 계정 복구 (탈퇴 취소 + 정보 갱신)
+    public void restore(String username, String password, Role role) {
+        this.username = username;
+        this.password = password;
+        this.role = role;
+        this.isDeleted = false;
+        this.deletedAt = null;
     }
 
 }

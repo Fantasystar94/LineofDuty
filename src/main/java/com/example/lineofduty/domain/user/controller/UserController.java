@@ -21,8 +21,8 @@ class UserController {
     // 조회
     @GetMapping("/{userId}")
     public ResponseEntity<GlobalResponse> getMyProfile(@AuthenticationPrincipal UserDetail userDetails) {
-        UserResponse data = userService.getMyProfile(userDetails.getUser().getId());
-        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_READ_SUCCESS, data));
+        UserResponse response = userService.getMyProfile(userDetails.getUser().getId());
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_READ_SUCCESS, response));
     }
 
     // 수정
@@ -30,8 +30,8 @@ class UserController {
     public ResponseEntity<GlobalResponse> updateProfile(
             @AuthenticationPrincipal UserDetail userDetails,
             @RequestBody UserUpdateRequest requestDto) {
-        UserResponse data = userService.updateProfile(userDetails.getUser().getId(), requestDto);
-        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_UPDATE_SUCCESS, data));
+        UserResponse response = userService.updateProfile(userDetails.getUser().getId(), requestDto);
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_UPDATE_SUCCESS, response));
     }
 
     // 탈퇴
