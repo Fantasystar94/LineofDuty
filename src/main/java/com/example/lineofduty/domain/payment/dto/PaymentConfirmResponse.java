@@ -1,8 +1,11 @@
 package com.example.lineofduty.domain.payment.dto;
 
 import com.example.lineofduty.domain.payment.Payment;
+import lombok.Getter;
+
 import java.time.OffsetDateTime;
 
+@Getter
 public class PaymentConfirmResponse {
 
     private final Long paymentId;

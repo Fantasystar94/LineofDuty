@@ -21,3 +21,6 @@ spring:
 
 # AES-256 암호화 키 - 주민번호 암호화
 AES_SECRET_KEY: ${AES_SECRET_KEY}
+
+toss:
+  secret-key: ${TOSS_SECRET_KEY}

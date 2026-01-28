@@ -2,6 +2,7 @@ package com.example.lineofduty.domain.enlistmentSchedule.model;
 
 import com.example.lineofduty.common.model.enums.DefermentStatus;
 import com.example.lineofduty.domain.enlistmentSchedule.Deferment;
+import com.example.lineofduty.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -14,18 +15,19 @@ public class DefermentsReadResponse {
     Long defermentsId;
     String reason;
     DefermentStatus status;
-    LocalDate requestedUntil;
+    LocalDate changedDate;
     LocalDateTime createdAt;
     LocalDateTime modifiedAt;
-
-    public static DefermentsReadResponse from(Deferment deferment) {
+    String username;
+    public static DefermentsReadResponse from(Deferment deferment, User user) {
         return new DefermentsReadResponse(
                 deferment.getId(),
                 deferment.getReason(),
                 deferment.getStatus(),
-                deferment.getRequestedUntil(),
+                deferment.getChangedDate(),
                 deferment.getCreatedAt(),
-                deferment.getModifiedAt()
+                deferment.getModifiedAt(),
+                user.getUsername()
         );
     }
 }

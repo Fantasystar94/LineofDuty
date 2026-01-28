@@ -17,17 +17,21 @@ import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentSchedu
 public class QueryEnlistmentScheduleRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
-    public List<EnlistmentScheduleReadResponse> getEnlistmentListSortBy(LocalDate now) {
-        return jpaQueryFactory
+    public Page<EnlistmentScheduleReadResponse> getEnlistmentListSortBy(Pageable pageable, LocalDate now) {
+        List<EnlistmentScheduleReadResponse> list = jpaQueryFactory
                 .select(Projections.constructor(EnlistmentScheduleReadResponse.class,
                         enlistmentSchedule.id,
                         enlistmentSchedule.enlistmentDate,
                         enlistmentSchedule.remainingSlots
                         ))
                 .from(enlistmentSchedule)
+                .offset(pageable.getOffset())
+                .limit(pageable.getPageSize())
                 .where(enlistmentSchedule.remainingSlots.ne(0), enlistmentSchedule.enlistmentDate.gt(now))
                 .orderBy(enlistmentSchedule.enlistmentDate.asc())
                 .fetch();
+
+        return new PageImpl<>(list, pageable, list.size());
     }
 
     public Page<EnlistmentScheduleReadResponse> searchEnlistment(LocalDate startDate, LocalDate endDate, Pageable pageable) {

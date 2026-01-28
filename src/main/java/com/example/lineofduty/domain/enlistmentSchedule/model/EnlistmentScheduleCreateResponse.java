@@ -1,6 +1,6 @@
 package com.example.lineofduty.domain.enlistmentSchedule.model;
 
-import com.example.lineofduty.common.model.enums.ApplicationStatus;
+import com.example.lineofduty.domain.enlistmentSchedule.ApplicationStatus;
 import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
