@@ -4,8 +4,6 @@ import com.example.lineofduty.common.model.enums.DefermentStatus;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
-import java.time.LocalDate;
-
 @Getter
 @AllArgsConstructor
 public class DefermentsPostRequest {

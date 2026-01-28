@@ -1,13 +1,9 @@
 package com.example.lineofduty.domain.enlistmentSchedule.repository;
-
 import com.example.lineofduty.domain.enlistmentSchedule.ApplicationStatus;
 import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.query.Param;
 import java.util.List;
 import java.util.Optional;
-
 
 public interface EnlistmentApplicationRepository extends JpaRepository<EnlistmentApplication, Long> {
 

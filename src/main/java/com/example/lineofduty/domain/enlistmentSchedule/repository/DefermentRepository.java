@@ -10,7 +10,6 @@ import org.springframework.data.jpa.repository.Query;
 import java.util.Optional;
 
 public interface DefermentRepository extends JpaRepository<Deferment, Long> {
-    Page<Deferment> findAll(Pageable pageable);
 
     @Query("SELECT new com.example.lineofduty.domain.enlistmentSchedule.model.DefermentsReadResponse( " +
             "d.id, d.reason, d.status, d.changedDate, d.createdAt, d.modifiedAt, u.username) " +
