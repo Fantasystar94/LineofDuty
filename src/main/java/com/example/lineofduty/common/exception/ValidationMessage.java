@@ -34,9 +34,9 @@ public final class ValidationMessage {
 
     // --- Payment 관련 ---
     public static final String NOT_SELECTED_ORDER_ID = "order id가 누락되었습니다.";
-    public static final String NOT_BLANK_ORDER_ID_STRING = "주문번호가 누락되었습니다.";
+    public static final String NOT_BLANK_ORDER_NUMBER = "주문번호가 누락되었습니다.";
     public static final String NOT_BLANK_PAYMENT_KEY = "결제 키 값이 누락되었습니다.";
-    public static final String NOT_BLANK_AMOUNT = "결제할 금액이 누락되었습니다.";
+    public static final String NOT_BLANK_CANCEL_REASON = "결제 취소 사유가 누락되었습니다";
 
     // --- 정규식 ---
     public static final String PASSWORD_REGEXP = "^(?=.*[a-zA-Z])(?=.*[0-9])(?=.*[~!@#$%])(?=\\S+$).{8,}$";
