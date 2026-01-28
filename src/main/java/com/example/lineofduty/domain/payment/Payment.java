@@ -23,14 +23,14 @@ public class Payment extends BaseEntity {
     @JoinColumn(name = "order_id", nullable = false)
     private Order order;
 
-    @Column(name = "amount", nullable = false)
-    private Long amount;
+    @Column(name = "total_price", nullable = false)
+    private Long totalPrice;
 
-    @Column(unique = true)
+    @Column(unique = true, nullable = false)
     private String paymentKey;
 
-    @Column(name = "order_id_string",unique = true, nullable = false)
-    private String orderId;
+    @Column(unique = true)
+    private String orderNumber;
 
     // 결제 상태 (READY, IN_PROGRESS, DONE, CANCELED, ABORTED)
     @Enumerated(EnumType.STRING)
@@ -40,10 +40,11 @@ public class Payment extends BaseEntity {
     private OffsetDateTime requestedAt;
     private OffsetDateTime approvedAt;
 
-    public Payment(Order order, String orderId) {
+    public Payment(Order order, String paymentKey) {
         this.order = order;
-        this.amount = order.getTotalPrice();
-        this.orderId = orderId;
+        this.totalPrice = order.getTotalPrice();
+        this.paymentKey = paymentKey;
+        this.orderNumber = order.getOrderNumber();
     }
 
     public void updateStatus(PaymentStatus paymentStatus) {
@@ -51,11 +52,10 @@ public class Payment extends BaseEntity {
     }
 
     // toss-api로 response 받아서 payment 업데이트
-    public void updateByResponse(PaymentStatus paymentStatus, String paymentKey, String orderId, long amount, OffsetDateTime requestedAt, OffsetDateTime approvedAt) {
+    public void updateByResponse(PaymentStatus paymentStatus, String paymentKey, Long amount, OffsetDateTime requestedAt, OffsetDateTime approvedAt) {
         this.status = paymentStatus;
         this.paymentKey = paymentKey;
-        this.orderId = orderId;
-        this.amount = amount;
+        this.totalPrice = amount;
         this.requestedAt = requestedAt;
         this.approvedAt = approvedAt;
     }

@@ -25,24 +25,32 @@ public class Order extends BaseEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    @Column(name = "order_name", nullable = false)
+    private String orderName;
+
+    @Column(name = "order_number", nullable = false, unique = true)
+    private String orderNumber;
+
     @Column(name = "total_price", nullable = false)
     private Long totalPrice;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<OrderItem> orderItems = new ArrayList<>();
+    private List<OrderItem> orderItemList = new ArrayList<>();
 
     // (status == true) => 주문서 사용 중임, (status == false) => 주문서 사용됨(soft-delete)
-    @Column(name = "status", nullable = false)
+    @Column(nullable = false)
     private boolean status = true;
 
-    public Order(User user, Long totalPrice, List<OrderItem> orderItems) {
+    public Order(User user, String orderName, String orderNumber, Long totalPrice, List<OrderItem> orderItemList) {
         this.user = user;
+        this.orderName = orderName;
+        this.orderNumber = orderNumber;
         this.totalPrice = totalPrice;
-        this.orderItems = orderItems;
+        this.orderItemList = orderItemList;
     }
 
     public void addOrderItem(OrderItem orderItem) {
-        orderItems.add(orderItem);
+        orderItemList.add(orderItem);
         this.totalPrice += orderItem.getOrderPrice() * orderItem.getQuantity();
         orderItem.updateOrder(this);
     }
@@ -53,6 +61,10 @@ public class Order extends BaseEntity {
 
     public void updateStatus(boolean status) {
         this.status = status;
+    }
+
+    public void updateOrderName(String orderName) {
+        this.orderName = orderName;
     }
 
 }
