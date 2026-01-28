@@ -150,7 +150,7 @@ public class EnlistmentScheduleService {
     public EnlistmentApplicationReadResponse getApplication(Long userId, Long applicationId) {
 
 
-        EnlistmentApplication application = applicationRepository.findById(applicationId).orElseThrow(()->new CustomException(ErrorMessage.APPLICATION_NOT_FOUND));
+        applicationValidate(applicationId);
 
 
         return queryEnlistmentApplicationRepository.getApplicationWithUser(userId, applicationId);
@@ -374,6 +374,10 @@ public class EnlistmentScheduleService {
 
     private User userValidate(Long userId) {
         return userRepository.findById(userId).orElseThrow(()-> new CustomException(ErrorMessage.USER_NOT_FOUND));
+    }
+
+    private EnlistmentApplication applicationValidate(Long applicationId) {
+        return applicationRepository.findById(applicationId).orElseThrow(()->new CustomException(ErrorMessage.APPLICATION_NOT_FOUND));
     }
 
     private EnlistmentSchedule scheduleValidate(Long scheduleId) {
