@@ -13,9 +13,6 @@ public class UserAdminResponse {
     private final String username;
     private final String email;
 
-    @JsonProperty("resident_number")
-    private final String residentNumber;
-
     private final String role;
 
     @JsonProperty("enlistment_application")
@@ -34,13 +31,7 @@ public class UserAdminResponse {
         this.role = user.getRole().name();
         this.createdAt = user.getCreatedAt();
         this.modifiedAt = user.getModifiedAt();
-        this.residentNumber = maskResidentNumber(user.getResidentNumber());
         this.enlistmentApplication = null;
-    }
-
-    private String maskResidentNumber(String origin) {
-        if (origin == null || origin.length() < 8) return origin;
-        return origin.substring(0, 8) + "******";
     }
 
     public void setEnlistmentInfo(EnlistmentApplication application) {

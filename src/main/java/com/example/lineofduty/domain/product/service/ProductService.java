@@ -2,7 +2,7 @@ package com.example.lineofduty.domain.product.service;
 
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
-import com.example.lineofduty.common.model.enums.ApplicationStatus;
+import com.example.lineofduty.common.model.enums.ProductStatus;
 import com.example.lineofduty.domain.product.dto.request.ProductRequest;
 import com.example.lineofduty.domain.product.dto.response.ProductResponse;
 import com.example.lineofduty.domain.product.repository.ProductRepository;
@@ -35,7 +35,7 @@ public class ProductService {
             throw new CustomException(ErrorMessage.INVALID_STOCK);
         }
 
-        Product product = new Product(request.getName(), request.getDescription(), request.getPrice(), request.getStock(), ApplicationStatus.ProductStatus.ON_SALE);
+        Product product = new Product(request.getName(), request.getDescription(), request.getPrice(), request.getStock(), ProductStatus.ON_SALE);
         Product savedProduct = productRepository.save(product);
 
         return ProductResponse.from(savedProduct);

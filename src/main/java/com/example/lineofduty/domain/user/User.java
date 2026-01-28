@@ -1,7 +1,6 @@
 package com.example.lineofduty.domain.user;
 
 import com.example.lineofduty.common.model.enums.Role;
-import com.example.lineofduty.common.util.AesUtil;
 import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.AccessLevel;
@@ -33,20 +32,15 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private Role role;
 
-    @Column(name = "resident_number", nullable = false)
-    @Convert(converter = AesUtil.ResidentNumberConverter.class)
-    private String residentNumber;
-
     @ColumnDefault("0")
     @Column(nullable = false, columnDefinition = "TINYINT(1)")
     private boolean isDeleted;
 
-    public User(String username, String email, String password, Role role, String residentNumber) {
+    public User(String username, String email, String password, Role role) {
         this.username = username;
         this.email = email;
         this.password = password;
         this.role = role;
-        this.residentNumber = residentNumber;
         this.isDeleted = false;
     }
 
