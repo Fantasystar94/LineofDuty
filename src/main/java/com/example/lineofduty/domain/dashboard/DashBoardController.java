@@ -37,7 +37,7 @@ public class DashBoardController {
     /**
      * 입영 요청, 연기 요청 요약
      * */
-    @GetMapping("/pending")
+    @GetMapping("/requested")
     public ResponseEntity<GlobalResponse> summaryPending(@AuthenticationPrincipal UserDetail userDetail) {
         return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.SUMMARY_SUCCESS, dashboardService.summaryPending(userDetail)));
     }

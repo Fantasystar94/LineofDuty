@@ -12,5 +12,5 @@ public class DefermentsPostRequest {
     private Long applicationId;
     private DefermentStatus defermentStatus;
     private String reasonDetail;
-    private LocalDate requestedUntil;
+    private Long scheduleId;
 }

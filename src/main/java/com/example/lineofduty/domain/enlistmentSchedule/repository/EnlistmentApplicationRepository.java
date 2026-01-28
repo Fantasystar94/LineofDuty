@@ -1,6 +1,6 @@
 package com.example.lineofduty.domain.enlistmentSchedule.repository;
 
-import com.example.lineofduty.common.model.enums.ApplicationStatus;
+import com.example.lineofduty.domain.enlistmentSchedule.ApplicationStatus;
 import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,14 +11,12 @@ import java.util.Optional;
 
 public interface EnlistmentApplicationRepository extends JpaRepository<EnlistmentApplication, Long> {
 
-    @Query("select count(e) != 0 from EnlistmentApplication e where e.userId =:userId and (e.applicationStatus IN ('PENDING','CONFIRMED'))")
-    boolean existsByUserIdAndStatus(@Param("userId") Long userId);
-
-
-    @Query("select count(e) != 0 from EnlistmentApplication e where e.userId =:userId and e.scheduleId =:scheduleId")
-    boolean existsByUserIdAndScheduleId(@Param("userId") Long UserId, @Param("scheduleId") Long ScheduleId);
-
     List<EnlistmentApplication> findEnlistmentApplicationByApplicationStatus(ApplicationStatus applicationStatus);
 
     Optional<EnlistmentApplication> findByUserId(Long userId);
+
+    boolean existsByUserIdAndApplicationStatusIn(
+            Long userId,
+            List<ApplicationStatus> statuses
+    );
 }
