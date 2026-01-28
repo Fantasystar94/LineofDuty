@@ -9,8 +9,4 @@ public class PaymentConfirmRequest {
 
     @NotNull(message = ValidationMessage.NOT_BLANK_PAYMENT_KEY)
     private String paymentKey;
-    @NotNull(message = ValidationMessage.NOT_BLANK_AMOUNT)
-    private int amount;
-    @NotNull(message = ValidationMessage.NOT_BLANK_ORDER_ID_STRING)
-    private String orderId;
 }
