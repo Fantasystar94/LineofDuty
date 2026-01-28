@@ -71,9 +71,12 @@ public class OrderService {
             orderItem = new OrderItem(product, order, product.getPrice(), request.getQuantity());
             OrderItem savedOrderItem = orderItemRepository.save(orderItem);
             order.addOrderItem(savedOrderItem);
+            order.updateOrderName(createOrderName(order, product));
         } else if (orderItem.getQuantity() + request.getQuantity() <= product.getStock()) {
 
-            orderItem.updateQuantity(request.getQuantity());
+            orderItem.addQuantity(request.getQuantity());
+            long changedTotalPrice = order.getTotalPrice() + request.getQuantity() * product.getPrice();
+            order.updateTotalPrice(changedTotalPrice);
         } else {
 
             throw new CustomException(ErrorMessage.OUT_OF_STOCK);
@@ -124,10 +127,13 @@ public class OrderService {
 
         // 상품 변경으로 인한 총금액 수정
         long changedTotalPrice = 0;
+        long totalProductAmount = 0;
         for (OrderItem item : order.getOrderItemList()) {
             changedTotalPrice += item.getProduct().getPrice() * item.getQuantity();
+            totalProductAmount += item.getQuantity();
         }
         order.updateTotalPrice(changedTotalPrice);
+        order.updateOrderName(orderItem.getProduct().getName() + " 외 " + totalProductAmount+ "건");
 
         return OrderUpdateResponse.from(orderItem);
     }
@@ -176,5 +182,16 @@ public class OrderService {
             sb.append(CHARSET.charAt(index));
         }
         return sb.toString();
+    }
+
+    // OrderName 생성
+    private String createOrderName(Order order, Product product) {
+
+        long totalAmount = 0;
+        for (OrderItem item : order.getOrderItemList()) {
+            totalAmount += item.getQuantity();
+        }
+
+        return product.getName() + " 외 " + totalAmount+ "건";
     }
 }

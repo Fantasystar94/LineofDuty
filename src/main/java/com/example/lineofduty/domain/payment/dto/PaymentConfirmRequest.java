@@ -7,6 +7,6 @@ import lombok.Getter;
 @Getter
 public class PaymentConfirmRequest {
 
-    @NotNull(message = ValidationMessage.NOT_BLANK_ORDER_NUMBER)
-    private String orderNumber;
+    @NotNull(message = ValidationMessage.NOT_BLANK_PAYMENT_KEY)
+    private String paymentKey;
 }

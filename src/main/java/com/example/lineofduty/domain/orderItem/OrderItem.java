@@ -50,4 +50,8 @@ public class OrderItem extends BaseEntity {
     public void updateQuantity(Long quantity) {
         this.quantity = quantity;
     }
+
+    public void addQuantity(Long quantity) {
+        this.quantity += quantity;
+    }
 }

@@ -63,4 +63,8 @@ public class Order extends BaseEntity {
         this.status = status;
     }
 
+    public void updateOrderName(String orderName) {
+        this.orderName = orderName;
+    }
+
 }
