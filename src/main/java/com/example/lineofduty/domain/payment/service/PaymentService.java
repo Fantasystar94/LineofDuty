@@ -245,7 +245,7 @@ public class PaymentService {
 
         // payment 삭제 권한 검사해
         Long paymentUserId = payment.getOrder().getUser().getId();
-        if (paymentUserId.equals(userId)) {
+        if (!paymentUserId.equals(userId)) {
             throw new CustomException(ErrorMessage.ACCESS_DENIED);
         }
 
@@ -296,6 +296,18 @@ public class PaymentService {
 
             // toss 반환 값에 맞추어 결제 정보 업데이트
             payment.updateByResponse(PaymentStatus.valueOf(status), paymentKey, totalPrice, requestedAt, approvedAt);
+
+            // 주문서에서 주문 내역 가져오기
+            List<OrderItem> orderItemList = payment.getOrder().getOrderItemList();
+
+            // 각 주문 상품의 재고를 다시 증가시켜
+            for (OrderItem orderItem : orderItemList) {
+                productService.increaseStock(
+                        orderItem.getProduct().getId(),
+                        orderItem.getQuantity()
+                );
+            }
+
             return PaymentCancelResponse.from(payment);
         } catch (IOException | InterruptedException ie) {
             throw new RuntimeException(ie);
