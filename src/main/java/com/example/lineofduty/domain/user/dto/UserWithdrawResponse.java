@@ -1,18 +1,19 @@
 package com.example.lineofduty.domain.user.dto;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import java.time.LocalDateTime;
 
 @Getter
-@AllArgsConstructor
 public class UserWithdrawResponse {
     private final Long userId;
+    private final String email;
+    private final boolean isDeleted;
+    private final LocalDateTime deletedAt;
 
-    @JsonProperty("is_deleted")
-    private boolean isDeleted;
-
-    @JsonProperty("deleted_at")
-    private LocalDateTime deletedAt;
+    public UserWithdrawResponse(Long userId, String email, boolean isDeleted, LocalDateTime deletedAt) {
+        this.userId = userId;
+        this.email = email;
+        this.isDeleted = isDeleted;
+        this.deletedAt = deletedAt;
+    }
 }

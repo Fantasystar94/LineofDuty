@@ -4,8 +4,10 @@ import com.example.lineofduty.common.model.enums.SuccessMessage;
 import com.example.lineofduty.common.model.response.GlobalResponse;
 import com.example.lineofduty.domain.user.dto.UserDetail;
 import com.example.lineofduty.domain.user.dto.UserAdminResponse;
+import com.example.lineofduty.domain.user.dto.UserWithdrawRequest;
 import com.example.lineofduty.domain.user.dto.UserWithdrawResponse;
 import com.example.lineofduty.domain.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -22,21 +24,26 @@ public class UserAdminController {
     // 전체 조회
     @GetMapping
     public ResponseEntity<GlobalResponse> getAllUsers() {
-        List<UserAdminResponse> data = userService.getAllUsers();
-        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_ALL_READ_SUCCESS, data));
+        List<UserAdminResponse> responseList = userService.getAllUsers();
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_ALL_READ_SUCCESS, responseList));
     }
 
     // 상세 조회
     @GetMapping("/{userId}")
     public ResponseEntity<GlobalResponse> getUser(@PathVariable Long userId) {
-        UserAdminResponse data = userService.getUserById(userId);
-        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_READ_ADMIN_SUCCESS, data));
+        UserAdminResponse response = userService.getUserById(userId);
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_READ_SUCCESS, response));
     }
 
     // 관리자 본인 탈퇴
     @DeleteMapping("/{userId}")
-    public ResponseEntity<GlobalResponse> withdrawAdmin(@AuthenticationPrincipal UserDetail userDetails) {
-        UserWithdrawResponse data = userService.withdrawAdmin(userDetails.getUser().getId());
-        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_DELETE_ADMIN_SUCCESS, data));
+    public ResponseEntity<GlobalResponse> withdrawAdmin(
+            @AuthenticationPrincipal UserDetail userDetails,
+            @RequestBody @Valid UserWithdrawRequest request
+            ) {
+
+        UserWithdrawResponse response = userService.withdrawAdmin(userDetails.getUser().getId(), request.getPassword());
+
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_DELETE_ADMIN_SUCCESS, response));
     }
 }
