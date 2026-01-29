@@ -1,6 +1,5 @@
 package com.example.lineofduty.domain.enlistmentSchedule.repository;
 import com.example.lineofduty.domain.enlistmentSchedule.ApplicationStatus;
-import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
 import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentApplicationReadResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
@@ -60,5 +59,24 @@ public class QueryEnlistmentApplicationRepository {
                 )
                 .fetchOne();
     }
+
+    public List<EnlistmentApplicationReadResponse> findApplicationsWithUser(List<Long> applicationIds) {
+
+        return jpaQueryFactory
+                .select(Projections.constructor(
+                        EnlistmentApplicationReadResponse.class,
+                        enlistmentApplication.id,
+                        enlistmentApplication.enlistmentDate,
+                        enlistmentApplication.applicationStatus,
+                        enlistmentApplication.createdAt,
+                        enlistmentApplication.modifiedAt,
+                        user.username
+                ))
+                .from(enlistmentApplication)
+                .join(user).on(user.id.eq(enlistmentApplication.userId))
+                .where(enlistmentApplication.id.in(applicationIds))
+                .fetch();
+    }
+
 
 }

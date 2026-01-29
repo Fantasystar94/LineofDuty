@@ -21,6 +21,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -194,9 +195,8 @@ public class EnlistmentScheduleService {
      * 입영 신청 승인 - v1
      * */
     @Transactional
-    public EnlistmentApplicationReadResponse approveApplication(Long userId, Long applicationId) {
+    public EnlistmentApplicationReadResponse approveApplication(Long applicationId) {
 
-        getUser(userId);
 
         // 1. 신청 조회
         EnlistmentApplication application = applicationRepository.findById(applicationId)
@@ -210,7 +210,26 @@ public class EnlistmentScheduleService {
         // 3. 상태 변경
         application.confirm();
 
-        return queryEnlistmentApplicationRepository.getApplicationWithUser(userId, applicationId);
+        return queryEnlistmentApplicationRepository.getApplicationWithUser(application.getUserId(), applicationId);
+    }
+
+    /*
+     * 입영 신청 일괄 승인
+     * */
+    @Transactional
+    public List<EnlistmentApplicationReadResponse> approveApplicationBulk() {
+
+        List<EnlistmentApplication> applicationList = applicationRepository.findEnlistmentApplicationByApplicationStatus(ApplicationStatus.REQUESTED);
+
+        applicationList.forEach(EnlistmentApplication::confirm);
+
+        List<Long> applicationIds = applicationList.stream()
+                .map(EnlistmentApplication::getId)
+                .toList();
+
+        return queryEnlistmentApplicationRepository
+                .findApplicationsWithUser(applicationIds);
+
     }
 
     /*
@@ -331,29 +350,90 @@ public class EnlistmentScheduleService {
     @Transactional
     public BulkDefermentProcessResponse processDefermentBulk(DefermentStatus decisionStatus) {
 
-        // 1. 신청 조회
-        List<EnlistmentApplication> lists = applicationRepository
-                .findRequestedWithDefermentAndSchedule(ApplicationStatus.REQUESTED);
+        // 1. 벌크 대상 조회
+        List<EnlistmentApplication> lists =
+                applicationRepository.findRequestedWithDefermentAndSchedule(
+                        ApplicationStatus.REQUESTED
+                );
 
         if (lists.isEmpty()) {
             return new BulkDefermentProcessResponse(0, 0);
         }
 
-        // 2. 변경될 날짜로 Map 구조 그루핑
-        Map<LocalDate, List<EnlistmentApplication>> groupedByChangedDate = lists.stream()
-                .collect(Collectors.groupingBy(a-> a.getDeferment().getChangedDate()));
+        // 2. REJECTED는 즉시 종료 (슬롯/스케줄 로직 없음)
+        if (decisionStatus == DefermentStatus.REJECTED) {
+            lists.forEach(EnlistmentApplication::reject);
+            return new BulkDefermentProcessResponse(lists.size(), lists.size());
+        }
 
-        // 3.
-        Set<LocalDate> changedDateList = groupedByChangedDate.keySet();
+        // 3. APPROVED
+        // 날짜 기준 정렬 (같은 날짜가 연속되도록)
+        lists.sort(Comparator.comparing(
+                a -> a.getDeferment().getChangedDate()
+        ));
 
-        List<EnlistmentSchedule> schedules = scheduleRepository.findAllByEnlistmentDateIn(changedDateList);
+        // 4. 기존 스케줄들 미리 로딩 (ID 기반)
+        List<Long> oldScheduleIds = lists.stream()
+                .map(EnlistmentApplication::getScheduleId)
+                .distinct()
+                .toList();
 
-        Map<LocalDate, EnlistmentSchedule> newScheduleMap = schedules.stream()
-                .collect((Collectors.toMap(EnlistmentSchedule::getEnlistmentDate, s-> s)
-                ));
+        Map<Long, EnlistmentSchedule> oldScheduleMap =
+                scheduleRepository.findAllById(oldScheduleIds)
+                        .stream()
+                        .collect(Collectors.toMap(
+                                EnlistmentSchedule::getId,
+                                s -> s
+                        ));
 
-        return null;
+        LocalDate currentDate = null;
+        EnlistmentSchedule currentNewSchedule = null;
+        int countForDate = 0;
+        int processedCount = 0;
+
+        for (EnlistmentApplication app : lists) {
+
+            LocalDate changedDate = app.getDeferment().getChangedDate();
+
+            // 날짜가 바뀌는 순간
+            if (!changedDate.equals(currentDate)) {
+
+                // 이전 날짜 슬롯 차감 (첫 루프 제외)
+                if (currentNewSchedule != null) {
+                    currentNewSchedule.bulkDeduct(countForDate);
+                }
+
+                // 새 날짜 스케줄 로딩 (날짜당 1번)
+                currentDate = changedDate;
+                currentNewSchedule =
+                        scheduleRepository.findByEnlistmentDate(changedDate);
+
+                countForDate = 0;
+            }
+
+            // 기존 스케줄 슬롯 복구
+            EnlistmentSchedule oldSchedule =
+                    oldScheduleMap.get(app.getScheduleId());
+            oldSchedule.restoreSlot();
+
+            // 신청 반영
+            app.applyDeferredDate(changedDate);
+            app.confirm();
+
+            countForDate++;
+            processedCount++;
+        }
+
+        // 마지막 날짜 슬롯 차감
+        if (currentNewSchedule != null) {
+            currentNewSchedule.bulkDeduct(countForDate);
+        }
+
+        return new BulkDefermentProcessResponse(lists.size(), processedCount);
     }
+
+
+
 
     private User getUser(Long userId) {
         return userRepository.findById(userId).orElseThrow(()-> new CustomException(ErrorMessage.USER_NOT_FOUND));

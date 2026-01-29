@@ -45,6 +45,10 @@ public class EnlistmentSchedule extends BaseEntity {
         this.remainingSlots--;
     }
 
+    public void bulkDeduct(int count) {
+        this.remainingSlots = this.remainingSlots - count;
+    }
+
     public void restoreSlot() {
         this.remainingSlots += 1;
     }

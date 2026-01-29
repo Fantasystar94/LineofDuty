@@ -27,7 +27,16 @@ public class EnlistmentAdminController {
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("enlistment-applications/{applicationId}/approve")
     public ResponseEntity<GlobalResponse> approveApplication(@AuthenticationPrincipal UserDetail userDetails, @PathVariable Long applicationId) {
-        return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_APPROVE_SUCCESS, enlistmentScheduleService.approveApplication(userDetails.getUser().getId(), applicationId)));
+        return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_APPROVE_SUCCESS, enlistmentScheduleService.approveApplication(applicationId)));
+    }
+
+    /*
+     * 입영 신청 일괄 승인 / admin 전용
+     * */
+    @PreAuthorize("hasRole('ADMIN')")
+    @PatchMapping("enlistment-applications/approve/bulk")
+    public ResponseEntity<GlobalResponse> approveApplication() {
+        return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_APPROVE_SUCCESS, enlistmentScheduleService.approveApplicationBulk()));
     }
 
     /*

@@ -31,4 +31,7 @@ public interface EnlistmentScheduleRepository extends JpaRepository<EnlistmentSc
 
     @Query("select s from EnlistmentSchedule s where s.enlistmentDate = :changedDates")
     List<EnlistmentSchedule> findAllByEnlistmentDateIn(Set<LocalDate> changedDates);
+
+    @Query("select s from EnlistmentSchedule s where s.id = :scheduleId")
+    EnlistmentSchedule findByIdTest(Long scheduleId);
 }

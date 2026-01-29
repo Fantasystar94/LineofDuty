@@ -1,5 +1,7 @@
 package com.example.lineofduty.enlistment;
 
+import com.example.lineofduty.common.exception.CustomException;
+import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentSchedule;
 import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentScheduleCreateRequest;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository;
@@ -129,7 +131,7 @@ public class EnlistmentLockTest {
         long endTime = System.currentTimeMillis();
 
         EnlistmentSchedule schedule =
-                enlistmentScheduleRepository.findById(scheduleId).orElseThrow();
+                enlistmentScheduleRepository.findByIdTest(scheduleId);
 
         System.out.println("====== JUnit 동시성 테스트 결과 ======");
         System.out.println("전략: 비관락");
