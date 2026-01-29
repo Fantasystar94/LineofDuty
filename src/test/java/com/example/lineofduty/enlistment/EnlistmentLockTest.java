@@ -35,8 +35,6 @@ public class EnlistmentLockTest {
     private int exceptionCount = 0;
     private final Long scheduleId = 20L;
     @Autowired
-    private EnlistmentDistributedLockService enlistmentDistributedLockService;
-    @Autowired
     private EnlistmentLockTestService enlistmentLockTestService;
 
     @Test
