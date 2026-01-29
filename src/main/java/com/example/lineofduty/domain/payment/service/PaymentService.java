@@ -63,17 +63,6 @@ public class PaymentService {
             throw new CustomException(ErrorMessage.ACCESS_DENIED);
         }
 
-        // 주문서(order)에서 주문 내역(List<orderItem>)을 가져와
-        List<OrderItem> orderItemList = order.getOrderItemList();
-
-        // 주문 내역(List<orderItem>)에 맞추어서 재고(product) 차감해
-        for (OrderItem orderItem : orderItemList) {
-            productService.decreaseStock(
-                    orderItem.getProduct().getId(),
-                    orderItem.getQuantity()
-            );
-        }
-
         // 결제 기록(Payment) 남기기
         Payment payment = new Payment(order, request.getPaymentKey());
         paymentRepository.save(payment);
@@ -131,6 +120,17 @@ public class PaymentService {
             if (rootNode.has("message")) {
                 payment.updateStatus(PaymentStatus.ABORTED);
                 throw new CustomTossResponseException(rootNode.get("message").asText());
+            }
+
+            // 주문서(order)에서 주문 내역(List<orderItem>)을 가져와
+            List<OrderItem> orderItemList = payment.getOrder().getOrderItemList();
+
+            // 주문 내역(List<orderItem>)에 맞추어서 재고(product) 차감해
+            for (OrderItem orderItem : orderItemList) {
+                productService.decreaseStock(
+                        orderItem.getProduct().getId(),
+                        orderItem.getQuantity()
+                );
             }
 
             String status = rootNode.get("status").asText();
