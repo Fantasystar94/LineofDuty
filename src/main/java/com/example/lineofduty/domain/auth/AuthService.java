@@ -4,18 +4,19 @@ import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.Role;
 import com.example.lineofduty.common.util.JwtUtil;
-import com.example.lineofduty.domain.auth.dto.request.LoginRequest;
-import com.example.lineofduty.domain.auth.dto.request.SignupRequest;
+import com.example.lineofduty.domain.auth.dto.LoginRequest;
+import com.example.lineofduty.domain.auth.dto.SignupRequest;
 import com.example.lineofduty.domain.token.RefreshToken;
 import com.example.lineofduty.domain.token.RefreshTokenRepository;
 import com.example.lineofduty.domain.token.TokenResponse;
 import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.util.StringUtils;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -27,24 +28,50 @@ public class AuthService {
     private final JwtUtil jwtUtil;
     private final RefreshTokenRepository refreshTokenRepository;
 
+    @Value("${ADMIN_TOKEN}")
+    private String adminToken;
+
     // 회원가입
     @Transactional
-    public Long signup(SignupRequest request) {
-        if (userRepository.existsByEmail(request.getEmail())) {
-            throw new CustomException(ErrorMessage.DUPLICATE_EMAIL);
+    public void signup(SignupRequest request) {
+
+        Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
+
+        // 권한 결정
+        Role role = Role.ROLE_USER;
+        if (request.isAdmin()) {
+            if (!request.getAdminToken().equals(this.adminToken)) {
+                throw new CustomException(ErrorMessage.INVALID_ADMIN_TOKEN);
+            }
+            role = Role.ROLE_ADMIN;
         }
 
-        String encodedPassword = passwordEncoder.encode(request.getPassword());
-        Role role = request.isAdmin() ? Role.ROLE_ADMIN : Role.ROLE_USER;
+        // 이미 존재하는 이메일 처리
+        if (existingUser.isPresent()) {
+            User user = existingUser.get();
 
+            // 활동 중인 유저면 가입불가
+            if (!user.isDeleted()) {
+                throw new CustomException(ErrorMessage.DUPLICATE_EMAIL);
+            }
+
+            // 탈퇴한 유저면 복구
+            user.restore(
+                    request.getUsername(),
+                    passwordEncoder.encode(request.getPassword()),
+                    role
+            );
+            return;
+        }
+
+        // 신규가입
         User user = new User(
-                request.getUsername(),
                 request.getEmail(),
-                encodedPassword,
+                request.getUsername(),
+                passwordEncoder.encode(request.getPassword()),
                 role
         );
-
-        return userRepository.save(user).getId();
+        userRepository.save(user);
     }
 
     // 로그인
@@ -58,7 +85,7 @@ public class AuthService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new CustomException(ErrorMessage.INVALID_AUTH_INFO);
         }
-        // 탈퇴 여부 확인
+        // 탈퇴 유저 로그인 차단
         if (user.isDeleted()) {
             throw new CustomException(ErrorMessage.USER_WITHDRAWN);
         }
@@ -67,7 +94,7 @@ public class AuthService {
         String accessToken = jwtUtil.generateToken(user.getId(), user.getRole());
         String refreshToken = jwtUtil.generateRefreshToken(user.getId(), user.getRole());
 
-        // Refresh Token 저장 (기존 토큰 있으면 update)
+        // DB에 Refresh Token 저장 (기존 토큰 있으면 update)
         RefreshToken refreshTokenEntity = refreshTokenRepository.findByUserId(user.getId())
                 .orElse(new RefreshToken(refreshToken, user.getId()));
 
@@ -77,35 +104,43 @@ public class AuthService {
         return new TokenResponse(accessToken, refreshToken);
     }
 
+    // 로그아웃
+    @Transactional
+    public void logout(Long userId) {
+
+        if (refreshTokenRepository.existsById(userId)) {
+            refreshTokenRepository.deleteById(userId);
+        }
+    }
+
     // 토큰 재발급
     @Transactional
     public TokenResponse reissue(String refreshTokenStr) {
 
-        String token = refreshTokenStr;
-
-        if (StringUtils.hasText(token) && token.startsWith(JwtUtil.BEARER_PREFIX)) {
-            token = token.substring(7);
+        if (!jwtUtil.validateToken(refreshTokenStr)) {
+            throw new CustomException(ErrorMessage.INVALID_TOKEN);
         }
 
-        if (!jwtUtil.validateToken(token)) {
-            throw new CustomException(ErrorMessage.INVALID_AUTH_INFO);
+        Long userId = jwtUtil.extractUserId(refreshTokenStr);
+
+        RefreshToken savedToken = refreshTokenRepository.findByUserId(userId)
+                .orElseThrow( () -> new CustomException(ErrorMessage.USER_LOGOUT));
+
+        if (!savedToken.getToken().equals(refreshTokenStr)) {
+            throw new CustomException(ErrorMessage.INVALID_TOKEN);
         }
 
-        RefreshToken refreshTokenEntity = refreshTokenRepository.findByToken(JwtUtil.BEARER_PREFIX + token)
+        User user = userRepository.findById(userId)
                 .orElseThrow(() -> new CustomException(ErrorMessage.USER_NOT_FOUND));
 
-        User user = userRepository.findById(refreshTokenEntity.getUserId())
-                .orElseThrow(() -> new CustomException(ErrorMessage.USER_NOT_FOUND));
+        // 탈퇴한 유저 재발급 차단
+        if (user.isDeleted()) {
+            throw new CustomException(ErrorMessage.USER_WITHDRAWN);
+        }
 
         String newAccessToken = jwtUtil.generateToken(user.getId(), user.getRole());
 
-        return new TokenResponse(newAccessToken, JwtUtil.BEARER_PREFIX + token);
-    }
-
-    // 로그아웃
-    @Transactional
-    public void logout(Long userId) {
-        refreshTokenRepository.deleteByUserId(userId);
+        return new TokenResponse(newAccessToken, refreshTokenStr);
     }
 
 }

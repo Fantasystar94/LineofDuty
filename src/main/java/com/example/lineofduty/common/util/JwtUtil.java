@@ -8,6 +8,7 @@ import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
+import org.springframework.util.StringUtils;
 import javax.crypto.SecretKey;
 import java.util.Date;
 
@@ -16,8 +17,10 @@ import java.util.Date;
 public class JwtUtil {
     public static final String BEARER_PREFIX = "Bearer ";
     public static final String AUTHORIZATION = "Authorization";
-    public static final long TOKEN_TIME = 10 * 60 * 1000L;  // 10분
-    public static final long REFREST_TOKEN_TIME = 7 * 24 * 60 * 60 * 1000L; // 7일
+    
+    // 토큰 만료 시간
+    public static final long TOKEN_TIME = 60 * 60 * 1000L;  // 60분
+    public static final long REFRESH_TOKEN_TIME = 7 * 24 * 60 * 60 * 1000L; // 7일
 
     @Value("${JWT_SECRET}")
     private String jwtSecretKey;
@@ -31,17 +34,28 @@ public class JwtUtil {
         this.jwtParser = Jwts.parser().verifyWith(secretKey).build();
     }
 
-    // 토큰 생성
+    // Access Token 생성
     public String generateToken(Long userId, Role userRole) {
         Date now = new Date();
-        return Jwts.builder().subject(userId.toString()).claim("userRole", userRole).issuedAt(now).expiration(new Date(now.getTime() + TOKEN_TIME)).signWith(secretKey, Jwts.SIG.HS256).compact();
+        return Jwts.builder()
+                .subject(userId.toString())
+                .claim("userRole", userRole)
+                .issuedAt(now)
+                .expiration(new Date(now.getTime() + TOKEN_TIME))
+                .signWith(secretKey, Jwts.SIG.HS256)
+                .compact();
     }
 
     // Refresh Token 생성
     public String generateRefreshToken(Long userId, Role userRole) {
         Date now = new Date();
-        String token = Jwts.builder().subject(userId.toString()).claim(AUTHORIZATION, userRole.name()).issuedAt(now).expiration(new Date(now.getTime() + REFREST_TOKEN_TIME)).signWith(secretKey, Jwts.SIG.HS256).compact();
-        return BEARER_PREFIX + token;
+        return Jwts.builder()
+                .subject(userId.toString())
+                .claim(AUTHORIZATION, userRole.name())
+                .issuedAt(now)
+                .expiration(new Date(now.getTime() + REFRESH_TOKEN_TIME))
+                .signWith(secretKey, Jwts.SIG.HS256)
+                .compact();
     }
 
     // 토큰 검증
@@ -49,6 +63,10 @@ public class JwtUtil {
         if (token == null || token.isBlank()) {
             return false;
         }
+        if (StringUtils.hasText(token) && token.startsWith(BEARER_PREFIX)) {
+            token = token.substring(7);
+        }
+
         try {
             jwtParser.parseSignedClaims(token);
             return true;
@@ -64,17 +82,33 @@ public class JwtUtil {
         return false;
     }
 
-    // 복호화
+    // Claims 추출
     public Claims extractAllClaims(String token) {
+        if (token.startsWith(BEARER_PREFIX)) {
+            token = token.substring(7);
+        }
         return jwtParser.parseSignedClaims(token).getPayload();
     }
 
+    // ID 추출
     public Long extractUserId(String token) {
+        if (token.startsWith(BEARER_PREFIX)) token = token.substring(7);
         return Long.valueOf(extractAllClaims(token).getSubject());
     }
 
+    // Role 추출
     public Role extractUserRole(String token) {
+
+        if (token.startsWith(BEARER_PREFIX)) token = token.substring(7);
+
+        Claims claims = jwtParser.parseSignedClaims(token).getPayload();
+
         String role = extractAllClaims(token).get("userRole", String.class);
+
+        if (role == null) {
+            role = extractAllClaims(token).get(AUTHORIZATION, String.class);
+        }
+
         return Role.valueOf(role);
     }
 
