@@ -22,6 +22,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Map;
+import java.util.Set;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -335,6 +338,19 @@ public class EnlistmentScheduleService {
         if (lists.isEmpty()) {
             return new BulkDefermentProcessResponse(0, 0);
         }
+
+        // 2. 변경될 날짜로 Map 구조 그루핑
+        Map<LocalDate, List<EnlistmentApplication>> groupedByChangedDate = lists.stream()
+                .collect(Collectors.groupingBy(a-> a.getDeferment().getChangedDate()));
+
+        // 3.
+        Set<LocalDate> changedDateList = groupedByChangedDate.keySet();
+
+        List<EnlistmentSchedule> schedules = scheduleRepository.findAllByEnlistmentDateIn(changedDateList);
+
+        Map<LocalDate, EnlistmentSchedule> newScheduleMap = schedules.stream()
+                .collect((Collectors.toMap(EnlistmentSchedule::getEnlistmentDate, s-> s)
+                ));
 
         return null;
     }
