@@ -12,6 +12,7 @@ import com.example.lineofduty.domain.payment.PaymentStatus;
 import com.example.lineofduty.domain.payment.dto.*;
 import com.example.lineofduty.domain.payment.repository.PaymentRepository;
 import com.example.lineofduty.domain.product.Product;
+import com.example.lineofduty.domain.product.service.ProductService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -35,6 +36,7 @@ public class PaymentService {
 
     private final OrderRepository orderRepository;
     private final PaymentRepository paymentRepository;
+    private final ProductService productService;
 
     @Value("${TOSS_SECRET_KEY}")
     private String secretKey;
@@ -59,20 +61,6 @@ public class PaymentService {
         // 니가 이 결제에 접근 권한을 가지고 있는지 확인해
         if (!order.getUser().getId().equals(userId)) {
             throw new CustomException(ErrorMessage.ACCESS_DENIED);
-        }
-
-        // 주문서(order)에서 주문 내역(List<orderItem>)을 가져와
-        List<OrderItem> orderItemList = order.getOrderItemList();
-
-        // 주문 내역(List<orderItem>)에 맞추어서 재고(product) 차감해
-        for (OrderItem orderItem : orderItemList) {
-            Product product = orderItem.getProduct();
-
-            // 재고가 부족하면 예외 출력
-            if (product.getStock() < orderItem.getQuantity()) {
-                throw new CustomException(ErrorMessage.OUT_OF_STOCK);
-            }
-            product.updateStock(product.getStock() - orderItem.getQuantity());
         }
 
         // 결제 기록(Payment) 남기기
@@ -132,6 +120,17 @@ public class PaymentService {
             if (rootNode.has("message")) {
                 payment.updateStatus(PaymentStatus.ABORTED);
                 throw new CustomTossResponseException(rootNode.get("message").asText());
+            }
+
+            // 주문서(order)에서 주문 내역(List<orderItem>)을 가져와
+            List<OrderItem> orderItemList = payment.getOrder().getOrderItemList();
+
+            // 주문 내역(List<orderItem>)에 맞추어서 재고(product) 차감해
+            for (OrderItem orderItem : orderItemList) {
+                productService.decreaseStock(
+                        orderItem.getProduct().getId(),
+                        orderItem.getQuantity()
+                );
             }
 
             String status = rootNode.get("status").asText();
@@ -246,7 +245,7 @@ public class PaymentService {
 
         // payment 삭제 권한 검사해
         Long paymentUserId = payment.getOrder().getUser().getId();
-        if (paymentUserId.equals(userId)) {
+        if (!paymentUserId.equals(userId)) {
             throw new CustomException(ErrorMessage.ACCESS_DENIED);
         }
 
@@ -297,6 +296,18 @@ public class PaymentService {
 
             // toss 반환 값에 맞추어 결제 정보 업데이트
             payment.updateByResponse(PaymentStatus.valueOf(status), paymentKey, totalPrice, requestedAt, approvedAt);
+
+            // 주문서에서 주문 내역 가져오기
+            List<OrderItem> orderItemList = payment.getOrder().getOrderItemList();
+
+            // 각 주문 상품의 재고를 다시 증가시켜
+            for (OrderItem orderItem : orderItemList) {
+                productService.increaseStock(
+                        orderItem.getProduct().getId(),
+                        orderItem.getQuantity()
+                );
+            }
+
             return PaymentCancelResponse.from(payment);
         } catch (IOException | InterruptedException ie) {
             throw new RuntimeException(ie);

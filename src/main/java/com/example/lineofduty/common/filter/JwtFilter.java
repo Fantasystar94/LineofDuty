@@ -39,7 +39,7 @@ public class JwtFilter extends OncePerRequestFilter {
         // DB에러 등 났을 때 EntryPoint로 넘어가지 않게
         try {
             // 토큰 유효성 검사
-            if (token != null & jwtUtil.validateToken(token)) {
+            if (token != null && jwtUtil.validateToken(token)) {
 
                 Long userId = jwtUtil.extractUserId(token);
                 UserDetails userDetails = userDetailService.loadUserById(userId);

@@ -2,8 +2,8 @@ package com.example.lineofduty.domain.auth;
 
 import com.example.lineofduty.common.model.enums.SuccessMessage;
 import com.example.lineofduty.common.model.response.GlobalResponse;
-import com.example.lineofduty.domain.auth.dto.request.LoginRequest;
-import com.example.lineofduty.domain.auth.dto.request.SignupRequest;
+import com.example.lineofduty.domain.auth.dto.LoginRequest;
+import com.example.lineofduty.domain.auth.dto.SignupRequest;
 import com.example.lineofduty.domain.token.TokenRequest;
 import com.example.lineofduty.domain.token.TokenResponse;
 import com.example.lineofduty.domain.user.dto.UserDetail;
@@ -30,13 +30,9 @@ public class AuthController {
     @PostMapping("/signup")
     public ResponseEntity<GlobalResponse> signup(@Valid @RequestBody SignupRequest request) {
 
-        Long userId = authService.signup(request);
+        authService.signup(request);
 
-        Map<String, Object> data = new HashMap<>();
-        data.put("userId", userId);
-
-        return ResponseEntity.status(HttpStatus.CREATED)
-                .body(GlobalResponse.success(SuccessMessage.USER_CREATE_SUCCESS, data));
+        return ResponseEntity.ok(GlobalResponse.successNodata(SuccessMessage.AUTH_SIGNUP_SUCCESS));
     }
 
     // 로그인

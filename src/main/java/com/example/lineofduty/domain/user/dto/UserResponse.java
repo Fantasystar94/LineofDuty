@@ -10,6 +10,8 @@ public class UserResponse {
     private final String username;
     private final String email;
     private final String role;
+    private final boolean isDeleted;
+    private final LocalDateTime deletedAt;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
@@ -18,6 +20,8 @@ public class UserResponse {
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.role = user.getRole().name();
+        this.isDeleted = user.isDeleted();
+        this.deletedAt = user.getDeletedAt();
         this.createdAt = user.getCreatedAt();
         this.modifiedAt = user.getModifiedAt();
     }
