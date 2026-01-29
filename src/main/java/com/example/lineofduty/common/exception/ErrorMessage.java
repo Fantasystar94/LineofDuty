@@ -27,6 +27,10 @@ public enum ErrorMessage {
     MISSING_PRODUCT_NAME_OR_DESCRIPTION(HttpStatus.BAD_REQUEST, "상품명과 상품설명은 필수입니다."),
     INVALID_PRICE(HttpStatus.BAD_REQUEST, "가격은 1원 이상이어야 합니다."),
     INVALID_STOCK(HttpStatus.BAD_REQUEST, "재고는 1개 이상이어야 합니다."),
+
+    // 동시성 제어 관련 에러 메시지 추가
+    LOCK_ACQUISITION_FAILED(HttpStatus.CONFLICT, "다른 요청이 처리 중입니다. 잠시 후 다시 시도해주세요."),
+    LOCK_INTERRUPTED(HttpStatus.INTERNAL_SERVER_ERROR, "요청 처리 중 오류가 발생했습니다."),
     OUT_OF_STOCK(HttpStatus.BAD_REQUEST, "재고가 부족합니다."),
 
     // 결제 관련
