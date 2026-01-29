@@ -1,5 +1,7 @@
 package com.example.lineofduty.domain.enlistmentSchedule;
 
+import com.example.lineofduty.common.exception.CustomException;
+import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -40,8 +42,14 @@ public class EnlistmentSchedule extends BaseEntity {
         this.remainingSlots = remainingSlots;
     }
 
+    @Version
+    @Column
+    private final Long version = 0L;
 
     public void slotDeduct() {
+        if (remainingSlots <= 0) {
+            throw new CustomException(ErrorMessage.NO_REMAINING_SLOTS);
+        }
         this.remainingSlots--;
     }
 

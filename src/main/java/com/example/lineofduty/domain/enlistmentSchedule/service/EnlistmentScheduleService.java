@@ -18,6 +18,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.orm.ObjectOptimisticLockingFailureException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDate;
@@ -98,43 +99,6 @@ public class EnlistmentScheduleService {
         schedule.slotDeduct();
 
         return EnlistmentScheduleCreateResponse.from(enlistmentApplication);
-    }
-
-
-    /*
-     * 입영 신청 - v2 / 동시성 비관락
-     * */
-    @Transactional
-    public EnlistmentScheduleCreateResponse applyEnlistmentTest(
-            Long userId,
-            EnlistmentScheduleCreateRequest request
-    ) {
-        EnlistmentSchedule schedule = getScheduleWithLock(request.getScheduleId());
-
-        if (applicationRepository.existsByUserIdAndApplicationStatusIn(
-                userId,
-                List.of(ApplicationStatus.REQUESTED, ApplicationStatus.CONFIRMED)
-        )) {
-            throw new CustomException(ErrorMessage.DUPLICATE_SCHEDULE);
-        }
-
-        if (schedule.getRemainingSlots() <= 0) {
-            throw new CustomException(ErrorMessage.NO_REMAINING_SLOTS);
-        }
-
-
-        EnlistmentApplication application =
-                new EnlistmentApplication(
-                        userId,
-                        schedule.getId(),
-                        schedule.getEnlistmentDate()
-                );
-
-        schedule.slotDeduct();
-
-        applicationRepository.save(application);
-
-        return EnlistmentScheduleCreateResponse.from(application);
     }
 
     /*

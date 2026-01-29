@@ -19,8 +19,8 @@ export let errorRate = new Rate('error_rate');
 export default function () {
     sleep(Math.random() * 0.01);
 
-    const url = 'http://localhost:8080/api/test/enlistment';
-    const payload = JSON.stringify({ scheduleId: 17 });
+    const url = 'http://localhost:8080/api/test/enlistment/distribute';
+    const payload = JSON.stringify({ scheduleId: 21 });
     const userId = Math.floor(Math.random() * 25000) + 1;
 
     const params = {
