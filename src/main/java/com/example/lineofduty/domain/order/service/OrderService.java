@@ -166,7 +166,7 @@ public class OrderService {
         String orderName = product.getName();
         String orderNumber = createOrderNumber();
         // 이미 존재하는 orderNumber라면 다시 작성
-        while (!orderRepository.existsByOrderNumber(orderNumber)) {
+        while (orderRepository.existsByOrderNumber(orderNumber)) {
             orderNumber = createOrderNumber();
         }
         Order order = new Order(user, orderName, orderNumber, totalPrice, orderItemList);
