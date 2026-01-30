@@ -40,6 +40,14 @@ public class EnlistmentApplication extends BaseEntity {
     @Column(nullable = false)
     private LocalDate enlistmentDate;
 
+    @OneToOne(mappedBy = "application")
+    @JoinColumn(name = "deferment_id", nullable = false, unique = true)
+    private Deferment deferment;
+
+    private void setDeferment(Deferment deferment) {
+        this.deferment = deferment;
+    }
+
     public EnlistmentApplication(Long userId, Long scheduleId, LocalDate enlistmentDate) {
         this.userId = userId;
         this.scheduleId = scheduleId;

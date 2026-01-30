@@ -111,6 +111,10 @@ Authorization: Bearer {{accessToken}}
 PATCH {{baseUrl}}/api/admin/enlistment-applications/1/approve
 Authorization: Bearer {{accessToken}}
 
+### APPROVE APPLICATION (ADMIN)
+PATCH {{baseUrl}}/api/admin/enlistment-applications/approve/bulk
+Authorization: Bearer {{accessToken}}
+
 ################################
 ### ADMIN – DEFERMENT
 ################################
@@ -134,7 +138,7 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "decisionStatus": "APPROVED"
+  "decisionStatus": "REJECTED"
 }
 
 ################################

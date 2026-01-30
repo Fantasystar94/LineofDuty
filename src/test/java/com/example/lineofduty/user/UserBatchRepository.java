@@ -35,8 +35,7 @@ class UserBatchRepositoryTest {
                     "bulkUser" + i,
                     "bulkUser" + i + "@realdb.com",
                     encodedPassword,
-                    Role.ROLE_USER,
-                    "900101-1" + String.format("%06d", i)
+                    Role.ROLE_USER
             );
 
             batch.add(user);
