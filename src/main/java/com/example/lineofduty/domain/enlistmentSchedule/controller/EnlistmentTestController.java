@@ -2,10 +2,8 @@ package com.example.lineofduty.domain.enlistmentSchedule.controller;
 
 import com.example.lineofduty.common.model.response.GlobalResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentScheduleCreateRequest;
-import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentDistributedLockService;
 import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentLockTestService;
 import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentScheduleRetryService;
-import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentScheduleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +17,6 @@ public class EnlistmentTestController {
 
     private final EnlistmentLockTestService enlistmentScheduleService;
     private final EnlistmentScheduleRetryService enlistmentScheduleRetryService;
-    private final EnlistmentDistributedLockService enlistmentDistributedLockService;
 
     @PostMapping("/pessimistic")
     public ResponseEntity<GlobalResponse> applyEnlistment(@RequestHeader("X-TEST-USER-ID") Long userId, @RequestBody EnlistmentScheduleCreateRequest request) {
@@ -29,11 +26,6 @@ public class EnlistmentTestController {
     @PostMapping("/optimistic")
     public ResponseEntity<GlobalResponse> applyEnlistmentOptimisticLock(@RequestHeader("X-TEST-USER-ID") Long userId, @RequestBody EnlistmentScheduleCreateRequest request) {
         return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_APPLY_SUCCESS, enlistmentScheduleRetryService.withdrawRetry(userId, request)));
-    }
-
-    @PostMapping("/distribute")
-    public ResponseEntity<GlobalResponse> applyEnlistmentDistribute(@RequestHeader("X-TEST-USER-ID") Long userId, @RequestBody EnlistmentScheduleCreateRequest request) {
-        return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_APPLY_SUCCESS, enlistmentScheduleService.applyWithDistributedLock(userId, request)));
     }
 
 }

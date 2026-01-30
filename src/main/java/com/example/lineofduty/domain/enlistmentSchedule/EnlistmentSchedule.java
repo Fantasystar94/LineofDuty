@@ -60,4 +60,9 @@ public class EnlistmentSchedule extends BaseEntity {
     public void restoreSlot() {
         this.remainingSlots += 1;
     }
+
+
+    public void setRemainingSlots(int slots) {
+        this.remainingSlots = slots;
+    }
 }
