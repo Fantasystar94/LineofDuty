@@ -64,7 +64,13 @@ public class PaymentService {
         }
 
         // 결제 기록(Payment) 남기기
-        Payment payment = new Payment(order, request.getPaymentKey());
+        Payment payment = new Payment(order);
+
+        String paymentKey = request.getPaymentKey();
+        if (paymentKey != null) {
+            payment.updatePaymentKey(paymentKey);
+        }
+
         paymentRepository.save(payment);
         return PaymentCreateResponse.from(payment);
     }
@@ -143,7 +149,7 @@ public class PaymentService {
             payment.updateByResponse(PaymentStatus.valueOf(status), paymentKey, totalPrice, requestedAt, approvedAt);
 
             // 결제 끝난 주문서는 사용 종료 처리
-            payment.getOrder().updateStatus(false);
+            payment.getOrder().updateIsOrderCompleted(true);
 
             return PaymentConfirmResponse.from(payment);
         } catch (IOException | InterruptedException ie) {
