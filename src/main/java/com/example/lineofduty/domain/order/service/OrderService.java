@@ -15,6 +15,8 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +35,7 @@ public class OrderService {
                     "0123456789" +
                     "-_";
     private static final SecureRandom random = new SecureRandom();
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
 
     // 주문서(주문 포함) 생성
     @Transactional
@@ -52,7 +55,7 @@ public class OrderService {
          1. 사용 가능한 주문서가 있다면 그 주문서를 사용해
          2. 주문서가 없다면 주문서를 새로 만들어
         */
-        Order order = orderRepository.findByUserIdAndStatusTrue(userId).orElseGet(
+        Order order = orderRepository.findByUserIdAndIsOrderCompletedFalse(userId).orElseGet(
                 () -> createNewOrder(userId, product)    // 빈 주문서 생성
         );
 
@@ -101,7 +104,7 @@ public class OrderService {
     public OrderUpdateResponse updateOrderService(Long orderId, Long orderItemId, OrderUpdateRequest request) {
 
         // 주문서를 찾아
-        Order order = orderRepository.findByIdAndStatusTrue(orderId).orElseThrow(
+        Order order = orderRepository.findByIdAndIsOrderCompletedFalse(orderId).orElseThrow(
                 () -> new CustomException(ErrorMessage.ORDER_NOT_FOUND)
         );
 
@@ -164,24 +167,35 @@ public class OrderService {
         long totalPrice = 0;
         List<OrderItem> orderItemList = new ArrayList<>();
         String orderName = product.getName();
-        String orderNumber = createOrderNumber();
-        // 이미 존재하는 orderNumber라면 다시 작성
-        while (orderRepository.existsByOrderNumber(orderNumber)) {
-            orderNumber = createOrderNumber();
-        }
+        String orderNumber = createTossOrderNumber();
+
         Order order = new Order(user, orderName, orderNumber, totalPrice, orderItemList);
         return orderRepository.save(order);
     }
 
-    // orderNumber 생성
-    private String createOrderNumber() {
+    // orderNumber(주문번호) 생성
+    private String createTossOrderNumber() {
 
-        StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < 64; i++) {
+        // 주문번호 최소 길이, 최대 길이
+        int minLength = 6;
+        int maxLength = 64;
+
+        String dateTimePart = LocalDateTime.now().format(DATE_TIME_FORMATTER);
+
+        String prefix = dateTimePart + "-";
+
+        int maxRandomLength = maxLength - prefix.length();
+        int minRandomLength = Math.max(0, minLength - prefix.length());
+
+        int randomLength = random.nextInt(maxRandomLength - minRandomLength + 1) + minRandomLength;
+
+        StringBuilder randomPart = new StringBuilder(randomLength);
+        for (int i = 0; i < randomLength; i++) {
             int index = random.nextInt(CHARSET.length());
-            sb.append(CHARSET.charAt(index));
+            randomPart.append(CHARSET.charAt(index));
         }
-        return sb.toString();
+
+        return prefix + randomPart;
     }
 
     // OrderName 생성
@@ -191,7 +205,8 @@ public class OrderService {
         for (OrderItem item : order.getOrderItemList()) {
             totalAmount += item.getQuantity();
         }
-
+        // 본인 제외 나머지 갯수
+        totalAmount -= 1;
         return product.getName() + " 외 " + totalAmount+ "건";
     }
 }
