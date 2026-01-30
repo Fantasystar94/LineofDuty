@@ -60,4 +60,23 @@ public class QueryEnlistmentApplicationRepository {
                 .fetchOne();
     }
 
+    public List<EnlistmentApplicationReadResponse> findApplicationsWithUser(List<Long> applicationIds) {
+
+        return jpaQueryFactory
+                .select(Projections.constructor(
+                        EnlistmentApplicationReadResponse.class,
+                        enlistmentApplication.id,
+                        enlistmentApplication.enlistmentDate,
+                        enlistmentApplication.applicationStatus,
+                        enlistmentApplication.createdAt,
+                        enlistmentApplication.modifiedAt,
+                        user.username
+                ))
+                .from(enlistmentApplication)
+                .join(user).on(user.id.eq(enlistmentApplication.userId))
+                .where(enlistmentApplication.id.in(applicationIds))
+                .fetch();
+    }
+
+
 }

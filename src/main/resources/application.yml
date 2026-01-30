@@ -32,7 +32,8 @@ spring:
             max-wait: -1ms
 toss:
   secret-key: ${TOSS_SECRET_KEY}
-
+frontend:
+  url: ${FRONTEND_URL}
 ---
 spring:
   config:

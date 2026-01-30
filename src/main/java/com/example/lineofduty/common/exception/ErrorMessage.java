@@ -80,7 +80,8 @@ public enum ErrorMessage {
     DUPLICATE_SCHEDULE(HttpStatus.CONFLICT, "이미 신청된 유저입니다"),
     INVALID_APPLICATION_STATUS(HttpStatus.CONFLICT,"승인 할 수 없습니다"),
     NO_REMAINING_SLOTS(HttpStatus.CONFLICT,"입영 일정이 모두 소진 되었습니다"),
-    INVALID_AMOUNT_PAYMENT(HttpStatus.CONFLICT, "결제할 금액 정보가 일치하지 않습니다.");
+    INVALID_AMOUNT_PAYMENT(HttpStatus.CONFLICT, "결제할 금액 정보가 일치하지 않습니다."),
+    SCHEDULE_CONFLICT(HttpStatus.CONFLICT, "동시에 요청이 들어왔습니다.");
 
 
     private final HttpStatus status;
