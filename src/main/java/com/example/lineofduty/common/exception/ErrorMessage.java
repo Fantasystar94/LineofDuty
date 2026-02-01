@@ -12,7 +12,6 @@ public enum ErrorMessage {
     // 공통/입력값 오류
     INVALID_REQUEST(HttpStatus.BAD_REQUEST, "잘못된 요청입니다."),
     MISSING_REQUIRED_FIELD(HttpStatus.BAD_REQUEST, "필수 필드값이 누락되었습니다."),
-    SEARCH_REQUIRED_FIELD(HttpStatus.BAD_REQUEST, "검색어를 입력해주세요."),
 
     // 유저 관련
     INVALID_EMAIL_FORMAT(HttpStatus.BAD_REQUEST, "이메일 형식이 올바르지 않습니다."),
@@ -28,7 +27,16 @@ public enum ErrorMessage {
     MISSING_PRODUCT_NAME_OR_DESCRIPTION(HttpStatus.BAD_REQUEST, "상품명과 상품설명은 필수입니다."),
     INVALID_PRICE(HttpStatus.BAD_REQUEST, "가격은 1원 이상이어야 합니다."),
     INVALID_STOCK(HttpStatus.BAD_REQUEST, "재고는 1개 이상이어야 합니다."),
+
+    // 동시성 제어 관련 에러 메시지 추가
+    LOCK_ACQUISITION_FAILED(HttpStatus.CONFLICT, "다른 요청이 처리 중입니다. 잠시 후 다시 시도해주세요."),
+    LOCK_INTERRUPTED(HttpStatus.INTERNAL_SERVER_ERROR, "요청 처리 중 오류가 발생했습니다."),
     OUT_OF_STOCK(HttpStatus.BAD_REQUEST, "재고가 부족합니다."),
+
+    // 결제 관련
+    ALREADY_CANCELED_PAYMENT(HttpStatus.BAD_REQUEST, "이미 취소된 결제 입니다."),
+    NOT_YET_CONFIRM(HttpStatus.BAD_REQUEST, "아직 승인되지않은 결제입니다."),
+    ALREADY_PROCESSED_PAYMENT(HttpStatus.BAD_REQUEST, "이미 처리된 결제 입니다."),
 
 
     /* --- 401 Unauthorized --- */
@@ -45,6 +53,10 @@ public enum ErrorMessage {
     NO_MODIFY_PERMISSION(HttpStatus.FORBIDDEN, "수정 권한이 없습니다."),
     NO_DELETE_PERMISSION(HttpStatus.FORBIDDEN, "삭제 권한이 없습니다."),
     USER_WITHDRAWN(HttpStatus.FORBIDDEN, "탈퇴한 회원입니다."),
+    REJECT_PAYMENT(HttpStatus.FORBIDDEN, "결제 승인이 거절되었습니다."),
+    INVALID_ADMIN_TOKEN(HttpStatus.BAD_REQUEST, "관리자 토큰값이 일치하지 않습니다."),
+    INVALID_TOKEN(HttpStatus.BAD_REQUEST, "토큰값이 일치하지 않습니다."),
+    USER_LOGOUT(HttpStatus.BAD_REQUEST, "로그아웃된 계정입니다."),
 
 
     /* --- 404 Not Found --- */
@@ -58,8 +70,7 @@ public enum ErrorMessage {
     NOTICE_NOT_FOUND(HttpStatus.NOT_FOUND, "공지를 찾을 수 없습니다."),
     DEFERMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "연기 일정을 찾을 수 없습니다"),
     USER_DELETED_NOT_FOUND(HttpStatus.NOT_FOUND, "이미 탈퇴한 사용자입니다."),
-
-
+    NOT_FOUND_PAYMENT(HttpStatus.NOT_FOUND, "존재하지 않는 결제 정보 입니다."),
 
     /* --- 409 Conflict --- */
     // 데이터 충돌
@@ -68,6 +79,9 @@ public enum ErrorMessage {
     ALREADY_PAID_ORDER(HttpStatus.CONFLICT, "이미 결제된 주문입니다."),
     DUPLICATE_SCHEDULE(HttpStatus.CONFLICT, "이미 신청된 유저입니다"),
     INVALID_APPLICATION_STATUS(HttpStatus.CONFLICT,"승인 할 수 없습니다"),
+    NO_REMAINING_SLOTS(HttpStatus.CONFLICT,"입영 일정이 모두 소진 되었습니다"),
+    INVALID_AMOUNT_PAYMENT(HttpStatus.CONFLICT, "결제할 금액 정보가 일치하지 않습니다."),
+    SCHEDULE_CONFLICT(HttpStatus.CONFLICT, "동시에 요청이 들어왔습니다."),
 
     /* --- 500 Internal Server Error --- */
     // 외부 API 관련

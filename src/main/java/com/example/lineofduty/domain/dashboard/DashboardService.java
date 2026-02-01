@@ -3,7 +3,7 @@ import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.Role;
 import com.example.lineofduty.domain.dashboard.model.DashboardDefermentsSummaryResponse;
-import com.example.lineofduty.domain.dashboard.model.DashboardPendingSummaryResponse;
+import com.example.lineofduty.domain.dashboard.model.DashboardRequestedSummaryResponse;
 import com.example.lineofduty.domain.dashboard.model.DashboardScheduleSummaryResponse;
 import com.example.lineofduty.domain.dashboard.model.DashboardSummaryResponse;
 import com.example.lineofduty.domain.user.dto.UserDetail;
@@ -48,11 +48,11 @@ public class DashboardService {
      * 입영 요청, 연기 요청 요약
      * */
     @Transactional(readOnly = true)
-    public DashboardPendingSummaryResponse summaryPending(UserDetail userDetail) {
+    public DashboardRequestedSummaryResponse summaryPending(UserDetail userDetail) {
 
         validateAdmin(userDetail.getUser().getId());
 
-        return queryDashboardRepository.summaryPending();
+        return queryDashboardRepository.summaryRequest();
     }
 
     /**

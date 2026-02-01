@@ -1,4 +1,4 @@
-package com.example.lineofduty.domain.auth.dto.request;
+package com.example.lineofduty.domain.auth.dto;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -22,8 +22,9 @@ public class SignupRequest {
     @NotBlank(message = "이름은 필수입니다.")
     private String username;
 
-    @NotBlank(message = "주민번호는 필수입니다.")
-    private String residentNumber;
+    // 관리자 가입 여부
+    private boolean admin = false;
 
-    private boolean admin = true;  // 테스트용으로 만듬
+    // 관리자 토큰 (입력값)
+    private String adminToken = "";
 }

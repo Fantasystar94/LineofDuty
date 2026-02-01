@@ -6,9 +6,9 @@ import lombok.NoArgsConstructor;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DashboardPendingSummaryResponse {
+public class DashboardRequestedSummaryResponse {
 
-    private Long pendingEnlistments;
-    private Long pendingDeferments;
+    private Long requestedEnlistments;
+    private Long confirmedEnlistments;
 
 }

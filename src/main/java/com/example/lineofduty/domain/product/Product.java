@@ -1,6 +1,6 @@
 package com.example.lineofduty.domain.product;
 
-import com.example.lineofduty.common.model.enums.ApplicationStatus;
+import com.example.lineofduty.common.model.enums.ProductStatus;
 import com.example.lineofduty.domain.product.dto.request.ProductRequest;
 import com.example.lineofduty.entity.BaseEntity;
 import jakarta.persistence.*;
@@ -32,9 +32,9 @@ public class Product extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private ApplicationStatus.ProductStatus status;
+    private ProductStatus status;
 
-    public Product(String name, String description, Long price, Long stock, ApplicationStatus.ProductStatus status) {
+    public Product(String name, String description, Long price, Long stock, ProductStatus status) {
         this.name = name;
         this.description = description;
         this.price = price;
@@ -49,9 +49,9 @@ public class Product extends BaseEntity {
 
     private void updateStatusBasedOnStock() {
         if (this.stock == 0) {
-            this.status = ApplicationStatus.ProductStatus.SOLD_OUT;
-        } else if (this.stock > 0 && this.status == ApplicationStatus.ProductStatus.SOLD_OUT) {
-            this.status = ApplicationStatus.ProductStatus.ON_SALE;
+            this.status = ProductStatus.SOLD_OUT;
+        } else if (this.stock > 0 && this.status == ProductStatus.SOLD_OUT) {
+            this.status = ProductStatus.ON_SALE;
         }
     }
 
