@@ -1,5 +1,6 @@
 package com.example.lineofduty.domain.weather.dto;
 
+import com.fasterxml.jackson.annotation.JsonAlias;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 import lombok.Getter;
@@ -48,87 +49,131 @@ public class MidWeatherResponse {
 
     @Getter
     @NoArgsConstructor
-    @JsonPropertyOrder({"rnSt4Am", "rnSt4Pm", "wf4Am", "wf4Pm", "taMin4", "taMax4", "rnSt5Am", "rnSt5Pm", "wf5Am", "wf5Pm","taMin5", "taMax5", "rnSt6Am", "rnSt6Pm", "wf6Am", "wf6Pm", "taMin6", "taMax6" ,"rnSt7Am", "rnSt7Pm", "wf7Am", "wf7Pm", "taMin7", "taMax7","rnSt8", "wf8", "rnSt9", "wf9", "rnSt10", "wf10"})
+    @JsonPropertyOrder({
+            "probabilityOfRain4Am", "probabilityOfRain4Pm", "weatherForecast4Am", "weatherForecast4Pm", "minTemp4", "maxTemp4",
+            "probabilityOfRain5Am", "probabilityOfRain5Pm", "weatherForecast5Am", "weatherForecast5Pm", "minTemp5", "maxTemp5",
+            "probabilityOfRain6Am", "probabilityOfRain6Pm", "weatherForecast6Am", "weatherForecast6Pm", "minTemp6", "maxTemp6",
+            "probabilityOfRain7Am", "probabilityOfRain7Pm", "weatherForecast7Am", "weatherForecast7Pm", "minTemp7", "maxTemp7",
+            "probabilityOfRain8", "weatherForecast8", "minTemp8", "maxTemp8",
+            "probabilityOfRain9", "weatherForecast9", "minTemp9", "maxTemp9",
+            "probabilityOfRain10", "weatherForecast10", "minTemp10", "maxTemp10"
+    })
     public static class Item {
         private String regId; // 예보구역코드
 
         // --- 중기육상예보 (강수확률, 날씨) ---
         // 4일 후
-        private int rnSt4Am;
-        private int rnSt4Pm;
-        private String wf4Am;
-        private String wf4Pm;
+        @JsonAlias("rnSt4Am")
+        private int probabilityOfRain4Am;
+        @JsonAlias("rnSt4Pm")
+        private int probabilityOfRain4Pm;
+        @JsonAlias("wf4Am")
+        private String weatherForecast4Am;
+        @JsonAlias("wf4Pm")
+        private String weatherForecast4Pm;
 
         // 5일 후
-        private int rnSt5Am;
-        private int rnSt5Pm;
-        private String wf5Am;
-        private String wf5Pm;
+        @JsonAlias("rnSt5Am")
+        private int probabilityOfRain5Am;
+        @JsonAlias("rnSt5Pm")
+        private int probabilityOfRain5Pm;
+        @JsonAlias("wf5Am")
+        private String weatherForecast5Am;
+        @JsonAlias("wf5Pm")
+        private String weatherForecast5Pm;
 
         // 6일 후
-        private int rnSt6Am;
-        private int rnSt6Pm;
-        private String wf6Am;
-        private String wf6Pm;
+        @JsonAlias("rnSt6Am")
+        private int probabilityOfRain6Am;
+        @JsonAlias("rnSt6Pm")
+        private int probabilityOfRain6Pm;
+        @JsonAlias("wf6Am")
+        private String weatherForecast6Am;
+        @JsonAlias("wf6Pm")
+        private String weatherForecast6Pm;
 
         // 7일 후
-        private int rnSt7Am;
-        private int rnSt7Pm;
-        private String wf7Am;
-        private String wf7Pm;
+        @JsonAlias("rnSt7Am")
+        private int probabilityOfRain7Am;
+        @JsonAlias("rnSt7Pm")
+        private int probabilityOfRain7Pm;
+        @JsonAlias("wf7Am")
+        private String weatherForecast7Am;
+        @JsonAlias("wf7Pm")
+        private String weatherForecast7Pm;
 
         // 8~10일 후
-        private int rnSt8;
-        private String wf8;
-        private int rnSt9;
-        private String wf9;
-        private int rnSt10;
-        private String wf10;
+        @JsonAlias("rnSt8")
+        private int probabilityOfRain8;
+        @JsonAlias("wf8")
+        private String weatherForecast8;
+        @JsonAlias("rnSt9")
+        private int probabilityOfRain9;
+        @JsonAlias("wf9")
+        private String weatherForecast9;
+        @JsonAlias("rnSt10")
+        private int probabilityOfRain10;
+        @JsonAlias("wf10")
+        private String weatherForecast10;
 
         // --- 중기기온예보 (최저/최고기온) ---
         // 4일 후
-        private int taMin4;
-        private int taMax4;
+        @JsonAlias("taMin4")
+        private int minTemp4;
+        @JsonAlias("taMax4")
+        private int maxTemp4;
 
         // 5일 후
-        private int taMin5;
-        private int taMax5;
+        @JsonAlias("taMin5")
+        private int minTemp5;
+        @JsonAlias("taMax5")
+        private int maxTemp5;
 
         // 6일 후
-        private int taMin6;
-        private int taMax6;
+        @JsonAlias("taMin6")
+        private int minTemp6;
+        @JsonAlias("taMax6")
+        private int maxTemp6;
 
         // 7일 후
-        private int taMin7;
-        private int taMax7;
+        @JsonAlias("taMin7")
+        private int minTemp7;
+        @JsonAlias("taMax7")
+        private int maxTemp7;
 
         // 8일 후
-        private int taMin8;
-        private int taMax8;
+        @JsonAlias("taMin8")
+        private int minTemp8;
+        @JsonAlias("taMax8")
+        private int maxTemp8;
 
         // 9일 후
-        private int taMin9;
-        private int taMax9;
+        @JsonAlias("taMin9")
+        private int minTemp9;
+        @JsonAlias("taMax9")
+        private int maxTemp9;
 
         // 10일 후
-        private int taMin10;
-        private int taMax10;
+        @JsonAlias("taMin10")
+        private int minTemp10;
+        @JsonAlias("taMax10")
+        private int maxTemp10;
 
         public void mergeTemperature(Item tempItem) {
-            this.taMin4 = tempItem.taMin4;
-            this.taMax4 = tempItem.taMax4;
-            this.taMin5 = tempItem.taMin5;
-            this.taMax5 = tempItem.taMax5;
-            this.taMin6 = tempItem.taMin6;
-            this.taMax6 = tempItem.taMax6;
-            this.taMin7 = tempItem.taMin7;
-            this.taMax7 = tempItem.taMax7;
-            this.taMin8 = tempItem.taMin8;
-            this.taMax8 = tempItem.taMax8;
-            this.taMin9 = tempItem.taMin9;
-            this.taMax9 = tempItem.taMax9;
-            this.taMin10 = tempItem.taMin10;
-            this.taMax10 = tempItem.taMax10;
+            this.minTemp4 = tempItem.minTemp4;
+            this.maxTemp4 = tempItem.maxTemp4;
+            this.minTemp5 = tempItem.minTemp5;
+            this.maxTemp5 = tempItem.maxTemp5;
+            this.minTemp6 = tempItem.minTemp6;
+            this.maxTemp6 = tempItem.maxTemp6;
+            this.minTemp7 = tempItem.minTemp7;
+            this.maxTemp7 = tempItem.maxTemp7;
+            this.minTemp8 = tempItem.minTemp8;
+            this.maxTemp8 = tempItem.maxTemp8;
+            this.minTemp9 = tempItem.minTemp9;
+            this.maxTemp9 = tempItem.maxTemp9;
+            this.minTemp10 = tempItem.minTemp10;
+            this.maxTemp10 = tempItem.maxTemp10;
         }
     }
 }

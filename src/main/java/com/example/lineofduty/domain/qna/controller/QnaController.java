@@ -53,7 +53,7 @@ public class QnaController {
 
         QnaInquiryListResponse response = qnaService.qnaInquiryListResponse(page, size, sort,keyword);
 
-        return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.QNA_READ_SUCCESS, response));
+        return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.QNA_LIST_READ_SUCCESS, response));
     }
 
     //질문 수정
