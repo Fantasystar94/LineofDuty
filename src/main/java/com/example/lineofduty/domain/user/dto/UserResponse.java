@@ -1,7 +1,6 @@
 package com.example.lineofduty.domain.user.dto;
 
 import com.example.lineofduty.domain.user.User;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import java.time.LocalDateTime;
 
@@ -10,11 +9,9 @@ public class UserResponse {
     private final Long id;
     private final String username;
     private final String email;
-
-    @JsonProperty("resident_number")
-    private final String residentNumber;
-
     private final String role;
+    private final boolean isDeleted;
+    private final LocalDateTime deletedAt;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
@@ -23,13 +20,9 @@ public class UserResponse {
         this.username = user.getUsername();
         this.email = user.getEmail();
         this.role = user.getRole().name();
+        this.isDeleted = user.isDeleted();
+        this.deletedAt = user.getDeletedAt();
         this.createdAt = user.getCreatedAt();
         this.modifiedAt = user.getModifiedAt();
-        this.residentNumber = maskResidentNumber(user.getResidentNumber());
-    }
-
-    private String maskResidentNumber(String origin) {
-        if (origin == null || origin.length() < 8) return origin;
-        return origin.substring(0, 8) + "******";
     }
 }

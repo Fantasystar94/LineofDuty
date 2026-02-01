@@ -10,6 +10,5 @@ public class PaymentCreateRequest {
     @NotNull(message = ValidationMessage.NOT_SELECTED_ORDER_ID)
     private Long orderId;
 
-    @NotNull(message = ValidationMessage.NOT_BLANK_ORDER_ID_STRING)
-    private String orderIdString;
+    private String paymentKey;
 }

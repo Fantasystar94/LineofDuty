@@ -8,11 +8,12 @@ import lombok.RequiredArgsConstructor;
 public enum SuccessMessage {
 
     // 200 OK
+    AUTH_SIGNUP_SUCCESS("회원가입 성공"),
     AUTH_LOGIN_SUCCESS("로그인 성공"),
-    USER_READ_SUCCESS("내 정보 조회 성공"),
+    MY_READ_SUCCESS("내 정보 조회 성공"),
     USER_UPDATE_SUCCESS("내 정보 수정 성공"),
     USER_ALL_READ_SUCCESS("회원 전체 조회 성공"),
-    USER_READ_ADMIN_SUCCESS("회원 정보 조회 성공"),
+    USER_READ_SUCCESS("회원 정보 조회 성공"),
     AUTH_LOGOUT_SUCCESS("로그아웃 성공"),
     AUTH_REISSUE_SUCCESS("토큰 재발급 성공"),
 

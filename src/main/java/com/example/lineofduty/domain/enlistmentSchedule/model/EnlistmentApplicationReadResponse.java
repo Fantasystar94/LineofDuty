@@ -1,7 +1,8 @@
 package com.example.lineofduty.domain.enlistmentSchedule.model;
 
-import com.example.lineofduty.common.model.enums.ApplicationStatus;
+import com.example.lineofduty.domain.enlistmentSchedule.ApplicationStatus;
 import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
+import com.example.lineofduty.domain.user.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -18,14 +19,15 @@ public class EnlistmentApplicationReadResponse {
     private ApplicationStatus status;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
-
-    public static EnlistmentApplicationReadResponse from(EnlistmentApplication application) {
+    private String userName;
+    public static EnlistmentApplicationReadResponse from(EnlistmentApplication application, User user) {
         return new EnlistmentApplicationReadResponse(
                 application.getId(),
                 application.getEnlistmentDate(),
                 application.getApplicationStatus(),
                 application.getCreatedAt(),
-                application.getModifiedAt()
+                application.getModifiedAt(),
+                user.getUsername()
         );
     }
 }

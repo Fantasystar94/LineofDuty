@@ -8,6 +8,6 @@ public class DashboardSummaryResponse {
 
     private Long totalUsers;
     private Long confirmedEnlistments;
-    private Long pendingApplications;
+    private Long requestedEnlistments;
     private Long totalRemainingSlots;
 }

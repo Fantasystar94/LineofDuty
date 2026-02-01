@@ -1,4 +1,4 @@
-package com.example.lineofduty.domain.auth.dto.request;
+package com.example.lineofduty.domain.auth.dto;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;

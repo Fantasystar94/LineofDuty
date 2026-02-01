@@ -5,16 +5,18 @@ import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.domain.order.Order;
 import com.example.lineofduty.domain.order.dto.*;
 import com.example.lineofduty.domain.order.repository.OrderRepository;
+import com.example.lineofduty.domain.orderItem.OrderItem;
 import com.example.lineofduty.domain.orderItem.repository.OrderItemRepository;
+import com.example.lineofduty.domain.product.Product;
 import com.example.lineofduty.domain.product.repository.ProductRepository;
 import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.domain.orderItem.OrderItem;
-import com.example.lineofduty.domain.product.Product;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.security.SecureRandom;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,6 +29,14 @@ public class OrderService {
     private final UserRepository userRepository;
     private final ProductRepository productRepository;
 
+    private static final String CHARSET =
+            "ABCDEFGHIJKLMNOPQRSTUVWXYZ" +
+                    "abcdefghijklmnopqrstuvwxyz" +
+                    "0123456789" +
+                    "-_";
+    private static final SecureRandom random = new SecureRandom();
+    private static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyyMMddHHmmss");
+
     // 주문서(주문 포함) 생성
     @Transactional
     public OrderCreateResponse createOrderService(OrderCreateRequest request, Long userId) {
@@ -36,21 +46,44 @@ public class OrderService {
                 () -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND)
         );
 
+        if (request.getQuantity() > product.getStock()) {
+            throw new CustomException(ErrorMessage.OUT_OF_STOCK);
+        }
+
         /*
          만들어져있는 주문서가 있는지 확인해
          1. 사용 가능한 주문서가 있다면 그 주문서를 사용해
          2. 주문서가 없다면 주문서를 새로 만들어
         */
-        Order order = orderRepository.findOrderByUserIdAndStatusTrue(userId).orElseGet(
-                () -> createNewOrder(userId)    // 빈 주문서 생성
+        Order order = orderRepository.findByUserIdAndIsOrderCompletedFalse(userId).orElseGet(
+                () -> createNewOrder(userId, product)    // 빈 주문서 생성
         );
 
-        // request를 기반으로 주문(orderItem)을 만들어
-        OrderItem orderItem = new OrderItem(product, order, product.getPrice(), request.getQuantity());
-        OrderItem savedOrderItem = orderItemRepository.save(orderItem);
+        // 주문서에 추가하려는 product가 이미 존재하는지 확인하고 있으면 주문 수량만 올리기
+        OrderItem orderItem = null;
+        for (OrderItem item : order.getOrderItemList()) {
+            if (item.getProduct().getId().equals(request.getProductId())) {
+                orderItem = item;
+                break;
+            }
+        }
 
-        // 주문서에 주문을 추가해
-        order.addOrderItem(savedOrderItem);
+        // product가 없다면 request를 기반으로 주문(orderItem)을 만들어
+        if (orderItem == null) {
+
+            orderItem = new OrderItem(product, order, product.getPrice(), request.getQuantity());
+            OrderItem savedOrderItem = orderItemRepository.save(orderItem);
+            order.addOrderItem(savedOrderItem);
+            order.updateOrderName(createOrderName(order, product));
+        } else if (orderItem.getQuantity() + request.getQuantity() <= product.getStock()) {
+
+            orderItem.addQuantity(request.getQuantity());
+            long changedTotalPrice = order.getTotalPrice() + request.getQuantity() * product.getPrice();
+            order.updateTotalPrice(changedTotalPrice);
+        } else {
+
+            throw new CustomException(ErrorMessage.OUT_OF_STOCK);
+        }
 
         return OrderCreateResponse.from(order);
     }
@@ -66,23 +99,12 @@ public class OrderService {
         return OrderGetResponse.from(order);
     }
 
-    // 주문(orderItem) 조회
-    @Transactional(readOnly = true)
-    public OrderItemGetResponse getOrderItemService(Long orderId, Long orderItemId) {
-
-        OrderItem orderItem = orderItemRepository.findById(orderItemId).orElseThrow(
-                () -> new CustomException(ErrorMessage.ORDER_NOT_FOUND)
-        );
-
-        return OrderItemGetResponse.from(orderId, orderItem);
-    }
-
     // 주문 수정
     @Transactional
     public OrderUpdateResponse updateOrderService(Long orderId, Long orderItemId, OrderUpdateRequest request) {
 
         // 주문서를 찾아
-        Order order = orderRepository.findByIdAndStatusTrue(orderId).orElseThrow(
+        Order order = orderRepository.findByIdAndIsOrderCompletedFalse(orderId).orElseThrow(
                 () -> new CustomException(ErrorMessage.ORDER_NOT_FOUND)
         );
 
@@ -108,10 +130,13 @@ public class OrderService {
 
         // 상품 변경으로 인한 총금액 수정
         long changedTotalPrice = 0;
-        for (OrderItem item : order.getOrderItems()) {
+        long totalProductAmount = 0;
+        for (OrderItem item : order.getOrderItemList()) {
             changedTotalPrice += item.getProduct().getPrice() * item.getQuantity();
+            totalProductAmount += item.getQuantity();
         }
         order.updateTotalPrice(changedTotalPrice);
+        order.updateOrderName(orderItem.getProduct().getName() + " 외 " + totalProductAmount+ "건");
 
         return OrderUpdateResponse.from(orderItem);
     }
@@ -133,7 +158,7 @@ public class OrderService {
     }
 
     // 빈 주문서 생성
-    private Order createNewOrder(Long userId) {
+    private Order createNewOrder(Long userId, Product product) {
 
         User user = userRepository.findById(userId).orElseThrow(
                 () -> new CustomException(ErrorMessage.USER_NOT_FOUND)
@@ -141,7 +166,47 @@ public class OrderService {
 
         long totalPrice = 0;
         List<OrderItem> orderItemList = new ArrayList<>();
-        Order order = new Order(user, totalPrice, orderItemList);
+        String orderName = product.getName();
+        String orderNumber = createTossOrderNumber();
+
+        Order order = new Order(user, orderName, orderNumber, totalPrice, orderItemList);
         return orderRepository.save(order);
+    }
+
+    // orderNumber(주문번호) 생성
+    private String createTossOrderNumber() {
+
+        // 주문번호 최소 길이, 최대 길이
+        int minLength = 6;
+        int maxLength = 64;
+
+        String dateTimePart = LocalDateTime.now().format(DATE_TIME_FORMATTER);
+
+        String prefix = dateTimePart + "-";
+
+        int maxRandomLength = maxLength - prefix.length();
+        int minRandomLength = Math.max(0, minLength - prefix.length());
+
+        int randomLength = random.nextInt(maxRandomLength - minRandomLength + 1) + minRandomLength;
+
+        StringBuilder randomPart = new StringBuilder(randomLength);
+        for (int i = 0; i < randomLength; i++) {
+            int index = random.nextInt(CHARSET.length());
+            randomPart.append(CHARSET.charAt(index));
+        }
+
+        return prefix + randomPart;
+    }
+
+    // OrderName 생성
+    private String createOrderName(Order order, Product product) {
+
+        long totalAmount = 0;
+        for (OrderItem item : order.getOrderItemList()) {
+            totalAmount += item.getQuantity();
+        }
+        // 본인 제외 나머지 갯수
+        totalAmount -= 1;
+        return product.getName() + " 외 " + totalAmount+ "건";
     }
 }

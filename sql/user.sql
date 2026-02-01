@@ -14,7 +14,7 @@ SELECT
     CONCAT('testuser', 16 + seq) AS username,
     CONCAT('testuser', 16 + seq, '@test.com') AS email,
     'testpassword' AS password,
-    'USER' AS role,
+    'ROLE_USER' AS role,
     CONCAT('900101-', LPAD(16 + seq, 6, '0')) AS resident_number,
     false AS is_deleted,
     NOW(6),

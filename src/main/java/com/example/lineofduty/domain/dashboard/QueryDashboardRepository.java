@@ -1,7 +1,7 @@
 package com.example.lineofduty.domain.dashboard;
-import com.example.lineofduty.common.model.enums.ApplicationStatus;
+import com.example.lineofduty.domain.enlistmentSchedule.ApplicationStatus;
 import com.example.lineofduty.domain.dashboard.model.DashboardDefermentsSummaryResponse;
-import com.example.lineofduty.domain.dashboard.model.DashboardPendingSummaryResponse;
+import com.example.lineofduty.domain.dashboard.model.DashboardRequestedSummaryResponse;
 import com.example.lineofduty.domain.dashboard.model.DashboardScheduleSummaryResponse;
 import com.example.lineofduty.domain.dashboard.model.DashboardSummaryResponse;
 import com.querydsl.core.types.Projections;
@@ -30,7 +30,7 @@ public class QueryDashboardRepository {
         /*
         * 		"totalUsers": 12340, //가입된 토탈 유저
 		"confirmedEnlistments": 8120, //승인된 입영 요청
-		"pendingApplications": 320, //요청대기중인 입영 요청
+		"requestedEnlistments": 320, //요청대기중인 입영 요청
 		"totalRemainingSlots": 48 //남아있는 총 입영가능 슬롯
         * */
         return jpaQueryFactory
@@ -46,7 +46,7 @@ public class QueryDashboardRepository {
                                 JPAExpressions
                                         .select(enlistmentApplication.count())
                                         .from(enlistmentApplication)
-                                        .where(enlistmentApplication.applicationStatus.eq(ApplicationStatus.PENDING)),
+                                        .where(enlistmentApplication.applicationStatus.eq(ApplicationStatus.REQUESTED)),
                                 JPAExpressions
                                         .select(enlistmentSchedule.remainingSlots.sum().longValue())
                                         .from(enlistmentSchedule)
@@ -90,26 +90,26 @@ public class QueryDashboardRepository {
 
     }
 
-    public DashboardPendingSummaryResponse summaryPending() {
+    public DashboardRequestedSummaryResponse summaryRequest() {
 
-        NumberExpression<Long> pendingEnlistments =
+        NumberExpression<Long> requestedEnlistments =
                 Expressions.cases()
-                        .when(enlistmentApplication.applicationStatus.eq(ApplicationStatus.PENDING))
+                        .when(enlistmentApplication.applicationStatus.eq(ApplicationStatus.REQUESTED))
                         .then(1L)
                         .otherwise(0L)
                         .sum();
 
-        NumberExpression<Long> pendingDeferments =
+        NumberExpression<Long> confirmedEnlistments =
                 Expressions.cases()
-                        .when(enlistmentApplication.applicationStatus.eq(ApplicationStatus.DEFERRED))
+                        .when(enlistmentApplication.applicationStatus.eq(ApplicationStatus.CONFIRMED))
                         .then(1L)
                         .otherwise(0L)
                         .sum();
 
         return jpaQueryFactory
-                .select(Projections.constructor(DashboardPendingSummaryResponse.class,
-                        pendingEnlistments,
-                        pendingDeferments
+                .select(Projections.constructor(DashboardRequestedSummaryResponse.class,
+                        requestedEnlistments,
+                        confirmedEnlistments
                         ))
                 .from(enlistmentApplication)
                 .fetchOne();

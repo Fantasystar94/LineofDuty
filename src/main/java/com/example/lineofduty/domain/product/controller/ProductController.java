@@ -9,9 +9,6 @@ import com.example.lineofduty.domain.product.service.ProductService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -40,17 +37,15 @@ public class ProductController {
     }
 
     @GetMapping("/products")
-    public ResponseEntity<GlobalResponse> getProDuctList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "createdAt") String sort, @RequestParam(defaultValue = "desc") String direction) {
-        Sort.Direction sortDirection = direction.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
-        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sort));
-        Page<ProductResponse> products = productService.getProductList(pageable);
+    public ResponseEntity<GlobalResponse> getProDuctList(@RequestParam(defaultValue = "0") int page, @RequestParam(defaultValue = "10") int size, @RequestParam(defaultValue = "createdAt") String sort, @RequestParam(defaultValue = "desc") String direction, @RequestParam(required = false) String keyword) {
+        Page<ProductResponse> products = productService.getProductList(page, size, sort, direction, keyword);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_GET_ALL_SUCCESS, PageResponse.from(products)));
     }
 
     @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/admin/products/{productId}")
-public ResponseEntity<GlobalResponse> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductRequest request) {
+    public ResponseEntity<GlobalResponse> updateProduct(@PathVariable Long productId, @Valid @RequestBody ProductRequest request) {
         ProductResponse response = productService.updateProduct(request, productId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_UPDATE_SUCCESS, response));
