@@ -32,16 +32,12 @@ public class MidWeatherService {
     private final RestClient restClient = RestClient.create();
 
     public MidWeatherResponse.Item getMidFcst(String landRegId, String tempRegId) {
-        // 발표 시각 계산
         String tmFc = calculateTmFc();
 
-        // 1. 중기육상예보 조회 (강수확률, 날씨)
         MidWeatherResponse.Item landItem = callApi(landApiUrl, landRegId, tmFc);
 
-        // 2. 중기기온예보 조회 (최저/최고기온)
         MidWeatherResponse.Item tempItem = callApi(tempApiUrl, tempRegId, tmFc);
 
-        // 3. 데이터 병합 (육상예보 객체에 기온 정보 추가)
         if (landItem != null && tempItem != null) {
             landItem.mergeTemperature(tempItem);
         }
