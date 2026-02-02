@@ -26,4 +26,39 @@ public class LogService {
         logRepository.save(log);
     }
 
+    @Transactional(readOnly = true)
+    public Page<SystemLogResponse> searchLogs(int page, int size, String sort, String username) {
+        String sortProperty = "createdAt";
+        Sort.Direction sortDirection = Sort.Direction.DESC;
+
+        if (sort != null && !sort.isEmpty()) {
+            String[] sortParams = sort.split(",");
+            sortProperty = sortParams[0];
+            if (sortParams.length > 1 && "asc".equalsIgnoreCase(sortParams[1])) {
+                sortDirection = Sort.Direction.ASC;
+            }
+        }
+
+        Pageable pageable = PageRequest.of(page, size, Sort.by(sortDirection, sortProperty));
+        Page<SystemLog> logPage;
+
+        if (username == null || username.trim().isEmpty()) {
+            logPage = logRepository.findAll(pageable);
+        } else {
+            logPage = logRepository.searchSystemLogsByUsername(username, pageable);
+        }
+
+        return logPage.map(log -> {
+            String userName = "Unknown";
+            String email = "Unknown";
+            if (log.getUserId() != null) {
+                User user = userRepository.findById(log.getUserId()).orElse(null);
+                if (user != null) {
+                    userName = user.getUsername();
+                    email = user.getEmail();
+                }
+            }
+            return SystemLogResponse.of(log, userName, email);
+        });
+    }
 }
