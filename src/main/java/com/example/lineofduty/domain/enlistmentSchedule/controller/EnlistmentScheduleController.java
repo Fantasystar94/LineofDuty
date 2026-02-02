@@ -1,14 +1,18 @@
 package com.example.lineofduty.domain.enlistmentSchedule.controller;
 import com.example.lineofduty.common.model.response.GlobalResponse;
+import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentScheduleReadResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentScheduleService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
+import java.util.List;
 
 import static com.example.lineofduty.common.model.enums.SuccessMessage.*;
 
@@ -25,7 +29,12 @@ public class EnlistmentScheduleController {
      * */
     @GetMapping
     public ResponseEntity<GlobalResponse> getEnlistmentList(Pageable pageable) {
-        return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_SUCCESS, enlistmentScheduleService.getEnlistmentList(pageable)));
+
+        List<EnlistmentScheduleReadResponse> list = enlistmentScheduleService.getEnlistmentList(pageable);
+
+        Page<EnlistmentScheduleReadResponse> data = new PageImpl<>(list,pageable, list.size());
+
+        return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_SUCCESS, data));
     }
 
     /*
@@ -46,6 +55,11 @@ public class EnlistmentScheduleController {
                                                            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate endDate,
                                                            Pageable pageable
     ) {
-        return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_LIST_SUCCESS, enlistmentScheduleService.searchEnlistment(startDate, endDate, pageable)));
+
+        List<EnlistmentScheduleReadResponse> list = enlistmentScheduleService.searchEnlistment(startDate, endDate, pageable);
+
+        Page<EnlistmentScheduleReadResponse> data = new PageImpl<>(list,pageable, list.size());
+
+        return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_LIST_SUCCESS, data));
     }
 }

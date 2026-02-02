@@ -47,16 +47,15 @@ Content-Type: application/json
 ################################
 
 ### GET ENLISTMENT LIST
-GET {{baseUrl}}/api/enlistment?page=0&size=100
-Authorization: Bearer {{accessToken}}
+GET {{baseUrl}}/api/enlistment?page=0&size=1
+
 
 ### GET ENLISTMENT DETAIL
-GET {{baseUrl}}/api/enlistment/5
+GET {{baseUrl}}/api/enlistment/99999
 Authorization: Bearer {{accessToken}}
 
 ### SEARCH ENLISTMENT (기간 조회)
-GET {{baseUrl}}/api/enlistment/search?startDate=2026-01-01&endDate=2029-12-01&page=0&size=10
-Authorization: Bearer {{accessToken}}
+GET {{baseUrl}}/api/enlistment/search?startDate=2026-01-01&endDate=2029-12-01&page=0&size=500
 
 ################################
 ### ENLISTMENT APPLICATION (입영 신청)
@@ -68,7 +67,7 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "scheduleId": 5
+  "scheduleId": 6
 }
 
 ### GET APPLICATION LIST

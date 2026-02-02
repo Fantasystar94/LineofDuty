@@ -16,6 +16,8 @@ import com.example.lineofduty.domain.enlistmentSchedule.Deferment;
 import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentSchedule;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -41,8 +43,12 @@ public class EnlistmentScheduleService {
     /*
      * 입영 가능 일정 조회
      * */
+    @Cacheable(
+            value = "enlistmentList",
+            key = "T(java.time.LocalDate).now().toString() + ':' + #pageable.pageNumber + ':' + #pageable.pageSize"
+    )
     @Transactional(readOnly = true)
-    public Page<EnlistmentScheduleReadResponse> getEnlistmentList(Pageable pageable) {
+    public List<EnlistmentScheduleReadResponse> getEnlistmentList(Pageable pageable) {
 
         return queryScheduleRepository.getEnlistmentListSortBy(pageable, LocalDate.now());
 
@@ -63,6 +69,7 @@ public class EnlistmentScheduleService {
     /*
      * 입영 신청 - v2 / 동시성 비관락
      * */
+    @CacheEvict(value = "enlistmentList", allEntries = true)
     @Transactional
     public EnlistmentScheduleCreateResponse applyEnlistment(Long userId, EnlistmentScheduleCreateRequest request) {
 
@@ -251,6 +258,7 @@ public class EnlistmentScheduleService {
      * 입영 연기 요청 승인 / 반려 - v1
      * 관리자 전용
      */
+    @CacheEvict(value = "enlistmentList", allEntries = true)
     @Transactional
     public EnlistmentApplicationReadResponse processDeferment(Long defermentsId, DefermentPatchRequest request) {
 
@@ -302,14 +310,20 @@ public class EnlistmentScheduleService {
     }
 
     @Transactional(readOnly = true)
-    public Page<EnlistmentScheduleReadResponse> searchEnlistment(LocalDate startDate, LocalDate endDate, Pageable pageable) {
+    public List<EnlistmentScheduleReadResponse> searchEnlistment(LocalDate startDate, LocalDate endDate, Pageable pageable) {
 
         return queryScheduleRepository.searchEnlistment(startDate, endDate, pageable);
 
     }
 
+    @CacheEvict(value = "enlistmentList", allEntries = true)
     @Transactional
     public BulkDefermentProcessResponse processDefermentBulk(DefermentStatus decisionStatus) {
+
+        //APPROVED, REJECTED 아니면 예외처리
+        if (decisionStatus != DefermentStatus.APPROVED && decisionStatus != DefermentStatus.REJECTED) {
+            throw new CustomException(ErrorMessage.INVALID_DEFERMENT_STATUS);
+        }
 
         // 1. 벌크 대상 조회
         List<EnlistmentApplication> lists = applicationRepository.findRequestedWithDefermentAndSchedule(ApplicationStatus.REQUESTED);

@@ -36,10 +36,6 @@ public class EnlistmentSchedule extends BaseEntity {
     @Column(name = "remaining_slots", nullable = false)
     private Integer remainingSlots;
 
-    @Version
-    @Column
-    private final Long version = 0L;
-
     public void slotDeduct() {
         if (remainingSlots <= 0) {
             throw new CustomException(ErrorMessage.NO_REMAINING_SLOTS);
