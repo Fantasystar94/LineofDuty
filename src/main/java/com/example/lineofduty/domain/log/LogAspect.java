@@ -35,7 +35,7 @@ public class LogAspect {
         String method = request.getMethod();
         String uri = request.getRequestURI();
         String args = Arrays.toString(joinPoint.getArgs());
-        String className = joinPoint.getTarget().getClass().getName(); // 클래스명(패키지 포함)
+        String className = joinPoint.getTarget().getClass().getName();
 
         Long userId = null;
         try {
@@ -57,7 +57,7 @@ public class LogAspect {
             // 2. 데이터베이스에 저장
             if (isCriticalDomain(className)) {
                 log.error("=== Error DB Logging {} ===", className);
-                logService.saveLog(userId, method + " " + uri, "FAIL", e.getMessage(), args);
+                logService.saveLog(userId, method + " " + uri, e.getMessage(), args);
             }
 
             throw e;
@@ -65,7 +65,6 @@ public class LogAspect {
         } finally {
             long endTime = System.currentTimeMillis();
             long executionTime = endTime - startTime;
-            // 일반 로그 파일 저장 (성공/실패 여부와 관계없이 실행 시간 등 기록)
             log.info("Request: {} {} | Time: {}ms", method, uri, executionTime);
         }
     }

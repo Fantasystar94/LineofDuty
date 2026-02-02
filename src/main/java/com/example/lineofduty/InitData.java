@@ -63,46 +63,46 @@
 //        userRepository.save(user);
 //
 //
-////        //2026년 동안 화요일마다 4회씩 생성
-////        int year = 2026;
-////
-////        for (int month = 1; month <= 12; month++) {
-////
-////            LocalDate firstTuesday = LocalDate.of(year, month, 1)
-////                    .with(TemporalAdjusters.nextOrSame(DayOfWeek.TUESDAY));
-////
-////            for (int i = 0; i < 4; i++) {
-////                LocalDate enlistmentDate = firstTuesday.plusWeeks(i);
-////
-////                EnlistmentSchedule schedule = new EnlistmentSchedule();
-////                schedule.setEnlistmentDate(enlistmentDate);
-////                schedule.setCapacity(100);
-////                schedule.setRemainingSlots(100);
-////
-////                enlistmentScheduleRepository.save(schedule);
-////            }
-////        }
-////
-////
-////        productRepository.save(
-////                new Product(
-////                        "왕고무링",
-////                        "짬의 상징 왕 고무링, 훈련소에서부터 착용해보세요",
-////                        10000,
-////                        100,
-////                        ApplicationStatus.ProductStatus.ON_SALE
-////                )
-////        );
-////
-////        productRepository.save(
-////                new Product(
-////                        "물집 안생기는 깔창",
-////                        "물집은 자랑이 아닙니다. 미리 예방하세요",
-////                        6000,
-////                        100,
-////                        ApplicationStatus.ProductStatus.ON_SALE
-////                )
-////        );
+//        //2026년 동안 화요일마다 4회씩 생성
+//        int year = 2026;
+//
+//        for (int month = 1; month <= 12; month++) {
+//
+//            LocalDate firstTuesday = LocalDate.of(year, month, 1)
+//                    .with(TemporalAdjusters.nextOrSame(DayOfWeek.TUESDAY));
+//
+//            for (int i = 0; i < 4; i++) {
+//                LocalDate enlistmentDate = firstTuesday.plusWeeks(i);
+//
+//                EnlistmentSchedule schedule = new EnlistmentSchedule();
+//                schedule.setEnlistmentDate(enlistmentDate);
+//                schedule.setCapacity(100);
+//                schedule.setRemainingSlots(100);
+//
+//                enlistmentScheduleRepository.save(schedule);
+//            }
+//        }
+//
+//
+//        productRepository.save(
+//                new Product(
+//                        "왕고무링",
+//                        "짬의 상징 왕 고무링, 훈련소에서부터 착용해보세요",
+//                        10000,
+//                        100,
+//                        ApplicationStatus.ProductStatus.ON_SALE
+//                )
+//        );
+//
+//        productRepository.save(
+//                new Product(
+//                        "물집 안생기는 깔창",
+//                        "물집은 자랑이 아닙니다. 미리 예방하세요",
+//                        6000,
+//                        100,
+//                        ApplicationStatus.ProductStatus.ON_SALE
+//                )
+//        );
 //
 //    }
 //}

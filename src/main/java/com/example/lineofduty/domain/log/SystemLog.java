@@ -24,12 +24,12 @@ public class SystemLog extends BaseEntity {
     @Column(name = "action")
     private String action;
 
-
     @Column(name = "error_message")
     private String errorMessage;
 
     @Column(name = "request_data", columnDefinition = "TEXT")
     private String requestData;
+
 
     public SystemLog(Long userId, String action, String errorMessage, String requestData) {
         this.userId = userId;
