@@ -24,7 +24,7 @@ public class SystemLog extends BaseEntity {
     @Column(name = "action")
     private String action;
 
-    @Column(name = "error_message")
+    @Column(name = "error_message", columnDefinition = "TEXT")
     private String errorMessage;
 
     @Column(name = "request_data", columnDefinition = "TEXT")

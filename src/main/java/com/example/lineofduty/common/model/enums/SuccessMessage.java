@@ -30,6 +30,7 @@ public enum SuccessMessage {
     QNA_CREATE_SUCCESS("질문이 생성되었습니다."),
     QNA_READ_SUCCESS("질문 단건 조회 성공"),
     QNA_UPDATE_SUCCESS("질문이 수정되었습니다"),
+    QNA_LIST_READ_SUCCESS("질문 목록 조회 성공"),
     NOTICE_READ_SUCCESS("공지사항 상세 조회 성공"),
     NOTICE_UPDATE_SUCCESS("공지가 수정되었습니다."),
     LOG_READ_SUCCESS("로그 조회 성공"),
@@ -57,7 +58,8 @@ public enum SuccessMessage {
     QNA_DELETE_SUCCESS("질문이 삭제되었습니다"),
     DEFERMENTS_PROCEED("연기 신청이 처리 되었습니다."),
     NOTICE_DELETE_SUCCESS("공지가 삭제되었습니다."),
-    SUMMARY_SUCCESS("요약 완료");
+    SUMMARY_SUCCESS("요약 완료"),
+    WEATHER_READ_SUCCESS("날씨정보 요청완료");
 
 
     private final String message;
