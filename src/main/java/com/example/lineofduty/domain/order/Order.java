@@ -37,9 +37,9 @@ public class Order extends BaseEntity {
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<OrderItem> orderItemList = new ArrayList<>();
 
-    // (status == true) => 주문서 사용 중임, (status == false) => 주문서 사용됨(soft-delete)
-    @Column(nullable = false)
-    private boolean status = true;
+    // (status == true) => 주문 완료(soft-delete), (status == false) => 주문 완료 안됨
+    @Column(name = "is_order_completed", nullable = false)
+    private boolean isOrderCompleted = false;
 
     public Order(User user, String orderName, String orderNumber, Long totalPrice, List<OrderItem> orderItemList) {
         this.user = user;
@@ -59,8 +59,8 @@ public class Order extends BaseEntity {
         this.totalPrice = changedTotalPrice;
     }
 
-    public void updateStatus(boolean status) {
-        this.status = status;
+    public void updateIsOrderCompleted(boolean status) {
+        this.isOrderCompleted = status;
     }
 
     public void updateOrderName(String orderName) {

@@ -27,8 +27,9 @@ public class Payment extends BaseEntity {
     private Long totalPrice;
 
     @Column(unique = true, nullable = false)
-    private String paymentKey;
+    private String paymentKey = "default_payment_key";
 
+    // toss 요청 주문번호
     @Column(unique = true)
     private String orderNumber;
 
@@ -37,14 +38,18 @@ public class Payment extends BaseEntity {
     @Column(nullable = false)
     private PaymentStatus status = PaymentStatus.READY;
 
+    // toss에서 offsetDatetime으로 제공함, 현금영수증 발급 혹은 취소를 요청한 날짜와 시간 정보
     private OffsetDateTime requestedAt;
     private OffsetDateTime approvedAt;
 
-    public Payment(Order order, String paymentKey) {
+    public Payment(Order order) {
         this.order = order;
         this.totalPrice = order.getTotalPrice();
-        this.paymentKey = paymentKey;
         this.orderNumber = order.getOrderNumber();
+    }
+
+    public void updatePaymentKey(String paymentKey) {
+        this.paymentKey = paymentKey;
     }
 
     public void updateStatus(PaymentStatus paymentStatus) {
