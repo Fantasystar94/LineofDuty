@@ -1,6 +1,7 @@
 package com.example.lineofduty.domain.enlistmentSchedule.service;
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
+import com.example.lineofduty.domain.dashboard.model.EnlistmentThisWeekResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.ApplicationStatus;
 import com.example.lineofduty.common.model.enums.DefermentStatus;
 import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
@@ -14,6 +15,7 @@ import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import com.example.lineofduty.domain.enlistmentSchedule.Deferment;
 import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentSchedule;
+import com.example.lineofduty.domain.weather.service.TodayWeatherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
@@ -39,7 +41,7 @@ public class EnlistmentScheduleService {
     private final QueryEnlistmentApplicationRepository queryEnlistmentApplicationRepository;
     private final UserRepository userRepository;
     private final DefermentRepository defermentRepository;
-
+    private final TodayWeatherService todayWeatherService;
     /*
      * 입영 가능 일정 조회
      * */
@@ -65,6 +67,16 @@ public class EnlistmentScheduleService {
         return EnlistmentScheduleReadResponse.from(schedule);
     }
 
+    /**
+     * 이번 주 입영일정 요약
+     * */
+    @Transactional(readOnly = true)
+    public EnlistmentThisWeekResponse summaryScheduleOfThisWeek() {
+
+        LocalDate today = LocalDate.now();
+
+        return queryScheduleRepository.summaryScheduleOfThisWeek(today);
+    }
 
     /*
      * 입영 신청 - v2 / 동시성 비관락

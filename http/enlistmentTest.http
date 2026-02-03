@@ -49,6 +49,8 @@ Content-Type: application/json
 ### GET ENLISTMENT LIST
 GET {{baseUrl}}/api/enlistment?page=0&size=1
 
+### GET ENLISTMENT THIS WEEK
+GET {{baseUrl}}/api/enlistment/thisWeek
 
 ### GET ENLISTMENT DETAIL
 GET {{baseUrl}}/api/enlistment/99999
@@ -146,10 +148,6 @@ Content-Type: application/json
 
 ### GET DASHBOARD SUMMARY
 GET {{baseUrl}}/api/admin/dashboard/summary
-Authorization: Bearer {{accessToken}}
-
-### GET DASHBOARD ENLISTMENT SUMMARY
-GET {{baseUrl}}/api/admin/dashboard/enlistment-schedule
 Authorization: Bearer {{accessToken}}
 
 ### GET DASHBOARD PENDING
