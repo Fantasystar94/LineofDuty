@@ -35,9 +35,8 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-//    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+    implementation 'com.google.firebase:firebase-admin:9.7.1'
 
-//    implementation 'org.redisson:redisson-spring-boot-starter:3.27.2'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
 
