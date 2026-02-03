@@ -91,7 +91,8 @@ public enum ErrorMessage {
 
     /* --- 500 Internal Server Error --- */
     // 외부 API 관련
-    WEATHER_API_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "기상청 API 호출 중 오류가 발생했습니다.");
+    WEATHER_API_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "기상청 API 호출 중 오류가 발생했습니다."),
+    KAKAO_LOGIN_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "카카오 로그인 중 오류가 발생했습니다.");
 
     private final HttpStatus status;
     private final String message;
