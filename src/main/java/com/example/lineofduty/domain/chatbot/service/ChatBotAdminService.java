@@ -5,7 +5,6 @@ import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.response.PageResponse;
 import com.example.lineofduty.domain.chatbot.ChatMessage;
 import com.example.lineofduty.domain.chatbot.ChatRoom;
-import com.example.lineofduty.domain.chatbot.dto.ChatRoomStatistics;
 import com.example.lineofduty.domain.chatbot.dto.response.AdminListResponse;
 import com.example.lineofduty.domain.chatbot.dto.response.ThreadResponse;
 import com.example.lineofduty.domain.chatbot.repository.ChatMessageRepository;
@@ -110,7 +109,7 @@ public class ChatBotAdminService {
                 .collect(Collectors.toList());
     }
 
-    // 전체 채팅방 목록 조회 (관리자)
+    // 전체 채팅방 목록 조회 (관리자) - N+1 문제 해결
     @Transactional(readOnly = true)
     public PageResponse<AdminListResponse> getAllChatRooms(int page, int size, String sort, String direction) {
         Sort.Direction sortDirection = direction.equalsIgnoreCase("asc") ? Sort.Direction.ASC : Sort.Direction.DESC;
@@ -128,15 +127,16 @@ public class ChatBotAdminService {
                 .collect(Collectors.toList());
 
         // 한 번의 쿼리로 모든 통계 조회
-        Map<Long, ChatRoomStatistics> statisticsMap = chatMessageRepository.getStatisticsByRoomIds(roomIds)
-                .stream()
-                .collect(Collectors.toMap(
-                        ChatRoomStatistics::getRoomId,
-                        stat -> stat
-                ));
+        Map<Long, ChatMessageRepository.ChatRoomStatisticsProjection> statisticsMap =
+                chatMessageRepository.getStatisticsByRoomIds(roomIds)
+                        .stream()
+                        .collect(Collectors.toMap(
+                                ChatMessageRepository.ChatRoomStatisticsProjection::getRoomId,
+                                stat -> stat
+                        ));
 
         Page<AdminListResponse> responses = chatRooms.map(chatRoom -> {
-            ChatRoomStatistics stats = statisticsMap.get(chatRoom.getId());
+            ChatMessageRepository.ChatRoomStatisticsProjection stats = statisticsMap.get(chatRoom.getId());
 
             if (stats == null) {
                 // 메시지가 없는 채팅방

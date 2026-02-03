@@ -13,11 +13,8 @@ spring:
     show-sql: true
     properties:
       hibernate:
-        jdbc:
-          batch_size: 50
-        order_inserts: true
-        order_updates: true
-
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
 
   application:
     name: Lineofduty
@@ -60,6 +57,14 @@ admin:
 
 frontend:
   url: ${FRONTEND_URL}
+
+weather:
+  api:
+    land-url: "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst"
+    temp-url: "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa"
+    short-term-url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"
+    key: ${WEATHER_API_KEY}
+
 ---
 spring:
   config:
@@ -80,11 +85,3 @@ spring:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
       password: ${REDIS_PASSWORD:}
-
-# 기상청 API 설정
-weather:
-  api:
-    land-url: "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst"
-    temp-url: "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa"
-    short-term-url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"
-    key: ${WEATHER_API_KEY}

@@ -78,19 +78,30 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
             @Param("endDate") LocalDateTime endDate
     );
 
-    @Query("SELECT new ChatRoomStatistics(" +
-            "cm.chatRoom.id, " +
-            "COUNT(DISTINCT CASE WHEN cm.messageType = com.example.lineofduty.common.model.enums.MessageType.USER AND cm.parentMessage IS NULL THEN cm.id ELSE NULL END), " +
-            "COUNT(cm.id), " +
-            "MAX(cm.createdAt)) " +
-            "FROM ChatMessage cm " +
-            "WHERE cm.chatRoom.id IN :roomIds " +
-            "GROUP BY cm.chatRoom.id")
-    List<ChatRoomStatistics> getStatisticsByRoomIds(@Param("roomIds") List<Long> roomIds);
-
     // 활성 유저 수 조회 (최근 30일 내 메시지를 보낸 유저)
     @Query("SELECT COUNT(DISTINCT cm.user.id) FROM ChatMessage cm " +
             "WHERE cm.messageType = 'USER' " +
             "AND cm.createdAt >= :sinceDate")
     Long countActiveUsers(@Param("sinceDate") LocalDateTime sinceDate);
+
+    @Query(value = "SELECT " +
+            "room_id as roomId, " +
+            "COALESCE(COUNT(DISTINCT CASE WHEN message_type = 'USER' AND parent_message_id IS NULL THEN message_id END), 0) as threadCount, " +
+            "COALESCE(COUNT(message_id), 0) as messageCount, " +
+            "MAX(created_at) as lastMessageAt " +
+            "FROM chat_messages " +
+            "WHERE room_id IN :roomIds " +
+            "GROUP BY room_id",
+            nativeQuery = true)
+    List<ChatRoomStatisticsProjection> getStatisticsByRoomIds(@Param("roomIds") List<Long> roomIds);
+
+    public interface ChatRoomStatisticsProjection {
+        Long getRoomId();
+
+        Long getThreadCount();
+
+        Long getMessageCount();
+
+        LocalDateTime getLastMessageAt();
+    }
 }
