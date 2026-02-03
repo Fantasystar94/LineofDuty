@@ -6,11 +6,13 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
@@ -46,10 +48,6 @@ public class User extends BaseEntity {
         this.username = username;
         this.password = password;
         this.role = role;
-    }
-
-    public void setKakaoId(Long kakaoId) {
-        this.kakaoId = kakaoId;
     }
 
     public void updateProfile(String email, String password) {
