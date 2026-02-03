@@ -53,3 +53,11 @@ spring:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
       password: ${REDIS_PASSWORD:}
+
+# 기상청 API 설정
+weather:
+  api:
+    land-url: "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst"
+    temp-url: "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa"
+    short-term-url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"
+    key: ${WEATHER_API_KEY}
