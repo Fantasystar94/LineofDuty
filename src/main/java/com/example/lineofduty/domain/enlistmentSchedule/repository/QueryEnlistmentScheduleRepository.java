@@ -17,8 +17,8 @@ import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentSchedu
 public class QueryEnlistmentScheduleRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
-    public Page<EnlistmentScheduleReadResponse> getEnlistmentListSortBy(Pageable pageable, LocalDate now) {
-        List<EnlistmentScheduleReadResponse> list = jpaQueryFactory
+    public List<EnlistmentScheduleReadResponse> getEnlistmentListSortBy(Pageable pageable, LocalDate now) {
+        return jpaQueryFactory
                 .select(Projections.constructor(EnlistmentScheduleReadResponse.class,
                         enlistmentSchedule.id,
                         enlistmentSchedule.enlistmentDate,
@@ -30,11 +30,9 @@ public class QueryEnlistmentScheduleRepository {
                 .where(enlistmentSchedule.remainingSlots.ne(0), enlistmentSchedule.enlistmentDate.gt(now))
                 .orderBy(enlistmentSchedule.enlistmentDate.asc())
                 .fetch();
-
-        return new PageImpl<>(list, pageable, list.size());
     }
 
-    public Page<EnlistmentScheduleReadResponse> searchEnlistment(LocalDate startDate, LocalDate endDate, Pageable pageable) {
+    public List<EnlistmentScheduleReadResponse> searchEnlistment(LocalDate startDate, LocalDate endDate, Pageable pageable) {
 
         BooleanBuilder builder = new BooleanBuilder();
 
@@ -46,7 +44,7 @@ public class QueryEnlistmentScheduleRepository {
             builder.and(enlistmentSchedule.enlistmentDate.loe(endDate));
         }
 
-        List<EnlistmentScheduleReadResponse> lists = jpaQueryFactory
+        return jpaQueryFactory
                 .select(Projections.constructor(EnlistmentScheduleReadResponse.class,
                         enlistmentSchedule.id,
                         enlistmentSchedule.enlistmentDate,
@@ -57,15 +55,6 @@ public class QueryEnlistmentScheduleRepository {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
-
-        Long total =
-                jpaQueryFactory
-                        .select(enlistmentSchedule.count())
-                        .from(enlistmentSchedule)
-                        .where(builder)
-                        .fetchOne();
-
-        return new PageImpl<>(lists, pageable, total == null ? 0 : total);
     }
 
 }
