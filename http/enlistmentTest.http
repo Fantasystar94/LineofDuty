@@ -10,7 +10,7 @@ POST {{baseUrl}}/api/auth/signup
 Content-Type: application/json
 
 {
-  "email": "test44444@example.com",
+  "email": "aniseed_3@naver.com",
   "password": "Test1234!",
   "username": "test3",
   "admin": false
@@ -21,7 +21,7 @@ POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "test44444@example.com",
+  "email": "aniseed_3@naver.com",
   "password": "Test1234!"
 }
 
@@ -69,7 +69,7 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "scheduleId": 6
+  "scheduleId": 7
 }
 
 ### GET APPLICATION LIST
@@ -94,10 +94,10 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "applicationId": 8526,
+  "applicationId": 5,
   "defermentStatus": "ILLNESS",
   "reasonDetail": "다리가 부러져서 치료 후 입대 예정",
-  "scheduleId": 25
+  "scheduleId": 9
 }
 
 ### GET DEFERMENT DETAIL (USER)
@@ -109,7 +109,7 @@ Authorization: Bearer {{accessToken}}
 ################################
 
 ### APPROVE APPLICATION (ADMIN)
-PATCH {{baseUrl}}/api/admin/enlistment-applications/1/approve
+PATCH {{baseUrl}}/api/admin/enlistment-applications/3/approve
 Authorization: Bearer {{accessToken}}
 
 ### APPROVE APPLICATION (ADMIN)
@@ -125,12 +125,12 @@ GET {{baseUrl}}/api/admin/deferments?page=0&size=10
 Authorization: Bearer {{accessToken}}
 
 ### PROCESS DEFERMENT (APPROVE / REJECT)
-PATCH {{baseUrl}}/api/admin/deferments/15
+PATCH {{baseUrl}}/api/admin/deferments/3
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "decisionStatus": "REJECTED"
+  "decisionStatus": "APPROVED"
 }
 
 ### PROCESS DEFERMENT BULK
@@ -139,7 +139,7 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "decisionStatus": "REJECTED"
+  "decisionStatus": "APPROVED"
 }
 
 ################################

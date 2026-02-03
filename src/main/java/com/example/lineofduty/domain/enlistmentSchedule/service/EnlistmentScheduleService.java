@@ -2,9 +2,8 @@ package com.example.lineofduty.domain.enlistmentSchedule.service;
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.domain.dashboard.model.EnlistmentThisWeekResponse;
-import com.example.lineofduty.domain.enlistmentSchedule.ApplicationStatus;
+import com.example.lineofduty.domain.enlistmentSchedule.*;
 import com.example.lineofduty.common.model.enums.DefermentStatus;
-import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentApplication;
 import com.example.lineofduty.domain.enlistmentSchedule.model.*;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.DefermentRepository;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentApplicationRepository;
@@ -13,13 +12,11 @@ import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentSch
 import com.example.lineofduty.domain.enlistmentSchedule.repository.QueryEnlistmentScheduleRepository;
 import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.repository.UserRepository;
-import com.example.lineofduty.domain.enlistmentSchedule.Deferment;
-import com.example.lineofduty.domain.enlistmentSchedule.EnlistmentSchedule;
-import com.example.lineofduty.domain.weather.service.TodayWeatherService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.ApplicationEventPublisher;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -41,7 +38,7 @@ public class EnlistmentScheduleService {
     private final QueryEnlistmentApplicationRepository queryEnlistmentApplicationRepository;
     private final UserRepository userRepository;
     private final DefermentRepository defermentRepository;
-    private final TodayWeatherService todayWeatherService;
+    private final ApplicationEventPublisher publisher;
     /*
      * 입영 가능 일정 조회
      * */
@@ -112,6 +109,15 @@ public class EnlistmentScheduleService {
 
         //슬롯 차감
         schedule.slotDeduct();
+
+        // 입영 신청 메일 전달
+        publisher.publishEvent(
+                NotificationEvent.enlistmentRequested(
+                        user.getId(),
+                        enlistmentApplication.getId(),
+                        schedule.getEnlistmentDate()
+                )
+        );
 
         return EnlistmentScheduleCreateResponse.from(enlistmentApplication);
     }
@@ -190,6 +196,14 @@ public class EnlistmentScheduleService {
         // 3. 상태 변경
         application.confirm();
 
+        publisher.publishEvent(
+                NotificationEvent.enlistmentConfirmed(
+                        application.getUserId(),
+                        applicationId,
+                        application.getEnlistmentDate()
+                )
+        );
+
         return queryEnlistmentApplicationRepository.getApplicationWithUser(application.getUserId(), applicationId);
     }
 
@@ -206,6 +220,11 @@ public class EnlistmentScheduleService {
         List<Long> applicationIds = applicationList.stream()
                 .map(EnlistmentApplication::getId)
                 .toList();
+
+        //일괄 이메일 전달
+        applicationList.forEach(e->
+                publisher.publishEvent(NotificationEvent.enlistmentConfirmed(e.getUserId(), e.getId(), e.getEnlistmentDate())
+        ));
 
         return queryEnlistmentApplicationRepository.findApplicationsWithUser(applicationIds);
 
@@ -241,6 +260,8 @@ public class EnlistmentScheduleService {
 
         defermentRepository.save(deferment);
 
+        //메일 전달defermentRequested
+        publisher.publishEvent(NotificationEvent.defermentRequested(userId,application.getId(), schedule.getEnlistmentDate(), deferment.getChangedDate()));
         return DefermentsReadResponse.from(deferment,user);
     }
 
@@ -280,7 +301,7 @@ public class EnlistmentScheduleService {
         }
 
         // 1. 연기 요청 조회
-        Deferment deferment = defermentRepository.findWithApplication(defermentsId)
+        Deferment deferment = defermentRepository.findById(defermentsId)
                 .orElseThrow(()-> new CustomException(ErrorMessage.DEFERMENT_NOT_FOUND));
 
         // 2. 신청 조회
@@ -311,11 +332,13 @@ public class EnlistmentScheduleService {
             application.applyDeferredDate(schedule.getEnlistmentDate());
 
             application.confirm();
-
+            //승인시 메일
+            publisher.publishEvent(NotificationEvent.defermentApproved(user.getId(), application.getId(), schedule.getEnlistmentDate(), deferment.getChangedDate()));
         } else {
 
             application.reject();
-
+            //반려시 메일
+            publisher.publishEvent(NotificationEvent.defermentRejected(user.getId(), application.getId(), deferment.getChangedDate()));
         }
 
         return queryEnlistmentApplicationRepository.getApplicationWithUser(user.getId(), application.getId());
@@ -347,6 +370,8 @@ public class EnlistmentScheduleService {
         // 2. REJECTED는 즉시 종료 (슬롯/스케줄 로직 없음)
         if (decisionStatus == DefermentStatus.REJECTED) {
             lists.forEach(EnlistmentApplication::reject);
+            //일괄 메일 발송
+            lists.forEach(l -> publisher.publishEvent(NotificationEvent.defermentRejected(l.getUserId(), l.getId(), l.getDeferment().getChangedDate())));
             return new BulkDefermentProcessResponse(lists.size(), lists.size());
         }
 
@@ -396,6 +421,9 @@ public class EnlistmentScheduleService {
             // 신청 반영
             app.applyDeferredDate(changedDate);
             app.confirm();
+
+            //메일 발송
+            publisher.publishEvent(NotificationEvent.defermentApproved(app.getUserId(), app.getId(), app.getEnlistmentDate(), app.getDeferment().getChangedDate()));
 
             countForDate++;
             processedCount++;
