@@ -5,6 +5,7 @@ import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.response.PageResponse;
 import com.example.lineofduty.domain.chatbot.ChatMessage;
 import com.example.lineofduty.domain.chatbot.ChatRoom;
+import com.example.lineofduty.domain.chatbot.dto.ChatRoomStatistics;
 import com.example.lineofduty.domain.chatbot.dto.response.AdminListResponse;
 import com.example.lineofduty.domain.chatbot.dto.response.ThreadResponse;
 import com.example.lineofduty.domain.chatbot.repository.ChatMessageRepository;
@@ -117,30 +118,41 @@ public class ChatBotAdminService {
 
         Page<ChatRoom> chatRooms = chatRoomRepository.findAllChatRooms(pageable);
 
+        if (chatRooms.isEmpty()) {
+            return PageResponse.from(Page.empty(pageable));
+        }
+
         // 모든 roomId 수집
         List<Long> roomIds = chatRooms.getContent().stream()
                 .map(ChatRoom::getId)
                 .collect(Collectors.toList());
 
         // 한 번의 쿼리로 모든 통계 조회
-        Map<Long, Map<String, Object>> statisticsMap = chatMessageRepository.getStatisticsByRoomIds(roomIds)
+        Map<Long, ChatRoomStatistics> statisticsMap = chatMessageRepository.getStatisticsByRoomIds(roomIds)
                 .stream()
                 .collect(Collectors.toMap(
-                        stat -> (Long) stat.get("roomId"),
+                        ChatRoomStatistics::getRoomId,
                         stat -> stat
                 ));
 
         Page<AdminListResponse> responses = chatRooms.map(chatRoom -> {
-            Map<String, Object> stats = statisticsMap.getOrDefault(
-                    chatRoom.getId(),
-                    Map.of("threadCount", 0L, "messageCount", 0L, "lastMessageAt", chatRoom.getCreatedAt())
-            );
+            ChatRoomStatistics stats = statisticsMap.get(chatRoom.getId());
+
+            if (stats == null) {
+                // 메시지가 없는 채팅방
+                return AdminListResponse.from(
+                        chatRoom,
+                        0L,
+                        0L,
+                        chatRoom.getCreatedAt()
+                );
+            }
 
             return AdminListResponse.from(
                     chatRoom,
-                    (Long) stats.getOrDefault("threadCount", 0L),
-                    (Long) stats.getOrDefault("messageCount", 0L),
-                    (LocalDateTime) stats.getOrDefault("lastMessageAt", chatRoom.getCreatedAt())
+                    stats.getThreadCount(),
+                    stats.getMessageCount(),
+                    stats.getLastMessageAt() != null ? stats.getLastMessageAt() : chatRoom.getCreatedAt()
             );
         });
 

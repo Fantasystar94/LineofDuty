@@ -2,6 +2,7 @@ package com.example.lineofduty.domain.chatbot.repository;
 
 import com.example.lineofduty.domain.chatbot.ChatMessage;
 import com.example.lineofduty.domain.chatbot.ChatRoom;
+import com.example.lineofduty.domain.chatbot.dto.ChatRoomStatistics;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -77,15 +78,15 @@ public interface ChatMessageRepository extends JpaRepository<ChatMessage, Long> 
             @Param("endDate") LocalDateTime endDate
     );
 
-    @Query("SELECT new map(" +
-            "cm.chatRoom.id as roomId, " +
-            "COUNT(DISTINCT CASE WHEN cm.messageType = 'USER' AND cm.parentMessage IS NULL THEN cm.id END) as threadCount, " +
-            "COUNT(cm.id) as messageCount, " +
-            "MAX(cm.createdAt) as lastMessageAt) " +
+    @Query("SELECT new ChatRoomStatistics(" +
+            "cm.chatRoom.id, " +
+            "COUNT(DISTINCT CASE WHEN cm.messageType = com.example.lineofduty.common.model.enums.MessageType.USER AND cm.parentMessage IS NULL THEN cm.id ELSE NULL END), " +
+            "COUNT(cm.id), " +
+            "MAX(cm.createdAt)) " +
             "FROM ChatMessage cm " +
             "WHERE cm.chatRoom.id IN :roomIds " +
             "GROUP BY cm.chatRoom.id")
-    List<Map<String, Object>> getStatisticsByRoomIds(@Param("roomIds") List<Long> roomIds);
+    List<ChatRoomStatistics> getStatisticsByRoomIds(@Param("roomIds") List<Long> roomIds);
 
     // 활성 유저 수 조회 (최근 30일 내 메시지를 보낸 유저)
     @Query("SELECT COUNT(DISTINCT cm.user.id) FROM ChatMessage cm " +
