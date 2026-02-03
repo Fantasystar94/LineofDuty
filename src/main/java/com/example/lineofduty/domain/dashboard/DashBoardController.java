@@ -27,14 +27,6 @@ public class DashBoardController {
     }
 
     /**
-     * 이번 주 입영일정 요약
-     * */
-    @GetMapping("/enlistment-schedule")
-    public ResponseEntity<GlobalResponse> summaryScheduleOfThisWeek(@AuthenticationPrincipal UserDetail userDetail) {
-        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.SUMMARY_SUCCESS, dashboardService.summaryScheduleOfThisWeek(userDetail)));
-    }
-
-    /**
      * 입영 요청, 연기 요청 요약
      * */
     @GetMapping("/requested")

@@ -5,7 +5,9 @@ import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.domain.weather.dto.TodayWeatherResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.annotations.Cache;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestClient;
@@ -30,6 +32,10 @@ public class TodayWeatherService {
     private final RestClient restClient = RestClient.create();
 
     @Transactional(readOnly = true)
+    @Cacheable(
+            value = "todayWeather",
+            key = "T(java.time.LocalDate).now().toString() + ':' + #nx + ':' + #ny"
+    )
     public TodayWeatherResponse getTodayWeather(int nx, int ny) {
 
         String[] baseDateTime = calculateBaseDateTime();
