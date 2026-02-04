@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-public class DashboardScheduleSummaryResponse {
+public class EnlistmentThisWeekResponse {
     private Long scheduledId;
     private LocalDate enlistmentDate;
     private Integer capacity;

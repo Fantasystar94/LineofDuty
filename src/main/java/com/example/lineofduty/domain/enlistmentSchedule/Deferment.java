@@ -37,8 +37,6 @@ public class Deferment extends BaseEntity {
 
     private LocalDate changedDate;
 
-
-
     public Deferment(EnlistmentApplication application, Long userId, String reason, DefermentStatus status, LocalDate changedDate) {
         this.application = application;
         this.userId = userId;

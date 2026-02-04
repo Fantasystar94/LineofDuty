@@ -36,6 +36,11 @@ public enum SuccessMessage {
     LOG_READ_SUCCESS("로그 조회 성공"),
     FILE_UPLOAD_SUCCESS("파일 업로드 성공"),
 
+    CHATROOM_READ_SUCCESS("채팅방 조회 성공"),
+    CHATROOM_DELETE_SUCCESS("채팅방 초기화 성공"),
+    CHAT_MESSAGE_CREATE_SUCCESS("채팅메세지 전송 성공"),
+
+
     // 201 CREATED
     NOTICE_CREATE_SUCCESS("공지사항이 등록되었습니다."),
     USER_CREATE_SUCCESS("회원가입이 완료되었습니다."),

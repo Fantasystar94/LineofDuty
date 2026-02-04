@@ -38,6 +38,9 @@ public enum ErrorMessage {
     NOT_YET_CONFIRM(HttpStatus.BAD_REQUEST, "아직 승인되지않은 결제입니다."),
     ALREADY_PROCESSED_PAYMENT(HttpStatus.BAD_REQUEST, "이미 처리된 결제 입니다."),
 
+    // 챗봇 관련
+    AI_ONLY_COMMENT_USER_MESSAGE(HttpStatus.BAD_REQUEST, "AI 메시지는 USER 메시지에만 답글을 달 수 있습니다."),
+
     // 파일 업로드 관련
     FILE_IS_EMPTY(HttpStatus.BAD_REQUEST, "파일이 비어있습니다."),
     INVALID_FILE_FORMAT(HttpStatus.BAD_REQUEST, "지원하지 않는 파일 형식입니다. (jpg, jpeg, png, bmp만 가능)"),
@@ -75,6 +78,8 @@ public enum ErrorMessage {
     DEFERMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "연기 일정을 찾을 수 없습니다"),
     USER_DELETED_NOT_FOUND(HttpStatus.NOT_FOUND, "이미 탈퇴한 사용자입니다."),
     NOT_FOUND_PAYMENT(HttpStatus.NOT_FOUND, "존재하지 않는 결제 정보 입니다."),
+    CHATROOM_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 채팅방입니다."),
+    CHAT_MESSAGE_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 메세지입니다."),
 
     /* --- 409 Conflict --- */
     // 데이터 충돌
@@ -89,7 +94,8 @@ public enum ErrorMessage {
 
     /* --- 500 Internal Server Error --- */
     // 외부 API 관련
-    WEATHER_API_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "기상청 API 호출 중 오류가 발생했습니다.");
+    WEATHER_API_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "기상청 API 호출 중 오류가 발생했습니다."),
+    KAKAO_LOGIN_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "카카오 로그인 중 오류가 발생했습니다.");
 
     private final HttpStatus status;
     private final String message;

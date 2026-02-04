@@ -3,6 +3,7 @@ package com.example.lineofduty.domain.user.service;
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentApplicationRepository;
+import com.example.lineofduty.domain.token.RefreshTokenRepository;
 import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.dto.UserAdminResponse;
 import com.example.lineofduty.domain.user.dto.UserResponse;
@@ -24,6 +25,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final EnlistmentApplicationRepository enlistmentApplicationRepository;
+    private final RefreshTokenRepository refreshTokenRepository;
 
     // userId로 조회
     private User findUserById(Long userId) {
@@ -92,6 +94,8 @@ public class UserService {
         }
 
         user.withdrawUser();
+
+        refreshTokenRepository.deleteById(userId);
     }
 
     // ------------------ [관리자] ------------------

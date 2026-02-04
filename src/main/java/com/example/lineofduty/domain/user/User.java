@@ -6,11 +6,13 @@ import jakarta.persistence.*;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "users")
 @Getter
+@Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class User extends BaseEntity {
 
@@ -40,6 +42,9 @@ public class User extends BaseEntity {
 
     @Column(name = "deleted_at")
     private LocalDateTime deletedAt;
+
+    @Column(name = "kakao_id", unique = true)
+    private Long kakaoId;
 
     public User(String email, String username, String password, Role role) {
         this.email = email;

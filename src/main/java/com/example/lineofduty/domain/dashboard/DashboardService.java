@@ -4,14 +4,13 @@ import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.Role;
 import com.example.lineofduty.domain.dashboard.model.DashboardDefermentsSummaryResponse;
 import com.example.lineofduty.domain.dashboard.model.DashboardRequestedSummaryResponse;
-import com.example.lineofduty.domain.dashboard.model.DashboardScheduleSummaryResponse;
 import com.example.lineofduty.domain.dashboard.model.DashboardSummaryResponse;
 import com.example.lineofduty.domain.user.dto.UserDetail;
 import com.example.lineofduty.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import java.time.LocalDate;
+
 import java.util.List;
 
 @Service
@@ -29,19 +28,6 @@ public class DashboardService {
         validateAdmin(userDetail.getUser().getId());
 
         return queryDashboardRepository.summary();
-    }
-
-    /**
-     * 이번 주 입영일정 요약
-     * */
-    @Transactional(readOnly = true)
-    public List<DashboardScheduleSummaryResponse> summaryScheduleOfThisWeek(UserDetail userDetail) {
-
-        validateAdmin(userDetail.getUser().getId());
-
-        LocalDate today = LocalDate.now();
-
-        return queryDashboardRepository.summaryScheduleOfThisWeek(today);
     }
 
     /**
