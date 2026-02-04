@@ -17,11 +17,6 @@ public interface DefermentRepository extends JpaRepository<Deferment, Long> {
             "JOIN User u ON d.userId = u.id")
     Page<DefermentsReadResponse> findDefermentList(Pageable pageable);
 
-
     Optional<Deferment> findByIdAndUserId(Long defermentId, Long userId);
 
-    Optional<Deferment> findByApplicationId(Long applicationId);
-
-    @Query("select d from Deferment d join fetch d.application join fetch d.userId where d.id = :defermentId")
-    Optional<Deferment> findWithApplication(Long defermentId);
 }

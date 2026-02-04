@@ -325,7 +325,6 @@ public class EnlistmentLockTest {
         System.out.println("duplicate: " + duplicate.get());
         System.out.println("알수없는 이유: " + cantFindReason.get());
         System.out.println("남은 슬롯: " + schedule.getRemainingSlots());
-        System.out.println("버전: " + schedule.getVersion());
         System.out.println("총 소요 시간(ms): " + (endTime - startTime));
     }
 

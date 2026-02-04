@@ -7,6 +7,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
+
 import java.util.Objects;
 
 @RestControllerAdvice
@@ -29,6 +31,14 @@ public class GlobalExceptionHandler {
         log.error("CustomException 발생 : {} ", ex.getMessage());
 
         return ResponseEntity.status(ex.getErrorMessage().getStatus()).body(GlobalResponse.exception(ex.getErrorMessage().getMessage()));
+    }
+
+    @ExceptionHandler(MaxUploadSizeExceededException.class)
+    public ResponseEntity<GlobalResponse> handleMaxUploadSizeExceededException(MaxUploadSizeExceededException e) {
+        log.error("파일 업로드 용량 초과 : {}", e.getMessage());
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(GlobalResponse.exception("파일 크기가 너무 큽니다. 최대 5MB까지 업로드 가능합니다."));
     }
 
     // 그 외 모든 예외 처리

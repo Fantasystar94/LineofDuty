@@ -85,6 +85,15 @@ public class ProductService {
         return ProductResponse.from(product);
     }
 
+    // 상품 이미지 업데이트
+    @Transactional
+    public void updateProductImage(Long productId, String productImageUrl) {
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND));
+
+        product.updateProductImage(productImageUrl);
+    }
+
     // 상품 삭제 (분산 락 적용)
     @Transactional
     public void deleteProduct(Long productId) {
@@ -121,4 +130,3 @@ public class ProductService {
         productRepository.saveAndFlush(product);
     }
 }
-

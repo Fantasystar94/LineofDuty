@@ -1,14 +1,16 @@
 package com.example.lineofduty.domain.enlistmentSchedule.repository;
+import com.example.lineofduty.domain.dashboard.model.EnlistmentThisWeekResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentScheduleReadResponse;
 import com.querydsl.core.BooleanBuilder;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
+
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
 import java.util.List;
 
 import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentSchedule.enlistmentSchedule;
@@ -17,8 +19,8 @@ import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentSchedu
 public class QueryEnlistmentScheduleRepository {
 
     private final JPAQueryFactory jpaQueryFactory;
-    public Page<EnlistmentScheduleReadResponse> getEnlistmentListSortBy(Pageable pageable, LocalDate now) {
-        List<EnlistmentScheduleReadResponse> list = jpaQueryFactory
+    public List<EnlistmentScheduleReadResponse> getEnlistmentListSortBy(Pageable pageable, LocalDate now) {
+        return jpaQueryFactory
                 .select(Projections.constructor(EnlistmentScheduleReadResponse.class,
                         enlistmentSchedule.id,
                         enlistmentSchedule.enlistmentDate,
@@ -30,11 +32,9 @@ public class QueryEnlistmentScheduleRepository {
                 .where(enlistmentSchedule.remainingSlots.ne(0), enlistmentSchedule.enlistmentDate.gt(now))
                 .orderBy(enlistmentSchedule.enlistmentDate.asc())
                 .fetch();
-
-        return new PageImpl<>(list, pageable, list.size());
     }
 
-    public Page<EnlistmentScheduleReadResponse> searchEnlistment(LocalDate startDate, LocalDate endDate, Pageable pageable) {
+    public List<EnlistmentScheduleReadResponse> searchEnlistment(LocalDate startDate, LocalDate endDate, Pageable pageable) {
 
         BooleanBuilder builder = new BooleanBuilder();
 
@@ -46,7 +46,7 @@ public class QueryEnlistmentScheduleRepository {
             builder.and(enlistmentSchedule.enlistmentDate.loe(endDate));
         }
 
-        List<EnlistmentScheduleReadResponse> lists = jpaQueryFactory
+        return jpaQueryFactory
                 .select(Projections.constructor(EnlistmentScheduleReadResponse.class,
                         enlistmentSchedule.id,
                         enlistmentSchedule.enlistmentDate,
@@ -57,15 +57,39 @@ public class QueryEnlistmentScheduleRepository {
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
+    }
 
-        Long total =
-                jpaQueryFactory
-                        .select(enlistmentSchedule.count())
-                        .from(enlistmentSchedule)
-                        .where(builder)
-                        .fetchOne();
+    public EnlistmentThisWeekResponse summaryScheduleOfThisWeek(LocalDate today) {
 
-        return new PageImpl<>(lists, pageable, total == null ? 0 : total);
+        LocalDate startOfWeek = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
+        LocalDate lastOfWeek = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
+
+
+            /*
+            * "scheduleId": 2,
+			"enlistmentDate": "2025-03-22",
+			"capacity": 100,
+			"remainingSlots": 10,
+			"fillRate": 90
+            * */
+        return jpaQueryFactory
+                .select(Projections.constructor(EnlistmentThisWeekResponse.class,
+                        enlistmentSchedule.id,
+                        enlistmentSchedule.enlistmentDate,
+                        enlistmentSchedule.capacity,
+                        enlistmentSchedule.remainingSlots,
+                        enlistmentSchedule.capacity
+                                .subtract(enlistmentSchedule.remainingSlots)
+                                .doubleValue()
+                                .divide(enlistmentSchedule.capacity.doubleValue())
+                                .multiply(100.0)
+                ))
+                .from(enlistmentSchedule)
+                .where(enlistmentSchedule.enlistmentDate.goe(startOfWeek).and(enlistmentSchedule.enlistmentDate.loe(lastOfWeek)))
+                .limit(1)
+                .fetchOne();
+
+
     }
 
 }

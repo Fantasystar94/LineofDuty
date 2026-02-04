@@ -10,7 +10,7 @@ POST {{baseUrl}}/api/auth/signup
 Content-Type: application/json
 
 {
-  "email": "test44444@example.com",
+  "email": "aniseed_3@naver.com",
   "password": "Test1234!",
   "username": "test3",
   "admin": false
@@ -21,7 +21,7 @@ POST {{baseUrl}}/api/auth/login
 Content-Type: application/json
 
 {
-  "email": "test44444@example.com",
+  "email": "aniseed_3@naver.com",
   "password": "Test1234!"
 }
 
@@ -47,16 +47,17 @@ Content-Type: application/json
 ################################
 
 ### GET ENLISTMENT LIST
-GET {{baseUrl}}/api/enlistment?page=0&size=5
-Authorization: Bearer {{accessToken}}
+GET {{baseUrl}}/api/enlistment?page=0&size=1
+
+### GET ENLISTMENT THIS WEEK
+GET {{baseUrl}}/api/enlistment/thisWeek
 
 ### GET ENLISTMENT DETAIL
-GET {{baseUrl}}/api/enlistment/5
+GET {{baseUrl}}/api/enlistment/99999
 Authorization: Bearer {{accessToken}}
 
 ### SEARCH ENLISTMENT (기간 조회)
-GET {{baseUrl}}/api/enlistment/search?startDate=2026-01-01&endDate=2029-12-01&page=0&size=10
-Authorization: Bearer {{accessToken}}
+GET {{baseUrl}}/api/enlistment/search?startDate=2026-01-01&endDate=2029-12-01&page=0&size=500
 
 ################################
 ### ENLISTMENT APPLICATION (입영 신청)
@@ -68,7 +69,7 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "scheduleId": 5
+  "scheduleId": 7
 }
 
 ### GET APPLICATION LIST
@@ -93,10 +94,10 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "applicationId": 8526,
+  "applicationId": 5,
   "defermentStatus": "ILLNESS",
   "reasonDetail": "다리가 부러져서 치료 후 입대 예정",
-  "scheduleId": 25
+  "scheduleId": 9
 }
 
 ### GET DEFERMENT DETAIL (USER)
@@ -108,7 +109,7 @@ Authorization: Bearer {{accessToken}}
 ################################
 
 ### APPROVE APPLICATION (ADMIN)
-PATCH {{baseUrl}}/api/admin/enlistment-applications/1/approve
+PATCH {{baseUrl}}/api/admin/enlistment-applications/3/approve
 Authorization: Bearer {{accessToken}}
 
 ### APPROVE APPLICATION (ADMIN)
@@ -124,12 +125,12 @@ GET {{baseUrl}}/api/admin/deferments?page=0&size=10
 Authorization: Bearer {{accessToken}}
 
 ### PROCESS DEFERMENT (APPROVE / REJECT)
-PATCH {{baseUrl}}/api/admin/deferments/15
+PATCH {{baseUrl}}/api/admin/deferments/3
 Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "decisionStatus": "REJECTED"
+  "decisionStatus": "APPROVED"
 }
 
 ### PROCESS DEFERMENT BULK
@@ -138,7 +139,7 @@ Authorization: Bearer {{accessToken}}
 Content-Type: application/json
 
 {
-  "decisionStatus": "REJECTED"
+  "decisionStatus": "APPROVED"
 }
 
 ################################
@@ -147,10 +148,6 @@ Content-Type: application/json
 
 ### GET DASHBOARD SUMMARY
 GET {{baseUrl}}/api/admin/dashboard/summary
-Authorization: Bearer {{accessToken}}
-
-### GET DASHBOARD ENLISTMENT SUMMARY
-GET {{baseUrl}}/api/admin/dashboard/enlistment-schedule
 Authorization: Bearer {{accessToken}}
 
 ### GET DASHBOARD PENDING
