@@ -26,6 +26,11 @@ spring:
           auth: true
           starttls:
             enable: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 50MB
+
   application:
     name: Lineofduty
 
@@ -74,7 +79,6 @@ weather:
     temp-url: "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa"
     short-term-url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"
     key: ${WEATHER_API_KEY}
-
 ---
 spring:
   config:

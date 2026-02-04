@@ -41,6 +41,10 @@ public enum ErrorMessage {
     // 챗봇 관련
     AI_ONLY_COMMENT_USER_MESSAGE(HttpStatus.BAD_REQUEST, "AI 메시지는 USER 메시지에만 답글을 달 수 있습니다."),
 
+    // 파일 업로드 관련
+    FILE_IS_EMPTY(HttpStatus.BAD_REQUEST, "파일이 비어있습니다."),
+    INVALID_FILE_FORMAT(HttpStatus.BAD_REQUEST, "지원하지 않는 파일 형식입니다. (jpg, jpeg, png, bmp만 가능)"),
+
 
     /* --- 401 Unauthorized --- */
     // 인증 실패 (로그인 필요)
@@ -60,7 +64,7 @@ public enum ErrorMessage {
     INVALID_ADMIN_TOKEN(HttpStatus.BAD_REQUEST, "관리자 토큰값이 일치하지 않습니다."),
     INVALID_TOKEN(HttpStatus.BAD_REQUEST, "토큰값이 일치하지 않습니다."),
     USER_LOGOUT(HttpStatus.BAD_REQUEST, "로그아웃된 계정입니다."),
-    NO_CHECK_PERMISSION(HttpStatus.FORBIDDEN, "조회 권한이 없습니다."),
+    NO_CHECK_PERMISSION(HttpStatus.INTERNAL_SERVER_ERROR, "권한이 없습니다."),
 
 
     /* --- 404 Not Found --- */
