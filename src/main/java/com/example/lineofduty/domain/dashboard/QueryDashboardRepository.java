@@ -2,7 +2,6 @@ package com.example.lineofduty.domain.dashboard;
 import com.example.lineofduty.domain.enlistmentSchedule.ApplicationStatus;
 import com.example.lineofduty.domain.dashboard.model.DashboardDefermentsSummaryResponse;
 import com.example.lineofduty.domain.dashboard.model.DashboardRequestedSummaryResponse;
-import com.example.lineofduty.domain.dashboard.model.DashboardScheduleSummaryResponse;
 import com.example.lineofduty.domain.dashboard.model.DashboardSummaryResponse;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.Expressions;
@@ -11,9 +10,7 @@ import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
-import java.time.DayOfWeek;
-import java.time.LocalDate;
-import java.time.temporal.TemporalAdjusters;
+
 import java.util.List;
 import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentSchedule.enlistmentSchedule;
 import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentApplication.enlistmentApplication;
@@ -55,38 +52,6 @@ public class QueryDashboardRepository {
                 .from(user)
                 .limit(1)
                 .fetchOne();
-
-    }
-
-    public List<DashboardScheduleSummaryResponse> summaryScheduleOfThisWeek(LocalDate today) {
-
-        LocalDate startOfWeek = today.with(TemporalAdjusters.previousOrSame(DayOfWeek.MONDAY));
-        LocalDate lastOfWeek = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.SUNDAY));
-
-
-            /*
-            * "scheduleId": 2,
-			"enlistmentDate": "2025-03-22",
-			"capacity": 100,
-			"remainingSlots": 10,
-			"fillRate": 90
-            * */
-            return jpaQueryFactory
-                    .select(Projections.constructor(DashboardScheduleSummaryResponse.class,
-                            enlistmentSchedule.id,
-                            enlistmentSchedule.enlistmentDate,
-                            enlistmentSchedule.capacity,
-                            enlistmentSchedule.remainingSlots,
-                            enlistmentSchedule.capacity
-                                    .subtract(enlistmentSchedule.remainingSlots)
-                                    .doubleValue()
-                                    .divide(enlistmentSchedule.capacity.doubleValue())
-                                    .multiply(100.0)
-                            ))
-                    .from(enlistmentSchedule)
-                    .where(enlistmentSchedule.enlistmentDate.goe(startOfWeek).and(enlistmentSchedule.enlistmentDate.loe(lastOfWeek)))
-                    .fetch();
-
 
     }
 

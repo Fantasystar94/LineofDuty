@@ -8,60 +8,85 @@ spring:
     password: ${DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: create-drop
+      ddl-auto: ${DDL_AUTO}
     show-sql: true
     properties:
       hibernate:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: ${MAIL_PASSWORD}
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 50MB
+
   application:
     name: Lineofduty
 
-    data:
-      redis:
-        host: localhost
-        port: 6379
-        timeout: 3000ms
-        lettuce:
-          pool:
-            max-active: 8
-            max-idle: 8
-            min-idle: 2
-            max-wait: -1ms
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+      timeout: 3000ms
+      lettuce:
+        pool:
+          max-active: 8
+          max-idle: 8
+          min-idle: 2
+          max-wait: -1ms
+
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+    time-zone: Asia/Seoul
+
+  cache:
+    type: caffeine
+    caffeine:
+      spec: maximumSize=500,expireAfterWrite=10m
+
+openai:
+  api:
+    key: ${OPENAI_API_KEY}
+
 toss:
-  secret-key: ${TOSS_SECRET_KEY}
+  secret:
+    key: ${TOSS_SECRET_KEY}
+
+jwt:
+  secret: ${JWT_SECRET}
+
+admin:
+  token: ${ADMIN_TOKEN}
+
 frontend:
   url: ${FRONTEND_URL}
-# 기상청 API 설정
+
 weather:
   api:
     land-url: "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst"
     temp-url: "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa"
     short-term-url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"
     key: ${WEATHER_API_KEY}
----
-spring:
-  config:
-    activate:
-      on-profile: dev
-  data:
-    redis:
-      host: localhost
-      port: 6379
 
----
-spring:
-  config:
-    activate:
-      on-profile: prod
-  data:
-    redis:
-      host: ${REDIS_HOST:localhost}
-      port: ${REDIS_PORT:6379}
-      password: ${REDIS_PASSWORD}
-
----
 kakao:
   client-id: ${KAKAO_CLIENT_ID}
   redirect-uri: ${KAKAO_REDIRECT_URI}
+
+gcp:
+  project-id: ${GCP_PROJECT_ID}
+  client-email: ${GCP_CLIENT_EMAIL}
+  private-key: ${GCP_PRIVATE_KEY}
+  private-key-id: ${GCP_PRIVATE_KEY_ID}
+  client-id: ${GCP_CLIENT_ID}

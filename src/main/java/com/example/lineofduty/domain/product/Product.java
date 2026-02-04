@@ -30,6 +30,9 @@ public class Product extends BaseEntity {
     @Column(nullable = false)
     private Long stock;
 
+    @Column(name = "product_image_url")
+    private String productImageUrl;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private ProductStatus status;
@@ -62,5 +65,9 @@ public class Product extends BaseEntity {
         if (request.getStock() != null) {
             updateStock(request.getStock());
         }
+    }
+
+    public void updateProductImage(String productImageUrl) {
+        this.productImageUrl = productImageUrl;
     }
 }

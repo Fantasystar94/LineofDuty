@@ -29,7 +29,7 @@ public class AuthService {
     private final JwtUtil jwtUtil;
     private final RefreshTokenRepository refreshTokenRepository;
 
-    @Value("${ADMIN_TOKEN}")
+    @Value("${admin.token}")
     private String adminToken;
 
     // 회원가입
