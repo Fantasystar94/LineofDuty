@@ -1,5 +1,7 @@
 package com.example.lineofduty.domain.user.service;
 
+import com.example.lineofduty.common.exception.CustomException;
+import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.dto.UserDetail;
 import com.example.lineofduty.domain.user.repository.UserRepository;
@@ -16,8 +18,16 @@ public class UserDetailService implements UserDetailsService {
 
     @Override
     public UserDetail loadUserByUsername(String email) throws UsernameNotFoundException {
+
+        // DB에서 유저 찾기
         User user = userRepository.findByEmail(email)
                 .orElseThrow(() -> new UsernameNotFoundException("해당 이메일의 유저를 찾을 수 없습니다: " + email));
+
+        // 탈퇴 여부 체크
+        if (user.isDeleted()) {
+            throw new CustomException(ErrorMessage.USER_DELETED_NOT_FOUND);
+        }
+
 
         return new UserDetail(user);
     }

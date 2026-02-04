@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import java.util.Optional;
 
 @Service
@@ -108,9 +109,7 @@ public class AuthService {
     @Transactional
     public void logout(Long userId) {
 
-        if (refreshTokenRepository.existsById(userId)) {
-            refreshTokenRepository.deleteById(userId);
-        }
+        refreshTokenRepository.deleteById(userId);
     }
 
     // 토큰 재발급
@@ -124,7 +123,7 @@ public class AuthService {
         Long userId = jwtUtil.extractUserId(refreshTokenStr);
 
         RefreshToken savedToken = refreshTokenRepository.findByUserId(userId)
-                .orElseThrow( () -> new CustomException(ErrorMessage.USER_LOGOUT));
+                .orElseThrow(() -> new CustomException(ErrorMessage.USER_LOGOUT));
 
         if (!savedToken.getToken().equals(refreshTokenStr)) {
             throw new CustomException(ErrorMessage.INVALID_TOKEN);
