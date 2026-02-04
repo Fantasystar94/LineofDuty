@@ -11,6 +11,7 @@ import com.example.lineofduty.domain.payment.Payment;
 import com.example.lineofduty.domain.payment.PaymentStatus;
 import com.example.lineofduty.domain.payment.dto.*;
 import com.example.lineofduty.domain.payment.repository.PaymentRepository;
+import com.example.lineofduty.domain.product.Product;
 import com.example.lineofduty.domain.product.service.ProductService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -37,7 +38,7 @@ public class PaymentService {
     private final PaymentRepository paymentRepository;
     private final ProductService productService;
 
-    @Value("${toss.secret.key}")
+    @Value("${TOSS_SECRET_KEY}")
     private String secretKey;
 
     private static final String TOSS_CONFIRM_URL = "https://api.tosspayments.com/v1/payments/confirm";

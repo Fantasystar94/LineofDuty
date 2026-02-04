@@ -8,7 +8,7 @@ spring:
     password: ${DB_PASSWORD}
   jpa:
     hibernate:
-      ddl-auto: ${DDL_AUTO}
+      ddl-auto: update
     show-sql: true
     properties:
       hibernate:
@@ -34,17 +34,17 @@ spring:
   application:
     name: Lineofduty
 
-  data:
-    redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
-      timeout: 3000ms
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 8
-          min-idle: 2
-          max-wait: -1ms
+    data:
+      redis:
+        host: localhost
+        port: 6379
+        timeout: 3000ms
+        lettuce:
+          pool:
+            max-active: 8
+            max-idle: 8
+            min-idle: 2
+            max-wait: -1ms
 
   jackson:
     serialization:
@@ -79,6 +79,17 @@ weather:
     temp-url: "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa"
     short-term-url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"
     key: ${WEATHER_API_KEY}
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+  data:
+    redis:
+      host: ${REDIS_HOST}
+      port: ${REDIS_PORT}
+
+---
 kakao:
   client-id: ${KAKAO_CLIENT_ID}
   redirect-uri: ${KAKAO_REDIRECT_URI}
