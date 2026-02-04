@@ -64,6 +64,7 @@ public enum ErrorMessage {
     INVALID_ADMIN_TOKEN(HttpStatus.BAD_REQUEST, "관리자 토큰값이 일치하지 않습니다."),
     INVALID_TOKEN(HttpStatus.BAD_REQUEST, "토큰값이 일치하지 않습니다."),
     USER_LOGOUT(HttpStatus.BAD_REQUEST, "로그아웃된 계정입니다."),
+    NO_CHECK_PERMISSION(HttpStatus.INTERNAL_SERVER_ERROR, "권한이 없습니다."),
 
 
     /* --- 404 Not Found --- */

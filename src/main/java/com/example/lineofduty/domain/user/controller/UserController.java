@@ -50,6 +50,7 @@ class UserController {
             @RequestParam("file") MultipartFile file) throws IOException {
 
         FileUploadResponse fileResponse = fileUploadService.fileUpload(file);
+
         userService.updateProfileImage(userDetails.getUser().getId(), fileResponse.getUrl());
 
         return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_UPDATE_SUCCESS, fileResponse));
