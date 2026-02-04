@@ -38,6 +38,10 @@ public enum ErrorMessage {
     NOT_YET_CONFIRM(HttpStatus.BAD_REQUEST, "아직 승인되지않은 결제입니다."),
     ALREADY_PROCESSED_PAYMENT(HttpStatus.BAD_REQUEST, "이미 처리된 결제 입니다."),
 
+    // 파일 업로드 관련
+    FILE_IS_EMPTY(HttpStatus.BAD_REQUEST, "파일이 비어있습니다."),
+    INVALID_FILE_FORMAT(HttpStatus.BAD_REQUEST, "지원하지 않는 파일 형식입니다. (jpg, jpeg, png, bmp만 가능)"),
+
 
     /* --- 401 Unauthorized --- */
     // 인증 실패 (로그인 필요)

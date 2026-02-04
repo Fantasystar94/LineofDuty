@@ -16,6 +16,11 @@ spring:
         dialect: org.hibernate.dialect.MySQLDialect
         format_sql: true
 
+  servlet:
+    multipart:
+      max-file-size: 5MB
+      max-request-size: 50MB
+
   application:
     name: Lineofduty
 
@@ -34,6 +39,13 @@ toss:
   secret-key: ${TOSS_SECRET_KEY}
 frontend:
   url: ${FRONTEND_URL}
+
+weather:
+  api:
+    land-url: "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidLandFcst"
+    temp-url: "http://apis.data.go.kr/1360000/MidFcstInfoService/getMidTa"
+    short-term-url: "http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst"
+    key: ${WEATHER_API_KEY}
 ---
 spring:
   config:
@@ -54,3 +66,5 @@ spring:
       host: ${REDIS_HOST:localhost}
       port: ${REDIS_PORT:6379}
       password: ${REDIS_PASSWORD:}
+
+

@@ -32,6 +32,9 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private Role role;
 
+    @Column
+    private String profileImageUrl;
+
     @Column(name = "is_deleted", nullable = false)
     private boolean isDeleted = false;
 
@@ -53,6 +56,10 @@ public class User extends BaseEntity {
         if (password != null && !password.isEmpty()) {
             this.password = password;
         }
+    }
+
+    public void updateProfileImage(String profileImageUrl) {
+        this.profileImageUrl = profileImageUrl;
     }
 
     public void withdrawUser() {

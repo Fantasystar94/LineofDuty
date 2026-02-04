@@ -3,6 +3,8 @@ package com.example.lineofduty.domain.product.controller;
 import com.example.lineofduty.common.model.enums.SuccessMessage;
 import com.example.lineofduty.common.model.response.GlobalResponse;
 import com.example.lineofduty.common.model.response.PageResponse;
+import com.example.lineofduty.domain.fileUpload.FileUploadResponse;
+import com.example.lineofduty.domain.fileUpload.FileUploadService;
 import com.example.lineofduty.domain.product.dto.request.ProductRequest;
 import com.example.lineofduty.domain.product.dto.response.ProductResponse;
 import com.example.lineofduty.domain.product.service.ProductService;
@@ -10,9 +12,13 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api")
@@ -20,6 +26,7 @@ import org.springframework.web.bind.annotation.*;
 public class ProductController {
 
     private final ProductService productService;
+    private final FileUploadService fileUploadService;
 
     @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/admin/products")
@@ -49,6 +56,18 @@ public class ProductController {
         ProductResponse response = productService.updateProduct(request, productId);
         return ResponseEntity.status(HttpStatus.OK)
                 .body(GlobalResponse.success(SuccessMessage.PRODUCT_UPDATE_SUCCESS, response));
+    }
+
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping(value = "/admin/products/{productId}/image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<GlobalResponse> uploadProductImage(
+            @PathVariable Long productId,
+            @RequestParam("file") MultipartFile file) throws IOException {
+
+        FileUploadResponse fileResponse = fileUploadService.fileUpload(file);
+        productService.updateProductImage(productId, fileResponse.getUrl());
+
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.PRODUCT_UPDATE_SUCCESS, fileResponse));
     }
 
     @PreAuthorize("hasRole('ADMIN')")

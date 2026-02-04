@@ -16,4 +16,7 @@ public class FileUploadResponse {
         this.fileLocation = fileLocation;
     }
 
+    public String getUrl() {
+        return fileLocation;
+    }
 }

@@ -73,6 +73,14 @@ public class UserService {
         return new UserResponse(user);
     }
 
+    // 프로필 이미지 업데이트
+    @Transactional
+    public void updateProfileImage(Long userId, String profileImageUrl) {
+        User user = findUserById(userId);
+
+        user.updateProfileImage(profileImageUrl);
+    }
+
     // 회원 탈퇴
     @Transactional
     public void withdrawUser(Long userId, String password) {

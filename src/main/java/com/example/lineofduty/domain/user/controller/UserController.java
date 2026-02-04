@@ -2,6 +2,8 @@ package com.example.lineofduty.domain.user.controller;
 
 import com.example.lineofduty.common.model.enums.SuccessMessage;
 import com.example.lineofduty.common.model.response.GlobalResponse;
+import com.example.lineofduty.domain.fileUpload.FileUploadResponse;
+import com.example.lineofduty.domain.fileUpload.FileUploadService;
 import com.example.lineofduty.domain.user.dto.UserDetail;
 import com.example.lineofduty.domain.user.dto.UserResponse;
 import com.example.lineofduty.domain.user.dto.UserUpdateRequest;
@@ -9,9 +11,13 @@ import com.example.lineofduty.domain.user.dto.UserWithdrawRequest;
 import com.example.lineofduty.domain.user.service.UserService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.io.IOException;
 
 @RestController
 @RequestMapping("/api/users")
@@ -19,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 class UserController {
 
     private final UserService userService;
+    private final FileUploadService fileUploadService;
 
     // 조회
     @GetMapping("/{userId}")
@@ -34,6 +41,18 @@ class UserController {
             @RequestBody UserUpdateRequest requestDto) {
         UserResponse response = userService.updateProfile(userDetails.getUser().getId(), requestDto);
         return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_UPDATE_SUCCESS, response));
+    }
+
+    // 프로필 이미지 업로드
+    @PostMapping(value = "/profile-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<GlobalResponse> uploadProfileImage(
+            @AuthenticationPrincipal UserDetail userDetails,
+            @RequestParam("file") MultipartFile file) throws IOException {
+
+        FileUploadResponse fileResponse = fileUploadService.fileUpload(file);
+        userService.updateProfileImage(userDetails.getUser().getId(), fileResponse.getUrl());
+
+        return ResponseEntity.ok(GlobalResponse.success(SuccessMessage.USER_UPDATE_SUCCESS, fileResponse));
     }
 
     // 탈퇴
