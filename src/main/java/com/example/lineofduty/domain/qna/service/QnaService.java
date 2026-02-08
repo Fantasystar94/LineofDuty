@@ -26,6 +26,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class QnaService {
 
     private final QnaRepository qnaRepository;
+    private final ProfanityFilterService profanityFilterService;
+
 
     // 질문 등록
     public QnaResisterResponse qnaRegistration(UserDetail userDetails, QnaResisterRequest request) {
@@ -35,6 +37,10 @@ public class QnaService {
         }
 
         Qna qna = new Qna(request.getTitle(), request.getQuestionContent(), userDetails.getUser());
+
+        profanityFilterService.validateNoProfanity(qna.getTitle());
+
+        profanityFilterService.validateNoProfanity(qna.getQuestionContent());
 
         qnaRepository.save(qna);
 
@@ -93,6 +99,10 @@ public class QnaService {
         if (!userDetails.getUser().getId().equals(qna.getUser().getId())) {
             throw new CustomException(ErrorMessage.NO_MODIFY_PERMISSION);
         }
+
+        profanityFilterService.validateNoProfanity(qna.getTitle());
+
+        profanityFilterService.validateNoProfanity(qna.getQuestionContent());
 
         qna.update(request.getTitle(), request.getQuestionContent());
 
