@@ -27,7 +27,7 @@ public class QnaService {
 
     private final QnaRepository qnaRepository;
     private final ProfanityFilterService profanityFilterService;
-
+    private final RateLimitService rateLimitService;
 
     // 질문 등록
     public QnaResisterResponse qnaRegistration(UserDetail userDetails, QnaResisterRequest request) {
@@ -41,6 +41,8 @@ public class QnaService {
         profanityFilterService.validateNoProfanity(qna.getTitle());
 
         profanityFilterService.validateNoProfanity(qna.getQuestionContent());
+
+        rateLimitService.checkPostLimit(userDetails.getUser().getId().toString());
 
         qnaRepository.save(qna);
 
