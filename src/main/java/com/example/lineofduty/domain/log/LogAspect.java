@@ -1,5 +1,6 @@
 package com.example.lineofduty.domain.log;
 
+import com.example.lineofduty.common.annotation.LogDescription;
 import com.example.lineofduty.domain.user.dto.UserDetail;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -8,12 +9,14 @@ import org.aspectj.lang.ProceedingJoinPoint;
 import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
+import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
+import java.lang.reflect.Method;
 import java.util.Arrays;
 
 @Aspect
@@ -57,7 +60,11 @@ public class LogAspect {
             // 2. 데이터베이스에 저장
             if (isCriticalDomain(className)) {
                 log.error("=== Error DB Logging {} ===", className);
-                logService.saveLog(userId, method + " " + uri, e.getMessage(), args);
+                
+                // 사람이 읽기 쉬운 설명 가져오기
+                String actionDescription = getActionDescription(joinPoint, method, uri);
+                
+                logService.saveLog(userId, actionDescription, e.getMessage(), args);
             }
 
             throw e;
@@ -69,6 +76,18 @@ public class LogAspect {
         }
     }
 
+    private String getActionDescription(ProceedingJoinPoint joinPoint, String method, String uri) {
+        MethodSignature signature = (MethodSignature) joinPoint.getSignature();
+        Method javaMethod = signature.getMethod();
+        LogDescription logDescription = javaMethod.getAnnotation(LogDescription.class);
+
+        if (logDescription != null) {
+            return logDescription.value();
+        }
+        
+        // 어노테이션이 없으면 기존처럼 Method + URI 반환
+        return method + " " + uri;
+    }
 
     private boolean isCriticalDomain(String className) {
         return className.contains(".payment.") || className.contains(".enlistmentSchedule.");

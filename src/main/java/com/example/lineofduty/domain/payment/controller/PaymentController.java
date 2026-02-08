@@ -1,5 +1,6 @@
 package com.example.lineofduty.domain.payment.controller;
 
+import com.example.lineofduty.common.annotation.LogDescription;
 import com.example.lineofduty.common.model.enums.SuccessMessage;
 import com.example.lineofduty.common.model.response.GlobalResponse;
 import com.example.lineofduty.domain.payment.dto.*;
@@ -20,6 +21,7 @@ public class PaymentController {
     private final PaymentService paymentService;
 
     // 결재 요청
+    @LogDescription("결제 요청")
     @PostMapping
     public ResponseEntity<GlobalResponse> createPayment(@Valid @RequestBody PaymentCreateRequest request, @AuthenticationPrincipal UserDetail userDetail) {
 
@@ -29,6 +31,7 @@ public class PaymentController {
     }
 
     // 결제 승인
+    @LogDescription("결제 승인")
     @PostMapping("/confirm")
     public ResponseEntity<GlobalResponse> confirmPayment(@Valid @RequestBody PaymentConfirmRequest request) {
 
@@ -37,6 +40,7 @@ public class PaymentController {
     }
 
     // 결제 조회 (paymentKey)
+    @LogDescription("결제 조회 (PaymentKey)")
     @GetMapping("/{paymentKey}")
     public ResponseEntity<GlobalResponse> getPaymentByPaymentKey(@PathVariable String paymentKey) {
 
@@ -45,6 +49,7 @@ public class PaymentController {
     }
 
     // 결제 조회 (orderNumber)
+    @LogDescription("결제 조회 (OrderNumber)")
     @GetMapping("/orders/{orderNumber}")
     public ResponseEntity<GlobalResponse> getPaymentByOrderId(@PathVariable String orderNumber) {
 
@@ -53,6 +58,7 @@ public class PaymentController {
     }
 
     // 결제 취소
+    @LogDescription("결제 취소")
     @PostMapping("/{paymentKey}/cancel")
     public ResponseEntity<GlobalResponse> cancelPayment(@Valid @RequestBody PaymentCancelRequest request, @PathVariable String paymentKey, @AuthenticationPrincipal UserDetail userDetail) {
 
