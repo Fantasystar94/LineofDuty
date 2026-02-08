@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @AllArgsConstructor
-@JsonPropertyOrder({"id", "userId", "title", "questionContent", "askContent", "createdAt", "modifiedAt"})
+@JsonPropertyOrder({"id", "userId", "title", "questionContent", "askContent", "viewCount", "createdAt", "modifiedAt"})
 public class QnaInquiryResponse {
 
     private final Long id;
@@ -17,6 +17,7 @@ public class QnaInquiryResponse {
     private final String title;
     private final String questionContent;
     private final String askContent;
+    private final Long viewCount;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
@@ -27,6 +28,7 @@ public class QnaInquiryResponse {
                 qna.getTitle(),
                 qna.getQuestionContent(),
                 qna.getAskContent(),
+                qna.getViewCount(),
                 qna.getCreatedAt(),
                 qna.getModifiedAt()
         );

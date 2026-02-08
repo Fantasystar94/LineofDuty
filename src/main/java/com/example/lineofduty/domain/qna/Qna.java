@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-@JsonPropertyOrder({"id", "userId", "title", "questionContent", "askContent", "createdAt", "modifiedAt"})
+@JsonPropertyOrder({"id", "userId", "title", "questionContent", "askContent", "viewCount", "createdAt", "modifiedAt"})
 public class Qna extends BaseEntity {
 
     @Id
@@ -35,6 +35,9 @@ public class Qna extends BaseEntity {
 
     @Column(name = "ask_content")
     private String askContent;
+
+    @Column(name = "view_count", nullable = false)
+    private Long viewCount = 0L;
 
     public Qna(@NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK) String title, @NotBlank(message = ValidationMessage.TITLE_CONTENT_NOT_BLANK) String questionContent, User user) {
         this.title = title;
@@ -57,5 +60,9 @@ public class Qna extends BaseEntity {
 
     public void updateAnswer(@NotBlank(message = ValidationMessage.ASK_CONTENT_NOT_BLANK) String askContent) {
         this.askContent = askContent;
+    }
+
+    public void increaseViewCount() {
+        this.viewCount++;
     }
 }
