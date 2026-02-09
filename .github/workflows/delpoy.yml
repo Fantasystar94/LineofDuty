@@ -42,6 +42,28 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew clean build
+        env:
+          DB_URL: jdbc:mysql://localhost:3306/testdb
+          DB_USERNAME: root
+          DB_PASSWORD: root
+          DDL_AUTO: create-drop
+          REDIS_HOST: localhost
+          REDIS_PORT: 6379
+          JWT_SECRET: test
+          MAIL_USERNAME: test
+          MAIL_PASSWORD: test
+          OPENAI_API_KEY: test
+          TOSS_SECRET_KEY: test
+          ADMIN_TOKEN: test
+          FRONTEND_URL: http://localhost
+          WEATHER_API_KEY: test
+          KAKAO_CLIENT_ID: test
+          KAKAO_REDIRECT_URI: test
+          GCP_PROJECT_ID: test
+          GCP_CLIENT_EMAIL: test
+          GCP_PRIVATE_KEY: test
+          GCP_PRIVATE_KEY_ID: test
+          GCP_CLIENT_ID: test
 
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v4
