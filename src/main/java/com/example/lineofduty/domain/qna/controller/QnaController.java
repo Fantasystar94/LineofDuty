@@ -38,7 +38,7 @@ public class QnaController {
     @GetMapping("/{qnaId}")
     public ResponseEntity<GlobalResponse> qnaInquiryApi(@PathVariable Long qnaId) {
 
-        QnaInquiryResponse response = qnaService.qnaInquiryWithPessimisticLock(qnaId);
+        QnaInquiryResponse response = qnaService.qnaInquiryWithOptimisticLock(qnaId);
 
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.QNA_READ_SUCCESS,response));
 

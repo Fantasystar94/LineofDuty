@@ -68,6 +68,7 @@ public class QnaService {
                 .orElseThrow(() -> new CustomException(ErrorMessage.QUESTION_NOT_FOUND));
 
         qna.increaseViewCount();
+
         return QnaInquiryResponse.from(qna);
     }
 
@@ -78,6 +79,7 @@ public class QnaService {
                 .orElseThrow(() -> new CustomException(ErrorMessage.QUESTION_NOT_FOUND));
 
         qna.increaseViewCount();
+
         return QnaInquiryResponse.from(qna);
     }
 
