@@ -4,6 +4,7 @@ import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.domain.qna.Qna;
 import com.example.lineofduty.domain.qna.QnaDto;
+import com.example.lineofduty.domain.qna.QnaStatus;
 import com.example.lineofduty.domain.qna.repository.QnaRepository;
 import com.example.lineofduty.domain.qna.dto.request.QnaResisterRequest;
 import com.example.lineofduty.domain.qna.dto.request.QnaUpdateRequest;
@@ -123,6 +124,10 @@ public class QnaService {
 
         if (!userDetails.getUser().getId().equals(qna.getUser().getId())) {
             throw new CustomException(ErrorMessage.NO_MODIFY_PERMISSION);
+        }
+
+        if (qna.getStatus() == QnaStatus.RESOLVED) {
+            throw new CustomException(ErrorMessage.ALREADY_ANSWERED_CANNOT_MODIFY);
         }
 
         profanityFilterService.validateNoProfanity(qna.getTitle());
