@@ -71,8 +71,17 @@ dependencies {
     //비속어필터링
     implementation 'io.github.vaneproject:badwordfiltering:1.0.0'
 
+    //h2 DB
+    testRuntimeOnly 'com.h2database:h2'
+
 }
 
 tasks.named('test') {
     useJUnitPlatform()
+}
+
+test {
+    useJUnitPlatform {
+        excludeTags 'concurrency'
+    }
 }

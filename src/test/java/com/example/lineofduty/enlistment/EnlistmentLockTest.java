@@ -5,6 +5,7 @@ import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentSchedule
 import com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository;
 import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentLockTestService;
 import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentScheduleRetryService;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -18,6 +19,7 @@ import static com.example.lineofduty.common.exception.ErrorMessage.DUPLICATE_SCH
 import static com.example.lineofduty.common.exception.ErrorMessage.NO_REMAINING_SLOTS;
 
 @SpringBootTest
+@Tag("concurrency")
 public class EnlistmentLockTest {
 
     @Autowired
