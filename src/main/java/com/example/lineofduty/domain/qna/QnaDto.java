@@ -13,6 +13,8 @@ public class QnaDto {
     private String title;
     private String questionContent;
     private String askContent;
+    private String status;
+    private Long viewCount;
     private String createdAt;
     private String modifiedAt;
 
@@ -23,6 +25,8 @@ public class QnaDto {
                 qna.getTitle(),
                 qna.getQuestionContent(),
                 qna.getAskContent(),
+                qna.getStatus().toString(),
+                qna.getViewCount(),
                 qna.getCreatedAt().toString(),
                 qna.getModifiedAt().toString());
     }

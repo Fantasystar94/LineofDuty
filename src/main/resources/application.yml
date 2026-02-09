@@ -1,6 +1,9 @@
 spring:
   config:
     import: optional:file:.env[.properties]
+  output:
+    ansi:
+      enabled: always
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DB_URL}

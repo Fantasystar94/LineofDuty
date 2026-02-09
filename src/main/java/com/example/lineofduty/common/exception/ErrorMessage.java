@@ -21,6 +21,10 @@ public enum ErrorMessage {
     // 게시판(QnA/공지) 관련
     MISSING_QUESTION_CONTENT(HttpStatus.BAD_REQUEST, "질문 내용은 필수입니다."),
     MISSING_COMMENT_CONTENT(HttpStatus.BAD_REQUEST, "댓글 내용은 필수입니다."),
+    PROFANITY_DETECTED(HttpStatus.BAD_REQUEST, "비속어가 포함되어 있습니다." ),
+    NOT_BLANK(HttpStatus.BAD_REQUEST, "빈칸으로 작성할 수 없습니다." ),
+    ANTI_PLAQUE_FUNCTION(HttpStatus.BAD_REQUEST, "1분에 2개까지 글작성이 가능합니다. 잠시후 다시 시도해주세요."),
+    ALREADY_ANSWERED_CANNOT_MODIFY(HttpStatus.BAD_REQUEST, "관리자가 답변한 게시글은 수정할 수 없습니다."),
 
     // 주문/상품 관련
     MISSING_ORDER_ID(HttpStatus.BAD_REQUEST, "orderId가 누락되었습니다."),
