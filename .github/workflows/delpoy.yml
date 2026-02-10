@@ -75,7 +75,7 @@ jobs:
           key: ${{ secrets.EC2_SSH_KEY }}
 
           # ⭐ 핵심: EC2로 전달할 환경 변수
-          envs: ECR_REGISTRY,ECR_REPOSITORY,IMAGE_TAG
+          envs: AWS_REGION,ECR_REGISTRY,ECR_REPOSITORY,IMAGE_TAG
 
           script: |
             aws ecr get-login-password --region $AWS_REGION \
