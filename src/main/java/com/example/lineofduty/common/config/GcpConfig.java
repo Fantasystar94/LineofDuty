@@ -34,10 +34,11 @@ public class GcpConfig {
     @Bean
     public GoogleCredentials googleCredentials() throws IOException {
 
-
+        //aws 환경 json 줄바꿈 해결
         String fixedPrivateKey = privateKey
                 .replace("\\n", "\n")
-                .replace("\"", ""); // 따옴표 중복 제거
+                .replace("\\\\n", "\n")
+                .trim();
 
         // 2. JSON 구조를 Map으로 생성
         Map<String, Object> jsonMap = new HashMap<>();
