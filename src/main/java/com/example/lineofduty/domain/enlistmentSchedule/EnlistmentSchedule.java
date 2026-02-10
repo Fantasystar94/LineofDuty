@@ -43,6 +43,12 @@ public class EnlistmentSchedule extends BaseEntity {
         this.remainingSlots--;
     }
 
+    public EnlistmentSchedule(LocalDate enlistmentDate) {
+        this.enlistmentDate = enlistmentDate;
+        this.capacity = 100;
+        this.remainingSlots = 100;
+    }
+
     public void bulkDeduct(int count) {
         this.remainingSlots = this.remainingSlots - count;
     }

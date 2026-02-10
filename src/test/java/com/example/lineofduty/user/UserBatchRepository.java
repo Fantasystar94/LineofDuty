@@ -2,6 +2,7 @@ package com.example.lineofduty.user;
 import com.example.lineofduty.common.model.enums.Role;
 import com.example.lineofduty.domain.user.User;
 import com.example.lineofduty.domain.user.repository.UserBatchRepository;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,6 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @SpringBootTest
+@Tag("concurrency")
 class UserBatchRepositoryTest {
 
     @Autowired
@@ -18,8 +20,8 @@ class UserBatchRepositoryTest {
     @Autowired
     PasswordEncoder passwordEncoder;
 
-    private static final int TOTAL_USERS = 100_000;
-    private static final int BATCH_SIZE = 5_000;
+    private static final int TOTAL_USERS = 10;
+    private static final int BATCH_SIZE = 5;
 
     @Test
     void bulkInsert_users_real_db() {

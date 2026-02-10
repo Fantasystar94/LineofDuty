@@ -96,7 +96,7 @@ public enum ErrorMessage {
     NO_REMAINING_SLOTS(HttpStatus.CONFLICT,"입영 일정이 모두 소진 되었습니다"),
     INVALID_AMOUNT_PAYMENT(HttpStatus.CONFLICT, "결제할 금액 정보가 일치하지 않습니다."),
     SCHEDULE_CONFLICT(HttpStatus.CONFLICT, "동시에 요청이 들어왔습니다."),
-
+    ALREADY_CREATED_YEAR(HttpStatus.CONFLICT, "이미 해당년도 입영일정이 있습니다"),
     /* --- 500 Internal Server Error --- */
     // 외부 API 관련
     WEATHER_API_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "기상청 API 호출 중 오류가 발생했습니다."),
