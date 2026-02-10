@@ -21,7 +21,11 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.time.temporal.TemporalAdjusters;
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
@@ -51,6 +55,41 @@ public class EnlistmentScheduleService {
 
         return queryScheduleRepository.getEnlistmentListSortBy(pageable, LocalDate.now());
 
+    }
+    /*
+     * 오늘 날짜로부터 입영일자 생성
+     * */
+    @Transactional
+    public List<EnlistmentScheduleReadResponse> createEnlistmentYear() {
+
+        final LocalDate today = LocalDate.now();
+
+        // 이미 해당 연도 데이터 존재하면 막기
+        boolean exists = scheduleRepository.existsByEnlistmentDateBetween((LocalDate.of(today.getYear(), 1, 1)), LocalDate.of(today.getYear(), 12, 31));
+
+        if (exists) {
+            throw new CustomException(ErrorMessage.ALREADY_CREATED_YEAR);
+        }
+
+        LocalDate end = today.with(TemporalAdjusters.lastDayOfYear());
+
+        LocalDate current = today.with(TemporalAdjusters.nextOrSame(DayOfWeek.TUESDAY));
+
+        List<EnlistmentSchedule> schedules = new ArrayList<>();
+
+        while (!current.isAfter(end)) {
+
+            EnlistmentSchedule schedule = new EnlistmentSchedule(current);
+
+            schedules.add(schedule);
+            current = current.plusWeeks(1);
+        }
+
+        scheduleRepository.saveAll(schedules);
+
+        return schedules.stream()
+                .map(EnlistmentScheduleReadResponse::from)
+                .toList();
     }
 
     /*
