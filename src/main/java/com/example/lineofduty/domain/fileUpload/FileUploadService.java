@@ -2,14 +2,14 @@ package com.example.lineofduty.domain.fileUpload;
 
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
-import com.google.cloud.storage.Blob;
-import com.google.cloud.storage.Bucket;
-import com.google.firebase.cloud.StorageClient;
+import io.awspring.cloud.s3.ObjectMetadata;
+import io.awspring.cloud.s3.S3Template;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.time.LocalDateTime;
@@ -19,9 +19,14 @@ import java.util.List;
 import java.util.UUID;
 
 @Service
+@RequiredArgsConstructor
 public class FileUploadService {
 
-    private final String firebaseBucket = "lineofdutyfileupload.firebasestorage.app";
+    private final S3Template s3Template;
+
+    @Value("${spring.cloud.aws.s3.bucket}")
+    private String bucketName;
+
     private final List<String> allowedExtensions = Arrays.asList("jpg", "jpeg", "png", "bmp");
 
     @Transactional
@@ -31,17 +36,13 @@ public class FileUploadService {
 
         LocalDateTime now = LocalDateTime.now();
         String fileName = now.format(DateTimeFormatter.ofPattern("yyyy/MM/dd/HH/mm/ss")) + "_" + UUID.randomUUID().toString();
+        
+        // S3에 업로드
+        try (InputStream inputStream = file.getInputStream()) {
+            s3Template.upload(bucketName, fileName, inputStream, ObjectMetadata.builder().contentType(file.getContentType()).build());
+        }
 
-        Bucket bucket = StorageClient.getInstance().bucket(firebaseBucket);
-        InputStream content = new ByteArrayInputStream(file.getBytes());
-
-        Blob blob = bucket.create(fileName, content, file.getContentType());
-
-        String publicUrl = String.format(
-                "https://firebasestorage.googleapis.com/v0/b/%s/o/%s?alt=media",
-                firebaseBucket,
-                fileName.replace("/", "%2F")
-        );
+        String publicUrl = s3Template.download(bucketName, fileName).getURL().toString();
 
         return new FileUploadResponse(fileName, publicUrl);
 
