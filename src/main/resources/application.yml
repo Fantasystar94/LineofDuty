@@ -96,10 +96,3 @@ weather:
 kakao:
   client-id: ${KAKAO_CLIENT_ID}
   redirect-uri: ${KAKAO_REDIRECT_URI}
-
-#gcp:
-#  project-id: ${GCP_PROJECT_ID}
-#  client-email: ${GCP_CLIENT_EMAIL}
-#  private-key: ${GCP_PRIVATE_KEY}
-#  private-key-id: ${GCP_PRIVATE_KEY_ID}
-#  client-id: ${GCP_CLIENT_ID}
