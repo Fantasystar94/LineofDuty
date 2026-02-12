@@ -18,9 +18,9 @@ public class RefreshToken extends BaseEntity {
     @Column(name = "token", nullable = false)
     private String token;
 
-    public RefreshToken(String token, Long userId) {
-        this.token = token;
+    public RefreshToken(Long userId, String token) {
         this.userId = userId;
+        this.token = token;
     }
 
     public void updateToken(String token) {

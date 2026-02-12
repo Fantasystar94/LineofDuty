@@ -151,7 +151,7 @@ public class AuthService {
 
         // DB에 Refresh Token 저장 (기존 토큰 있으면 update)
         RefreshToken refreshTokenEntity = refreshTokenRepository.findByUserId(user.getId())
-                .orElse(new RefreshToken(refreshToken, user.getId()));
+                .orElse(new RefreshToken(user.getId(), refreshToken));
 
         refreshTokenEntity.updateToken(refreshToken);
         refreshTokenRepository.save(refreshTokenEntity);
@@ -163,23 +163,24 @@ public class AuthService {
     @Transactional
     public void logout(Long userId) {
 
-        refreshTokenRepository.deleteById(userId);
+        refreshTokenRepository.findByUserId(userId)
+                .ifPresent(refreshTokenRepository::delete);
     }
 
     // 토큰 재발급
     @Transactional
-    public TokenResponse reissue(String refreshTokenStr) {
+    public TokenResponse reissue(String refreshToken) {
 
-        if (!jwtUtil.validateToken(refreshTokenStr)) {
+        if (!jwtUtil.validateToken(refreshToken)) {
             throw new CustomException(ErrorMessage.INVALID_TOKEN);
         }
 
-        Long userId = jwtUtil.extractUserId(refreshTokenStr);
+        Long userId = jwtUtil.extractUserId(refreshToken);
 
         RefreshToken savedToken = refreshTokenRepository.findByUserId(userId)
                 .orElseThrow(() -> new CustomException(ErrorMessage.USER_LOGOUT));
 
-        if (!savedToken.getToken().equals(refreshTokenStr)) {
+        if (!savedToken.getToken().equals(refreshToken)) {
             refreshTokenRepository.delete(savedToken);
             throw new CustomException(ErrorMessage.INVALID_TOKEN);
         }
@@ -197,7 +198,7 @@ public class AuthService {
 
         savedToken.updateToken(newRefreshToken);
 
-        return new TokenResponse(newAccessToken, refreshTokenStr);
+        return new TokenResponse(newAccessToken, refreshToken);
     }
 
 }
