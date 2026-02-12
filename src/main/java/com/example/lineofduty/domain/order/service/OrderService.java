@@ -80,6 +80,7 @@ public class OrderService {
             orderItem.addQuantity(request.getQuantity());
             long changedTotalPrice = order.getTotalPrice() + request.getQuantity() * product.getPrice();
             order.updateTotalPrice(changedTotalPrice);
+            order.updateOrderName(createOrderName(order, product));order.updateOrderName(createOrderName(order, product));
         } else {
 
             throw new CustomException(ErrorMessage.OUT_OF_STOCK);
