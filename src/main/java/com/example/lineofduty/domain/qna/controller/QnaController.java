@@ -34,11 +34,11 @@ public class QnaController {
         return ResponseEntity.status(HttpStatus.CREATED).body(GlobalResponse.success(SuccessMessage.QNA_CREATE_SUCCESS, response));
     }
 
-    //질문 단건 조회
+    //질문 단건 조회 (낙관적 락 적용)
     @GetMapping("/{qnaId}")
     public ResponseEntity<GlobalResponse> qnaInquiryApi(@PathVariable Long qnaId) {
 
-        QnaInquiryResponse response = qnaService.qnaInquiry(qnaId);
+        QnaInquiryResponse response = qnaService.qnaInquiryWithOptimisticLock(qnaId);
 
         return ResponseEntity.status(HttpStatus.OK).body(GlobalResponse.success(SuccessMessage.QNA_READ_SUCCESS,response));
 

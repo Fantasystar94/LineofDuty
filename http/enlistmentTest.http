@@ -1,4 +1,4 @@
-@baseUrl = http://localhost:8080
+@baseUrl = http://43.201.115.73:8080
 #@accessToken = 초기값 (로그인 후 자동 세팅됨)
 
 ################################
@@ -157,3 +157,8 @@ Authorization: Bearer {{accessToken}}
 ### GET DASHBOARD DEFERMENTS
 GET {{baseUrl}}/api/admin/dashboard/deferments
 Authorization: Bearer {{accessToken}}
+
+### 입영 일정 연도 생성 (ADMIN 전용)
+POST {{baseUrl}}/api/admin/enlistment-schedule
+Authorization: Bearer {{accessToken}}
+Content-Type: application/json

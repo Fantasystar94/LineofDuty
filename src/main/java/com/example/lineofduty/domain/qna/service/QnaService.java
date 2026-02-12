@@ -4,6 +4,7 @@ import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.domain.qna.Qna;
 import com.example.lineofduty.domain.qna.QnaDto;
+import com.example.lineofduty.domain.qna.QnaStatus;
 import com.example.lineofduty.domain.qna.repository.QnaRepository;
 import com.example.lineofduty.domain.qna.dto.request.QnaResisterRequest;
 import com.example.lineofduty.domain.qna.dto.request.QnaUpdateRequest;
@@ -22,12 +23,14 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
 public class QnaService {
 
     private final QnaRepository qnaRepository;
+    private final ProfanityFilterService profanityFilterService;
+    private final RateLimitService rateLimitService;
 
     // 질문 등록
+    @Transactional
     public QnaResisterResponse qnaRegistration(UserDetail userDetails, QnaResisterRequest request) {
 
         if (userDetails.getUser().isDeleted()) {
@@ -36,16 +39,46 @@ public class QnaService {
 
         Qna qna = new Qna(request.getTitle(), request.getQuestionContent(), userDetails.getUser());
 
+        profanityFilterService.validateNoProfanity(qna.getTitle());
+
+        profanityFilterService.validateNoProfanity(qna.getQuestionContent());
+
+        rateLimitService.checkPostLimit(userDetails.getUser().getId().toString());
+
         qnaRepository.save(qna);
 
         return QnaResisterResponse.from(qna);
     }
     //질문 단건 조회
-    @Transactional(readOnly = true)
+    @Transactional
     public QnaInquiryResponse qnaInquiry(Long qnaId) {
 
         Qna qna = qnaRepository.findById(qnaId)
                 .orElseThrow(() -> new CustomException(ErrorMessage.QUESTION_NOT_FOUND));
+
+        qna.increaseViewCount();
+
+        return QnaInquiryResponse.from(qna);
+    }
+
+    // 질문 단건 조회 (비관적 락)
+    @Transactional
+    public QnaInquiryResponse qnaInquiryWithPessimisticLock(Long qnaId) {
+        Qna qna = qnaRepository.findByIdWithPessimisticLock(qnaId)
+                .orElseThrow(() -> new CustomException(ErrorMessage.QUESTION_NOT_FOUND));
+
+        qna.increaseViewCount();
+
+        return QnaInquiryResponse.from(qna);
+    }
+
+    // 질문 단건 조회 (낙관적 락)
+    @Transactional
+    public QnaInquiryResponse qnaInquiryWithOptimisticLock(Long qnaId) {
+        Qna qna = qnaRepository.findByIdWithOptimisticLock(qnaId)
+                .orElseThrow(() -> new CustomException(ErrorMessage.QUESTION_NOT_FOUND));
+
+        qna.increaseViewCount();
 
         return QnaInquiryResponse.from(qna);
     }
@@ -81,6 +114,7 @@ public class QnaService {
     }
 
     //질문 수정
+    @Transactional
     public QnaUpdateResponse qnaUpdate(UserDetail userDetails, Long qnaId, QnaUpdateRequest request) {
 
         if (userDetails.getUser().isDeleted()) {
@@ -94,12 +128,21 @@ public class QnaService {
             throw new CustomException(ErrorMessage.NO_MODIFY_PERMISSION);
         }
 
+        if (qna.getStatus() == QnaStatus.RESOLVED) {
+            throw new CustomException(ErrorMessage.ALREADY_ANSWERED_CANNOT_MODIFY);
+        }
+
+        profanityFilterService.validateNoProfanity(qna.getTitle());
+
+        profanityFilterService.validateNoProfanity(qna.getQuestionContent());
+
         qna.update(request.getTitle(), request.getQuestionContent());
 
         return QnaUpdateResponse.from(qna);
     }
 
     //질문 삭제
+    @Transactional
     public void qnaDelete(UserDetail userDetails, Long qnaId) {
 
         if (userDetails.getUser().isDeleted()) {

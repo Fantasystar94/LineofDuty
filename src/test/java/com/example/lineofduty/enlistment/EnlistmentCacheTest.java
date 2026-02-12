@@ -3,6 +3,7 @@ import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentSchedule
 import com.example.lineofduty.domain.enlistmentSchedule.repository.QueryEnlistmentScheduleRepository;
 import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentScheduleService;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Tag;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,6 +20,7 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 
 @SpringBootTest
+@Tag("concurrency")
 public class EnlistmentCacheTest {
 
     @Autowired

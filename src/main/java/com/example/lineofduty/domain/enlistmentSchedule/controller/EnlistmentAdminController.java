@@ -2,14 +2,15 @@ package com.example.lineofduty.domain.enlistmentSchedule.controller;
 
 import com.example.lineofduty.common.model.response.GlobalResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.model.DefermentPatchRequest;
+import com.example.lineofduty.domain.enlistmentSchedule.model.EnlistmentScheduleReadResponse;
 import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentScheduleService;
-import com.example.lineofduty.domain.user.dto.UserDetail;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 import static com.example.lineofduty.common.model.enums.SuccessMessage.*;
 import static com.example.lineofduty.common.model.enums.SuccessMessage.DEFERMENTS_PROCEED;
@@ -26,7 +27,7 @@ public class EnlistmentAdminController {
      * */
     @PreAuthorize("hasRole('ADMIN')")
     @PatchMapping("enlistment-applications/{applicationId}/approve")
-    public ResponseEntity<GlobalResponse> approveApplication(@AuthenticationPrincipal UserDetail userDetails, @PathVariable Long applicationId) {
+    public ResponseEntity<GlobalResponse> approveApplication(@PathVariable Long applicationId) {
         return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_APPROVE_SUCCESS, enlistmentScheduleService.approveApplication(applicationId)));
     }
 
@@ -79,6 +80,16 @@ public class EnlistmentAdminController {
                         enlistmentScheduleService.processDefermentBulk(request.getDecisionStatus())
                 )
         );
+    }
+
+    /*
+     * 입영 일정 생성
+     * */
+    @PreAuthorize("hasRole('ADMIN')")
+    @PostMapping("/enlistment-schedule")
+    public ResponseEntity<GlobalResponse> createEnlistmentSchedule() {
+        List<EnlistmentScheduleReadResponse> data = enlistmentScheduleService.createEnlistmentYear();
+        return ResponseEntity.ok(GlobalResponse.success(ENLISTMENT_SUCCESS, data));
     }
 
 }

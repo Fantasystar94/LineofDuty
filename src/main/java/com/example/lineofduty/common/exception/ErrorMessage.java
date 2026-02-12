@@ -21,6 +21,10 @@ public enum ErrorMessage {
     // 게시판(QnA/공지) 관련
     MISSING_QUESTION_CONTENT(HttpStatus.BAD_REQUEST, "질문 내용은 필수입니다."),
     MISSING_COMMENT_CONTENT(HttpStatus.BAD_REQUEST, "댓글 내용은 필수입니다."),
+    PROFANITY_DETECTED(HttpStatus.BAD_REQUEST, "비속어가 포함되어 있습니다." ),
+    NOT_BLANK(HttpStatus.BAD_REQUEST, "빈칸으로 작성할 수 없습니다." ),
+    ANTI_PLAQUE_FUNCTION(HttpStatus.BAD_REQUEST, "1분에 2개까지 글작성이 가능합니다. 잠시후 다시 시도해주세요."),
+    ALREADY_ANSWERED_CANNOT_MODIFY(HttpStatus.BAD_REQUEST, "관리자가 답변한 게시글은 수정할 수 없습니다."),
 
     // 주문/상품 관련
     MISSING_ORDER_ID(HttpStatus.BAD_REQUEST, "orderId가 누락되었습니다."),
@@ -92,7 +96,7 @@ public enum ErrorMessage {
     NO_REMAINING_SLOTS(HttpStatus.CONFLICT,"입영 일정이 모두 소진 되었습니다"),
     INVALID_AMOUNT_PAYMENT(HttpStatus.CONFLICT, "결제할 금액 정보가 일치하지 않습니다."),
     SCHEDULE_CONFLICT(HttpStatus.CONFLICT, "동시에 요청이 들어왔습니다."),
-
+    ALREADY_CREATED_YEAR(HttpStatus.CONFLICT, "이미 해당년도 입영일정이 있습니다"),
     /* --- 500 Internal Server Error --- */
     // 외부 API 관련
     WEATHER_API_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "기상청 API 호출 중 오류가 발생했습니다."),
