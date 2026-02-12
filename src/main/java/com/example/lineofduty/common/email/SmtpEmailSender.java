@@ -44,6 +44,16 @@ public class SmtpEmailSender {
         javaMailSender.send(msg);
     }
 
+    @Async
+    public void sendVerificationCode(String to, String code) {
+        SimpleMailMessage msg = new SimpleMailMessage();
+        msg.setTo(to);
+        msg.setSubject("[LineOfDuty] 회원가입 인증 코드 안내");
+        msg.setText("인증 코드: " + code + "\n\n3분 이내에 입력해 주세요.");
+
+        javaMailSender.send(msg);
+    }
+
     private String buildSubject(NotificationType type) {
         return switch (type) {
             case ENLISTMENT_REQUESTED -> "[LineOfDuty] 입영 신청 접수 완료";

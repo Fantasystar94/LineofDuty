@@ -2,6 +2,7 @@ package com.example.lineofduty.domain.auth;
 
 import com.example.lineofduty.common.model.enums.SuccessMessage;
 import com.example.lineofduty.common.model.response.GlobalResponse;
+import com.example.lineofduty.domain.auth.dto.EmailVerificationRequest;
 import com.example.lineofduty.domain.auth.dto.LoginRequest;
 import com.example.lineofduty.domain.auth.dto.SignupRequest;
 import com.example.lineofduty.domain.token.TokenRequest;
@@ -9,15 +10,12 @@ import com.example.lineofduty.domain.token.TokenResponse;
 import com.example.lineofduty.domain.user.dto.UserDetail;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/api/auth")
@@ -25,6 +23,20 @@ import java.util.Map;
 public class AuthController {
 
     private final AuthService authService;
+
+    // 인증 코드 발송
+    @PostMapping("/email/send")
+    public ResponseEntity<GlobalResponse> sendEmail(@RequestBody EmailVerificationRequest request) {
+        authService.sendCode(request.getEmail());
+        return ResponseEntity.ok(GlobalResponse.successNodata(SuccessMessage.SEND_AUTHENTICATION_CODE));
+    }
+
+    // 이메일 인증 확인
+    @PostMapping("/email/verify")
+    public ResponseEntity<GlobalResponse> verifyEmail(@RequestBody EmailVerificationRequest request) {
+        authService.verifyCode(request.getEmail(), request.getCode());
+        return ResponseEntity.ok(GlobalResponse.successNodata(SuccessMessage.EMAIL_VERIFICATION_SUCCESSFUL));
+    }
 
     // 회원가입
     @PostMapping("/signup")

@@ -12,15 +12,15 @@ import lombok.NoArgsConstructor;
 public class RefreshToken extends BaseEntity {
 
     @Id
-    @Column(name = "rt_key")
+    @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "rt_value", nullable = false)
+    @Column(name = "token", nullable = false)
     private String token;
 
-    public RefreshToken(String token, Long userId) {
-        this.token = token;
+    public RefreshToken(Long userId, String token) {
         this.userId = userId;
+        this.token = token;
     }
 
     public void updateToken(String token) {

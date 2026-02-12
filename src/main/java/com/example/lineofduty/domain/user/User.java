@@ -27,7 +27,6 @@ public class User extends BaseEntity {
     @Column(nullable = false, length = 30)
     private String username;
 
-    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)

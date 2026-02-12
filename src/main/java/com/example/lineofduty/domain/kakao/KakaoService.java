@@ -62,7 +62,7 @@ public class KakaoService {
 
             // RefreshToken 저장
             RefreshToken refreshTokenEntity = refreshTokenRepository.findByUserId(user.getId())
-                    .orElse(new RefreshToken(refreshToken, user.getId()));
+                    .orElse(new RefreshToken(user.getId(), refreshToken));
 
             refreshTokenEntity.updateToken(refreshToken);
             refreshTokenRepository.save(refreshTokenEntity);
