@@ -126,6 +126,7 @@ public class AuthService {
                 .orElseThrow(() -> new CustomException(ErrorMessage.USER_LOGOUT));
 
         if (!savedToken.getToken().equals(refreshTokenStr)) {
+            refreshTokenRepository.delete(savedToken);
             throw new CustomException(ErrorMessage.INVALID_TOKEN);
         }
 
@@ -138,6 +139,9 @@ public class AuthService {
         }
 
         String newAccessToken = jwtUtil.generateToken(user.getId(), user.getRole());
+        String newRefreshToken = jwtUtil.generateRefreshToken(user.getId(), user.getRole());
+
+        savedToken.updateToken(newRefreshToken);
 
         return new TokenResponse(newAccessToken, refreshTokenStr);
     }

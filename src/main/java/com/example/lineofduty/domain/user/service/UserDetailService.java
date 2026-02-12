@@ -36,6 +36,10 @@ public class UserDetailService implements UserDetailsService {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> new UsernameNotFoundException("해당 ID의 유저를 찾을 수 없습니다: " + id));
 
+        if (user.isDeleted()) {
+            throw new CustomException(ErrorMessage.USER_WITHDRAWN);
+        }
+
         return new UserDetail(user);
     }
 
