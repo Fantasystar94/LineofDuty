@@ -1,5 +1,6 @@
 package com.example.lineofduty.domain.auth;
 
+import com.example.lineofduty.common.email.SmtpEmailSender;
 import com.example.lineofduty.common.exception.CustomException;
 import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.Role;
@@ -16,8 +17,9 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
+import java.time.LocalDateTime;
 import java.util.Optional;
+import java.util.concurrent.ThreadLocalRandom;
 
 @Service
 @RequiredArgsConstructor
@@ -28,13 +30,61 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtUtil jwtUtil;
     private final RefreshTokenRepository refreshTokenRepository;
+    private final EmailVerificationRepository emailVerificationRepository;
+    private final SmtpEmailSender smtpEmailSender;
 
     @Value("${admin.token}")
     private String adminToken;
 
+    // 인증 코드 발송
+    @Transactional
+    public void sendCode(String email) {
+        if (userRepository.existsByEmail(email)) {
+            throw new CustomException(ErrorMessage.DUPLICATE_EMAIL);
+        }
+
+        String code = String.valueOf(ThreadLocalRandom.current().nextInt(100000, 1000000));
+        LocalDateTime expiry = LocalDateTime.now().plusMinutes(3);
+
+        // 기존 내역이 있으면 업데이트, 없으면 생성
+        EmailVerification verification = emailVerificationRepository.findByEmail(email)
+                .orElse(new EmailVerification(email, code, expiry));
+
+        if (verification.getId() != null) {
+            verification.updateCode(code, expiry);
+        }
+        emailVerificationRepository.save(verification);
+
+        smtpEmailSender.sendVerificationCode(email, code);
+    }
+
+    // 인증 코드 검증
+    @Transactional
+    public void verifyCode(String email, String code) {
+        EmailVerification verification = emailVerificationRepository.findByEmail(email)
+                .orElseThrow(() -> new CustomException(ErrorMessage.EMAIL_NOT_FOUND));
+
+        if (verification.getExpirationTime().isBefore(LocalDateTime.now())) {
+            throw new CustomException(ErrorMessage.INVALID_VERIFICATION_CODE); // 만료됨
+        }
+        if (!verification.getCode().equals(code)) {
+            throw new CustomException(ErrorMessage.INVALID_VERIFICATION_CODE);
+        }
+
+        verification.verify(); // 인증 완료 상태로 변경
+    }
+
     // 회원가입
     @Transactional
     public void signup(SignupRequest request) {
+
+        // 이메일 인증 여부 확인
+        EmailVerification verification = emailVerificationRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new CustomException(ErrorMessage.EMAIL_NOT_FOUND));
+
+        if (!verification.isVerified()) {
+            throw new CustomException(ErrorMessage.EMAIL_NOT_FOUND);
+        }
 
         Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
 
@@ -72,6 +122,10 @@ public class AuthService {
                 passwordEncoder.encode(request.getPassword()),
                 role
         );
+        
+        // 가입 성공 시 인증 데이터 삭제
+        emailVerificationRepository.delete(verification);
+        
         userRepository.save(user);
     }
 
