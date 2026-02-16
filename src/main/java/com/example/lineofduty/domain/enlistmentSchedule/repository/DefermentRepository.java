@@ -11,12 +11,23 @@ import java.util.Optional;
 
 public interface DefermentRepository extends JpaRepository<Deferment, Long> {
 
-    @Query("SELECT new com.example.lineofduty.domain.enlistmentSchedule.model.DefermentsReadResponse( " +
-            "d.id, d.reason, d.status, d.changedDate, d.createdAt, d.modifiedAt, u.username) " +
-            "FROM Deferment d " +
-            "JOIN User u ON d.userId = u.id")
+    @Query("""
+        SELECT new com.example.lineofduty.domain.enlistmentSchedule.model.DefermentsReadResponse(
+            d.id,
+            d.reason,
+            d.status,
+            d.changedDate,
+            d.createdAt,
+            d.modifiedAt,
+            u.username
+        )
+        FROM Deferment d
+        JOIN User u On d.userId = u.id
+        WHERE d.isConfirmed = false
+        """)
     Page<DefermentsReadResponse> findDefermentList(Pageable pageable);
 
+    @Query("select d from Deferment d where d.isConfirmed = false")
     Optional<Deferment> findByIdAndUserId(Long defermentId, Long userId);
 
 }

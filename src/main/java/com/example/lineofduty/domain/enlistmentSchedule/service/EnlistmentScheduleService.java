@@ -172,7 +172,7 @@ public class EnlistmentScheduleService {
     }
 
     /*
-     * 입영 신청 단건 조회 - v1 / Authentication 없음
+     * 입영 신청 단건 조회 - v1 /
      * */
     @Transactional(readOnly = true)
     public EnlistmentApplicationReadResponse getApplication(Long userId, Long applicationId) {
@@ -379,6 +379,8 @@ public class EnlistmentScheduleService {
             //반려시 메일
             publisher.publishEvent(NotificationEvent.defermentRejected(user.getId(), application.getId(), deferment.getChangedDate()));
         }
+        //승인, 반려든 확인을 했으니 무조건 변경
+        deferment.setConfirmed();
 
         return queryEnlistmentApplicationRepository.getApplicationWithUser(user.getId(), application.getId());
     }
