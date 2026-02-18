@@ -9,6 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentApplication.enlistmentApplication;
 import static com.example.lineofduty.domain.enlistmentSchedule.QEnlistmentSchedule.enlistmentSchedule;
+import static com.example.lineofduty.domain.enlistmentSchedule.QDeferment.deferment;
 import static com.example.lineofduty.domain.user.QUser.user;
 
 @Repository
@@ -55,7 +56,15 @@ public class QueryEnlistmentApplicationRepository {
                 .from(enlistmentApplication)
                 .where(
                         enlistmentApplication.id.eq(applicationId),
-                        (enlistmentApplication.userId.eq(userId))
+                        enlistmentApplication.userId.eq(userId),
+                        JPAExpressions
+                                .selectOne()
+                                .from(deferment)
+                                .where(
+                                        deferment.userId.eq(enlistmentApplication.userId),
+                                        deferment.isConfirmed.isFalse()
+                                )
+                                .notExists()
                 )
                 .fetchOne();
     }
