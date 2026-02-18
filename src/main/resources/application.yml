@@ -39,15 +39,20 @@ spring:
 
   data:
     redis:
-      host: ${REDIS_HOST}
-      port: ${REDIS_PORT}
-      timeout: 3000ms
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 8
-          min-idle: 2
-          max-wait: -1ms
+      host: localhost
+      port: 6379
+      password: # 비워두면 비밀번호 없음
+      redisson:
+        # 연결 풀 설정
+        connection-pool-size: 64
+        connection-minimum-idle-size: 10
+        # 타임아웃 설정 (밀리초)
+        idle-connection-timeout: 10000
+        connect-timeout: 10000
+        timeout: 3000
+        # 재시도 설정
+        retry-attempts: 3
+        retry-interval: 1500
 
   jackson:
     serialization:
