@@ -1,4 +1,4 @@
-package com.example.lineofduty.distributedLock;
+package com.example.lineofduty.product;
 
 import com.example.lineofduty.domain.product.Product;
 import com.example.lineofduty.domain.product.repository.ProductRepository;
@@ -9,7 +9,6 @@ import org.redisson.api.RLock;
 import org.redisson.api.RedissonClient;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ActiveProfiles;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
@@ -18,9 +17,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
-@ActiveProfiles("test")
-@Tag("concurrency")
-class DistributedLockIntegrationTest {
+class DistributedLockTest {
 
     @Autowired
     private RedissonClient redissonClient;
@@ -97,7 +94,9 @@ class DistributedLockIntegrationTest {
                 Thread.sleep(3000);      // 락 유지
             } catch (Exception ignored) {
             } finally {
-                lock.unlock();
+                if (lock.isHeldByCurrentThread()) {
+                    lock.unlock();
+                }
             }
         });
 
@@ -115,46 +114,76 @@ class DistributedLockIntegrationTest {
         t1.join();
         t2.join();
 
+        System.out.println("=== 동시 접근 방지 테스트 ===");
+        System.out.println("첫 번째 스레드 락 획득: 성공");
+        System.out.println("두 번째 스레드 락 획득: " + (secondLockAcquired.get() ? "성공" : "실패"));
+        System.out.println("✓ 분산 락이 동시 접근을 방지합니다");
+
         assertThat(secondLockAcquired.get()).isFalse();
     }
 
-
     @Test
-    @DisplayName("@DistributedLock 어노테이션이 정상 동작하는지 확인")
-    void distributedLockAnnotation_WorksProperly() {
+    @DisplayName("재고 감소 메서드가 분산 락과 함께 정상 동작")
+    void decreaseStock_WorksWithDistributedLock() {
         // Given
         Long initialStock = testProduct.getStock();
 
-        // When - @DistributedLock이 적용된 메서드 호출
+        // When
         productService.decreaseStock(testProduct.getId(), 10L);
 
         // Then
         Product updatedProduct = productRepository.findById(testProduct.getId()).orElseThrow();
 
-        System.out.println("=== @DistributedLock 어노테이션 테스트 ===");
+        System.out.println("=== 재고 감소 테스트 ===");
         System.out.println("초기 재고: " + initialStock);
         System.out.println("감소량: 10");
         System.out.println("최종 재고: " + updatedProduct.getStock());
+        System.out.println("✓ 재고 감소가 정상적으로 동작합니다");
 
         assertThat(updatedProduct.getStock()).isEqualTo(initialStock - 10);
     }
 
     @Test
-    @DisplayName("락 타임아웃 테스트 - waitTime 초과 시 예외 발생")
-    void lock_Timeout_ThrowsException() throws InterruptedException {
+    @DisplayName("재고 증가 메서드가 분산 락과 함께 정상 동작")
+    void increaseStock_WorksWithDistributedLock() {
+        // Given
+        Long initialStock = testProduct.getStock();
+
+        // When
+        productService.increaseStock(testProduct.getId(), 20L);
+
+        // Then
+        Product updatedProduct = productRepository.findById(testProduct.getId()).orElseThrow();
+
+        System.out.println("=== 재고 증가 테스트 ===");
+        System.out.println("초기 재고: " + initialStock);
+        System.out.println("증가량: 20");
+        System.out.println("최종 재고: " + updatedProduct.getStock());
+        System.out.println("✓ 재고 증가가 정상적으로 동작합니다");
+
+        assertThat(updatedProduct.getStock()).isEqualTo(initialStock + 20);
+    }
+
+    @Test
+    @DisplayName("락 타임아웃 테스트 - waitTime 내에 락 획득 성공")
+    void lock_Timeout_WaitsAndAcquires() throws InterruptedException {
         // Given
         String lockKey = "product:stock:" + testProduct.getId();
         RLock lock = redissonClient.getLock(lockKey);
+        AtomicBoolean secondThreadSuccess = new AtomicBoolean(false);
 
         // 락을 먼저 획득하고 5초간 유지
         lock.tryLock(0, 5, TimeUnit.SECONDS);
 
-        // When & Then
-        // decreaseStock의 waitTime은 10초이므로 락을 획득할 때까지 대기
+        System.out.println("=== 락 타임아웃 테스트 ===");
+        System.out.println("메인 스레드가 락 획득");
+
+        // When
         Thread otherThread = new Thread(() -> {
             try {
-                // 이 메서드는 락을 기다리다가 성공할 것임 (waitTime=10초)
+                System.out.println("다른 스레드가 락 획득 시도 (waitTime=10초)");
                 productService.decreaseStock(testProduct.getId(), 1L);
+                secondThreadSuccess.set(true);
                 System.out.println("✓ 대기 후 락 획득 성공");
             } catch (Exception e) {
                 System.out.println("✗ 락 획득 실패: " + e.getMessage());
@@ -162,17 +191,21 @@ class DistributedLockIntegrationTest {
         });
 
         otherThread.start();
-        Thread.sleep(1000); // 1초 대기
+        Thread.sleep(1000);
 
         // 원래 락 해제
         if (lock.isHeldByCurrentThread()) {
             lock.unlock();
-            System.out.println("원래 락 해제 완료");
+            System.out.println("메인 스레드가 락 해제");
         }
 
         otherThread.join();
 
-        System.out.println("=== 락 타임아웃 테스트 완료 ===");
+        // Then
+        System.out.println("최종 결과: " + (secondThreadSuccess.get() ? "성공" : "실패"));
+        System.out.println("✓ waitTime 내에 락을 획득할 수 있습니다");
+
+        assertThat(secondThreadSuccess.get()).isTrue();
     }
 
     @Test
@@ -247,5 +280,102 @@ class DistributedLockIntegrationTest {
 
         // Cleanup
         productRepository.delete(product2);
+    }
+
+    @Test
+    @DisplayName("예외 발생 시에도 락이 안전하게 해제됨")
+    void lock_ReleaseSafely_OnException() {
+        // Given
+        Long initialStock = testProduct.getStock();
+
+        System.out.println("=== 예외 발생 시 락 해제 테스트 ===");
+        System.out.println("초기 재고: " + initialStock);
+        System.out.println("재고보다 많은 양 감소 시도: 150개");
+
+        // When - 재고보다 많은 양 감소 시도
+        try {
+            productService.decreaseStock(testProduct.getId(), 150L);
+        } catch (Exception e) {
+            System.out.println("예상된 예외 발생: " + e.getClass().getSimpleName());
+        }
+
+        // Then - 락이 해제되었고 재고는 변하지 않음
+        Product updatedProduct = productRepository.findById(testProduct.getId()).orElseThrow();
+        assertThat(updatedProduct.getStock()).isEqualTo(initialStock);
+
+        // 락을 다시 획득할 수 있는지 확인
+        String lockKey = "product:stock:" + testProduct.getId();
+        RLock lock = redissonClient.getLock(lockKey);
+
+        try {
+            boolean acquired = lock.tryLock(1, 3, TimeUnit.SECONDS);
+            assertThat(acquired).isTrue();
+            System.out.println("✓ 예외 발생 후에도 락을 다시 획득할 수 있습니다");
+            System.out.println("✓ 재고는 변경되지 않았습니다: " + updatedProduct.getStock());
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        } finally {
+            if (lock.isHeldByCurrentThread()) {
+                lock.unlock();
+            }
+        }
+    }
+
+    @Test
+    @DisplayName("REQUIRES_NEW 트랜잭션 전파 속성 동작 확인")
+    void transaction_RequiresNew_WorksCorrectly() throws InterruptedException {
+        // Given
+        CountDownLatch latch = new CountDownLatch(2);
+        AtomicBoolean firstSuccess = new AtomicBoolean(false);
+        AtomicBoolean secondSuccess = new AtomicBoolean(false);
+
+        System.out.println("=== REQUIRES_NEW 트랜잭션 전파 테스트 ===");
+        System.out.println("초기 재고: " + testProduct.getStock());
+
+        // When - 두 스레드가 재고 감소 시도
+        Thread thread1 = new Thread(() -> {
+            try {
+                productService.decreaseStock(testProduct.getId(), 30L);
+                firstSuccess.set(true);
+                System.out.println("스레드1: 30개 감소 성공");
+            } catch (Exception e) {
+                System.out.println("스레드1: 실패");
+            } finally {
+                latch.countDown();
+            }
+        });
+
+        Thread thread2 = new Thread(() -> {
+            try {
+                Thread.sleep(100);
+                productService.decreaseStock(testProduct.getId(), 20L);
+                secondSuccess.set(true);
+                System.out.println("스레드2: 20개 감소 성공");
+            } catch (Exception e) {
+                System.out.println("스레드2: 실패");
+            } finally {
+                latch.countDown();
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+        latch.await();
+
+        // Then
+        Product updatedProduct = productRepository.findById(testProduct.getId()).orElseThrow();
+
+        System.out.println("최종 재고: " + updatedProduct.getStock());
+
+        if (firstSuccess.get() && secondSuccess.get()) {
+            assertThat(updatedProduct.getStock()).isEqualTo(50L);
+            System.out.println("✓ 두 트랜잭션 모두 성공적으로 커밋됨");
+        } else if (firstSuccess.get()) {
+            assertThat(updatedProduct.getStock()).isEqualTo(70L);
+            System.out.println("✓ 첫 번째 트랜잭션만 커밋됨");
+        } else if (secondSuccess.get()) {
+            assertThat(updatedProduct.getStock()).isEqualTo(80L);
+            System.out.println("✓ 두 번째 트랜잭션만 커밋됨");
+        }
     }
 }

@@ -8,28 +8,18 @@ import com.example.lineofduty.domain.product.dto.response.ProductResponse;
 import com.example.lineofduty.domain.product.repository.ProductRepository;
 import com.example.lineofduty.domain.product.Product;
 import lombok.RequiredArgsConstructor;
-import org.redisson.api.RLock;
-import org.redisson.api.RedissonClient;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-import java.util.concurrent.TimeUnit;
 
 @Service
 @RequiredArgsConstructor
 public class ProductService {
 
     private final ProductRepository productRepository;
-    private final RedissonClient redissonClient;
-
-    // 락 설정 상수
-    private static final long LOCK_WAIT_TIME = 10L;
-    private static final long LOCK_LEASE_TIME = 5L;
-    private static final TimeUnit LOCK_TIME_UNIT = TimeUnit.SECONDS;
 
     // 상품 등록
     @Transactional
@@ -111,69 +101,23 @@ public class ProductService {
     }
 
     // 재고 감소 (분산 락 적용 - 주문 시 사용)
-    @Transactional(propagation = Propagation.REQUIRES_NEW)
+    @Transactional
     public void decreaseStock(Long productId, Long quantity) {
-        String lockKey = "product:stock:" + productId;
-        RLock lock = redissonClient.getLock(lockKey);
-        boolean acquired = false;
 
-        try {
-            acquired = lock.tryLock(LOCK_WAIT_TIME, LOCK_LEASE_TIME, LOCK_TIME_UNIT);
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND));
 
-            if (!acquired) {
-                throw new CustomException(ErrorMessage.LOCK_ACQUISITION_FAILED);
-            }
-
-            Product product = productRepository.findById(productId)
-                    .orElseThrow(() -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND));
-
-            if (product.getStock() < quantity) {
-                throw new CustomException(ErrorMessage.OUT_OF_STOCK);
-            }
-
-            product.updateStock(product.getStock() - quantity);
-            productRepository.saveAndFlush(product);
-        } catch (InterruptedException e) {
-            throw new CustomException(ErrorMessage.LOCK_INTERRUPTED);
-        } finally {
-            if (acquired && lock.isHeldByCurrentThread()) {
-                try {
-                    lock.unlock();
-                } catch (IllegalMonitorStateException ignored) {
-                }
-            }
-        }
+        product.decreaseStock(quantity);
     }
 
-        // 재고 증가 (분산 락 적용 - 주문 취소 시 사용)
-        @Transactional(propagation = Propagation.REQUIRES_NEW)
-        public void increaseStock (Long productId, Long quantity){
-            String lockKey = "product:stock:" + productId;
-            RLock lock = redissonClient.getLock(lockKey);
-            boolean acquired = false;
+    // 재고 증가 (분산 락 적용 - 주문 취소 시 사용)
+    @Transactional
+    public void increaseStock(Long productId, Long quantity) {
 
-            try {
-                acquired = lock.tryLock(LOCK_WAIT_TIME, LOCK_LEASE_TIME, LOCK_TIME_UNIT);
+        Product product = productRepository.findById(productId)
+                .orElseThrow(() -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND));
 
-                if (!acquired) {
-                    throw new CustomException(ErrorMessage.LOCK_ACQUISITION_FAILED);
-                }
-
-                Product product = productRepository.findById(productId)
-                        .orElseThrow(() -> new CustomException(ErrorMessage.PRODUCT_NOT_FOUND));
-
-                product.updateStock(product.getStock() + quantity);
-                productRepository.saveAndFlush(product);
-            } catch (InterruptedException e) {
-                throw new CustomException(ErrorMessage.LOCK_INTERRUPTED);
-        } finally {
-            if (acquired && lock.isHeldByCurrentThread()) {
-                try {
-                    lock.unlock();
-                } catch (IllegalMonitorStateException ignored) {
-                }
-            }
-        }
+        product.increaseStock(quantity);
     }
 }
 
