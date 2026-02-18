@@ -5,6 +5,7 @@ import com.example.lineofduty.domain.enlistmentSchedule.model.DefermentsPostRequ
 import com.example.lineofduty.domain.enlistmentSchedule.service.EnlistmentScheduleService;
 import com.example.lineofduty.domain.user.dto.UserDetail;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
@@ -22,7 +23,7 @@ public class DefermentController {
     /*
      * 입영 신청 연기
      * */
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<GlobalResponse> defermentsSchedule(@AuthenticationPrincipal UserDetail userDetails, @RequestBody DefermentsPostRequest request) {
         return ResponseEntity.ok(GlobalResponse.success(DEFERMENTS_SUCCESS, enlistmentScheduleService.defermentsSchedule(userDetails.getUser().getId(), request)));
     }
@@ -34,4 +35,10 @@ public class DefermentController {
     public ResponseEntity<GlobalResponse> getDeferment(@AuthenticationPrincipal UserDetail userDetails, @PathVariable Long defermentsId) {
         return ResponseEntity.ok(GlobalResponse.success(DEFERMENTS_GET_SUCCESS, enlistmentScheduleService.getDeferment(userDetails.getUser().getId(), defermentsId)));
     }
+
+    @GetMapping
+    public ResponseEntity<GlobalResponse> getDefermentList(Pageable pageable) {
+        return ResponseEntity.ok(GlobalResponse.success(DEFERMENTS_GET_SUCCESS, enlistmentScheduleService.getDefermentList(pageable)));
+    }
+
 }

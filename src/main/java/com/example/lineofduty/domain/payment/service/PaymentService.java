@@ -24,6 +24,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.Base64;
 import java.util.List;
@@ -320,6 +321,7 @@ public class PaymentService {
     }
 
     private String encodeSecretKey(String secretKey) {
-        return Base64.getEncoder().encodeToString(secretKey.getBytes());
+        return Base64.getEncoder()
+                .encodeToString((secretKey + ":").getBytes(StandardCharsets.UTF_8));
     }
 }

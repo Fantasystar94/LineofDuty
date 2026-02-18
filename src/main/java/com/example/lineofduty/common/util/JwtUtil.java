@@ -19,7 +19,7 @@ public class JwtUtil {
     public static final String AUTHORIZATION = "Authorization";
     
     // 토큰 만료 시간
-    public static final long TOKEN_TIME = 60 * 60 * 1000L;  // 60분
+    public static final long TOKEN_TIME = 30 * 60 * 1000L;  // 30분
     public static final long REFRESH_TOKEN_TIME = 7 * 24 * 60 * 60 * 1000L; // 7일
 
     @Value("${jwt.secret}")

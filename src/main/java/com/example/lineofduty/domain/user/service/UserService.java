@@ -52,25 +52,39 @@ public class UserService {
 
         User user = findUserById(userId);
 
-        // 기존 비밀번호 검증
-        if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
-            throw new CustomException(ErrorMessage.INVALID_AUTH_INFO);
-        }
+        // 변경할 이메일 없으면 기존 이메일 유지
+        String newEmail = (request.getEmail() != null) ? request.getEmail() : user.getEmail();
 
-        // 이메일 중복 검사
-        if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
-            if (userRepository.existsByEmail(request.getEmail())) {
+        // (카카오회원) 비밀번호 검사 없이 변경되도록
+        if (user.getKakaoId() != null) {
+            // 중복체크
+            if (!newEmail.equals(user.getEmail()) && userRepository.existsByEmail(newEmail)) {
                 throw new CustomException(ErrorMessage.DUPLICATE_EMAIL);
             }
-        }
+            user.updateProfile(newEmail, null); // 이메일만 변경
+        } else {
 
-        // 새 비밀번호 암호화
-        String encodedPassword = null;
-        if (request.getNewPassword() != null && !request.getNewPassword().isEmpty()) {
-            encodedPassword = passwordEncoder.encode(request.getNewPassword());
-        }
+            // 기존 비밀번호 검증
+            if (!passwordEncoder.matches(request.getCurrentPassword(), user.getPassword())) {
+                throw new CustomException(ErrorMessage.INVALID_AUTH_INFO);
+            }
 
-        user.updateProfile(request.getEmail(), encodedPassword);
+            // 이메일 중복 검사
+            if (request.getEmail() != null && !request.getEmail().equals(user.getEmail())) {
+                if (userRepository.existsByEmail(request.getEmail())) {
+                    throw new CustomException(ErrorMessage.DUPLICATE_EMAIL);
+                }
+            }
+
+            // 새 비밀번호 암호화
+            String encodedPassword = null;
+            if (request.getNewPassword() != null && !request.getNewPassword().isEmpty()) {
+                encodedPassword = passwordEncoder.encode(request.getNewPassword());
+            }
+
+            user.updateProfile(request.getEmail(), encodedPassword);
+
+        }
 
         return new UserResponse(user);
     }
