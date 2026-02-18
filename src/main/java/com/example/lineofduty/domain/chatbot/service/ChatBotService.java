@@ -91,16 +91,14 @@ public class ChatBotService {
         ChatMessage userMessage = ChatMessage.from(chatRoom, user, request.getContent());
         ChatMessage savedUserMessage = chatMessageRepository.save(userMessage);
 
-        // 비동기 AI 응답 생성
+        // AI 응답 생성
         long startTime = System.currentTimeMillis();
-        CompletableFuture<String> aiResponseFuture = openAIService.generateResponseAsync(request.getContent());
-
-        String aiResponse = aiResponseFuture.join(); // 결과 대기
+        String aiResponse = openAIService.generateResponse(request.getContent());
         long responseTime = System.currentTimeMillis() - startTime;
 
-        // AI 메시지 저장 (답글)
+        // AI 메시지 저장
         Map<String, Object> metadata = openAIService.createMetadata(
-                aiResponse.length() / 4,
+                aiResponse.length() / 4,  // 대략적인 토큰 수
                 responseTime
         );
 

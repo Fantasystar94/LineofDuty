@@ -67,11 +67,10 @@ public class OpenAIService {
         try {
             // API 키 확인
             if (apiKey == null || apiKey.isEmpty() || apiKey.equals("${OPENAI_API_KEY}")) {
-                log.warn("OpenAI API key is not configured, using fallback response");
                 return getFallbackResponse(userMessage);
             }
 
-            String requestBody = createRequestBody(userMessage, false);
+            String requestBody = createRequestBody(userMessage);
 
             // User-Agent 포함한 요청 생성 (Cloudflare 우회)
             HttpRequest request = HttpRequest.newBuilder()
@@ -84,21 +83,17 @@ public class OpenAIService {
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            log.info("OpenAI API Response Status: {}", response.statusCode());
-
             if (response.statusCode() == 200) {
                 return parseResponse(response.body());
             } else {
-                log.error("OpenAI API Error (Status {}): {}", response.statusCode(), response.body());
                 return getFallbackResponse(userMessage);
             }
         } catch (Exception e) {
-            log.error("Error calling OpenAI API: {}", e.getMessage(), e);
             return getFallbackResponse(userMessage);
         }
     }
 
-    private String createRequestBody(String userMessage, boolean stream) {
+    private String createRequestBody(String userMessage) {
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("model", AI_MODEL);
         requestBody.put("messages", List.of(
@@ -107,7 +102,6 @@ public class OpenAIService {
         ));
         requestBody.put("temperature", 0.7);
         requestBody.put("max_tokens", 1000);
-        requestBody.put("stream", stream);
 
         try {
             return objectMapper.writeValueAsString(requestBody);
