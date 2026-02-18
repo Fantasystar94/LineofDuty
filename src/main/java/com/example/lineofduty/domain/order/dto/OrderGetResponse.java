@@ -12,16 +12,18 @@ public class OrderGetResponse {
     private final Long userId;
     private final String userName;
     private final Long orderId;
+    private final String orderNumber;
     private final List<OrderItemResponse> orderItemList;
     private final Long totalPrice;
     private final Boolean isOrderCompleted;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
 
-    public OrderGetResponse(Long userId, String userName, Long orderId, List<OrderItemResponse> orderItemResponseList, Long totalPrice, Boolean isOrderCompleted, LocalDateTime createdAt, LocalDateTime modifiedAt) {
+    public OrderGetResponse(Long userId, String userName, Long orderId, String orderNumber, List<OrderItemResponse> orderItemResponseList, Long totalPrice, Boolean isOrderCompleted, LocalDateTime createdAt, LocalDateTime modifiedAt) {
         this.userId = userId;
         this.userName = userName;
         this.orderId = orderId;
+        this.orderNumber = orderNumber;
         this.orderItemList = orderItemResponseList;
         this.totalPrice = totalPrice;
         this.isOrderCompleted = isOrderCompleted;
@@ -34,6 +36,7 @@ public class OrderGetResponse {
                 order.getUser().getId(),
                 order.getUser().getUsername(),
                 order.getId(),
+                order.getOrderNumber(),
                 order.getOrderItemList().stream().map(OrderItemResponse::from).toList(),
                 order.getTotalPrice(),
                 order.isOrderCompleted(),
