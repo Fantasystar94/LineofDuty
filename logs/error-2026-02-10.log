@@ -1,0 +1,1016 @@
+2026-02-10 00:15:04.230 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m20s377ms463µs200ns).
+2026-02-10 08:58:40.620 [HikariPool-1 housekeeper] WARN  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6h41m1s670ms11µs400ns).
+2026-02-10 14:31:02.931 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 14:31:02.949 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-10 14:31:02.962 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-02-10 14:31:32.436 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-10 14:31:32.507 [main] INFO  c.e.lineofduty.LineofdutyApplication - Starting LineofdutyApplication using Java 25 with PID 36732 (C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty\build\classes\java\main started by Fantasystar94 in C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty)
+2026-02-10 14:31:32.508 [main] INFO  c.e.lineofduty.LineofdutyApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-10 14:31:34.991 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 14:31:34.994 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-10 14:31:35.776 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 771 ms. Found 14 JPA repository interfaces.
+2026-02-10 14:31:35.794 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 14:31:35.797 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-02-10 14:31:35.846 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatMessageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.847 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatRoomRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.848 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.DefermentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.848 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentApplicationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.849 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.849 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.log.LogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.849 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.notice.repository.NoticeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.850 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.orderItem.repository.OrderItemRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.850 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.order.repository.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.850 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.payment.repository.PaymentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.850 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.product.repository.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.852 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.qna.repository.QnaRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.852 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.token.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.852 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.user.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:31:35.852 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 42 ms. Found 0 Redis repository interfaces.
+2026-02-10 14:31:37.338 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-10 14:31:37.399 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-10 14:31:37.401 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-10 14:31:37.402 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2026-02-10 14:31:37.610 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-10 14:31:37.611 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5037 ms
+2026-02-10 14:31:38.337 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-10 14:31:38.425 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-02-10 14:31:38.472 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-10 14:31:38.936 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-10 14:31:39.013 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-10 14:31:39.714 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@40e41f88
+2026-02-10 14:31:39.727 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-10 14:31:39.913 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-10 14:31:41.893 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-10 14:31:42.315 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 14:31:42.973 [main] INFO  org.redisson.Version - Redisson 3.27.2
+2026-02-10 14:31:43.368 [redisson-netty-1-5] INFO  o.r.connection.ConnectionsHolder - 1 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 14:31:43.412 [redisson-netty-1-24] INFO  o.r.connection.ConnectionsHolder - 10 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 14:31:43.568 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-10 14:31:45.740 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-10 14:31:45.798 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailService
+2026-02-10 14:31:46.583 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-02-10 14:31:48.082 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-10 14:31:48.093 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-10 14:31:48.104 [main] INFO  c.e.lineofduty.LineofdutyApplication - Started LineofdutyApplication in 16.753 seconds (process running for 18.548)
+2026-02-10 14:35:05.089 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 14:35:05.091 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-10 14:35:05.110 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-02-10 14:35:15.952 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-10 14:35:16.004 [main] INFO  c.e.lineofduty.LineofdutyApplication - Starting LineofdutyApplication using Java 25 with PID 39700 (C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty\build\classes\java\main started by Fantasystar94 in C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty)
+2026-02-10 14:35:16.005 [main] INFO  c.e.lineofduty.LineofdutyApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-10 14:35:17.739 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 14:35:17.742 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-10 14:35:18.216 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 464 ms. Found 14 JPA repository interfaces.
+2026-02-10 14:35:18.233 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 14:35:18.235 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-02-10 14:35:18.290 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatMessageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.292 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatRoomRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.293 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.DefermentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.293 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentApplicationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.294 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.294 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.log.LogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.294 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.notice.repository.NoticeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.295 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.orderItem.repository.OrderItemRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.296 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.order.repository.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.296 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.payment.repository.PaymentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.296 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.product.repository.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.297 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.qna.repository.QnaRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.298 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.token.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.298 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.user.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:35:18.298 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 48 ms. Found 0 Redis repository interfaces.
+2026-02-10 14:35:19.553 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-10 14:35:19.573 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-10 14:35:19.575 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-10 14:35:19.575 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2026-02-10 14:35:19.693 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-10 14:35:19.694 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3625 ms
+2026-02-10 14:35:20.177 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-10 14:35:20.257 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-02-10 14:35:20.298 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-10 14:35:20.700 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-10 14:35:20.744 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-10 14:35:21.133 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@57f1fbae
+2026-02-10 14:35:21.136 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-10 14:35:21.194 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-10 14:35:22.636 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-10 14:35:22.909 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 14:35:23.565 [main] INFO  org.redisson.Version - Redisson 3.27.2
+2026-02-10 14:35:23.966 [redisson-netty-1-5] INFO  o.r.connection.ConnectionsHolder - 1 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 14:35:24.004 [redisson-netty-1-24] INFO  o.r.connection.ConnectionsHolder - 10 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 14:35:24.147 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-10 14:35:26.283 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-10 14:35:26.341 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailService
+2026-02-10 14:35:27.041 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-02-10 14:35:28.361 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-10 14:35:28.374 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-10 14:35:28.384 [main] INFO  c.e.lineofduty.LineofdutyApplication - Started LineofdutyApplication in 13.28 seconds (process running for 14.958)
+2026-02-10 14:36:33.720 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 14:36:33.722 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-10 14:36:33.734 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-02-10 14:36:48.932 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-10 14:36:48.983 [main] INFO  c.e.lineofduty.LineofdutyApplication - Starting LineofdutyApplication using Java 25 with PID 11996 (C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty\build\classes\java\main started by Fantasystar94 in C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty)
+2026-02-10 14:36:48.984 [main] INFO  c.e.lineofduty.LineofdutyApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-10 14:36:50.774 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 14:36:50.777 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-10 14:36:51.316 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 526 ms. Found 14 JPA repository interfaces.
+2026-02-10 14:36:51.337 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 14:36:51.337 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-02-10 14:36:51.391 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatMessageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.393 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatRoomRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.393 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.DefermentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.393 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentApplicationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.393 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.393 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.log.LogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.394 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.notice.repository.NoticeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.394 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.orderItem.repository.OrderItemRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.394 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.order.repository.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.395 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.payment.repository.PaymentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.395 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.product.repository.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.397 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.qna.repository.QnaRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.397 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.token.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.397 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.user.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:36:51.399 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 49 ms. Found 0 Redis repository interfaces.
+2026-02-10 14:36:52.622 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-10 14:36:52.642 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-10 14:36:52.645 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-10 14:36:52.645 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2026-02-10 14:36:52.780 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-10 14:36:52.781 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3738 ms
+2026-02-10 14:36:53.604 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-10 14:36:53.672 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-02-10 14:36:53.717 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-10 14:36:54.146 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-10 14:36:54.202 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-10 14:36:54.694 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@5ab1107d
+2026-02-10 14:36:54.698 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-10 14:36:54.774 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-10 14:36:56.733 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-10 14:36:57.039 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 14:36:57.765 [main] INFO  org.redisson.Version - Redisson 3.27.2
+2026-02-10 14:36:58.276 [redisson-netty-1-5] INFO  o.r.connection.ConnectionsHolder - 1 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 14:36:58.320 [redisson-netty-1-24] INFO  o.r.connection.ConnectionsHolder - 10 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 14:36:58.470 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-10 14:37:00.996 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-10 14:37:01.064 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailService
+2026-02-10 14:37:01.899 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-02-10 14:37:03.520 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-10 14:37:03.534 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-10 14:37:03.544 [main] INFO  c.e.lineofduty.LineofdutyApplication - Started LineofdutyApplication in 15.336 seconds (process running for 16.971)
+2026-02-10 14:38:40.056 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-10 14:38:40.056 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-10 14:38:40.058 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-02-10 14:38:40.275 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 14:41:02.408 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 14:41:02.586 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: POST /api/admin/enlistment-schedule | Time: 153ms
+2026-02-10 14:41:04.962 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 14:41:04.985 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: POST /api/admin/enlistment-schedule | Time: 20ms
+2026-02-10 14:46:01.975 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 14:46:01.977 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-10 14:46:01.993 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-02-10 14:46:07.697 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-10 14:46:07.735 [main] INFO  c.e.lineofduty.LineofdutyApplication - Starting LineofdutyApplication using Java 25 with PID 37932 (C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty\build\classes\java\main started by Fantasystar94 in C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty)
+2026-02-10 14:46:07.736 [main] INFO  c.e.lineofduty.LineofdutyApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-10 14:46:09.358 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 14:46:09.360 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-10 14:46:09.788 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 419 ms. Found 14 JPA repository interfaces.
+2026-02-10 14:46:09.799 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 14:46:09.801 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-02-10 14:46:09.839 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatMessageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.840 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatRoomRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.841 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.DefermentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.841 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentApplicationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.841 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.841 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.log.LogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.842 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.notice.repository.NoticeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.842 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.orderItem.repository.OrderItemRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.842 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.order.repository.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.842 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.payment.repository.PaymentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.843 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.product.repository.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.843 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.qna.repository.QnaRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.844 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.token.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.844 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.user.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 14:46:09.844 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 34 ms. Found 0 Redis repository interfaces.
+2026-02-10 14:46:10.972 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-10 14:46:10.990 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-10 14:46:10.992 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-10 14:46:10.993 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2026-02-10 14:46:11.122 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-10 14:46:11.122 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3332 ms
+2026-02-10 14:46:11.694 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-10 14:46:11.783 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-02-10 14:46:11.836 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-10 14:46:12.270 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-10 14:46:12.316 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-10 14:46:12.783 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@6c8f5262
+2026-02-10 14:46:12.786 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-10 14:46:12.845 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-10 14:46:14.314 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-10 14:46:14.558 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 14:46:15.259 [main] INFO  org.redisson.Version - Redisson 3.27.2
+2026-02-10 14:46:15.816 [redisson-netty-1-5] INFO  o.r.connection.ConnectionsHolder - 1 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 14:46:15.863 [redisson-netty-1-24] INFO  o.r.connection.ConnectionsHolder - 10 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 14:46:16.034 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-10 14:46:18.194 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-10 14:46:18.252 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailService
+2026-02-10 14:46:19.043 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-02-10 14:46:20.441 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-10 14:46:20.452 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-10 14:46:20.462 [main] INFO  c.e.lineofduty.LineofdutyApplication - Started LineofdutyApplication in 13.399 seconds (process running for 14.654)
+2026-02-10 14:46:20.810 [RMI TCP Connection(5)-172.17.64.1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-10 14:46:20.812 [RMI TCP Connection(5)-172.17.64.1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-10 14:46:20.815 [RMI TCP Connection(5)-172.17.64.1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 3 ms
+2026-02-10 14:46:28.380 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 14:46:28.554 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: POST /api/admin/enlistment-schedule | Time: 141ms
+2026-02-10 14:47:10.782 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 14:47:10.803 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: POST /api/admin/enlistment-schedule | Time: 19ms
+2026-02-10 14:47:17.907 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 14:47:18.059 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: POST /api/admin/enlistment-schedule | Time: 150ms
+2026-02-10 15:27:33.638 [http-nio-8080-exec-4] INFO  o.s.api.AbstractOpenApiResource - Init duration for springdoc-openapi is: 1280 ms
+2026-02-10 19:17:09.335 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 19:17:09.357 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-10 19:17:09.375 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-02-10 20:34:18.578 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-10 20:34:18.651 [main] INFO  c.e.lineofduty.LineofdutyApplication - Starting LineofdutyApplication using Java 25 with PID 58884 (C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty\build\classes\java\main started by Fantasystar94 in C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty)
+2026-02-10 20:34:18.653 [main] INFO  c.e.lineofduty.LineofdutyApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-10 20:34:22.189 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 20:34:22.191 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-10 20:34:22.845 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 645 ms. Found 14 JPA repository interfaces.
+2026-02-10 20:34:22.871 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 20:34:22.874 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-02-10 20:34:22.969 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatMessageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.970 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatRoomRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.970 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.DefermentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.971 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentApplicationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.971 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.972 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.log.LogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.973 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.notice.repository.NoticeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.973 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.orderItem.repository.OrderItemRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.973 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.order.repository.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.974 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.payment.repository.PaymentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.977 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.product.repository.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.980 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.qna.repository.QnaRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.982 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.token.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.982 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.user.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:34:22.982 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 87 ms. Found 0 Redis repository interfaces.
+2026-02-10 20:34:24.441 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-10 20:34:24.464 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-10 20:34:24.467 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-10 20:34:24.467 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2026-02-10 20:34:24.590 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-10 20:34:24.591 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 5847 ms
+2026-02-10 20:34:25.192 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-10 20:34:25.327 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-02-10 20:34:25.402 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-10 20:34:25.962 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-10 20:34:26.017 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-10 20:34:26.556 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@28901fe7
+2026-02-10 20:34:26.562 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-10 20:34:26.666 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-10 20:34:28.598 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-10 20:34:28.971 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 20:34:29.835 [main] INFO  org.redisson.Version - Redisson 3.27.2
+2026-02-10 20:34:30.468 [redisson-netty-1-5] INFO  o.r.connection.ConnectionsHolder - 1 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 20:34:30.526 [redisson-netty-1-24] INFO  o.r.connection.ConnectionsHolder - 10 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 20:34:30.759 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-10 20:34:33.676 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-10 20:34:33.758 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailService
+2026-02-10 20:34:34.632 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-02-10 20:34:36.152 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-10 20:34:36.168 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-10 20:34:36.179 [main] INFO  c.e.lineofduty.LineofdutyApplication - Started LineofdutyApplication in 18.817 seconds (process running for 21.008)
+2026-02-10 20:35:09.698 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-10 20:35:09.698 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-10 20:35:09.700 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-02-10 20:35:09.918 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:09.918 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:09.918 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:09.965 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/1 | Time: 16ms
+2026-02-10 20:35:10.008 [http-nio-8080-exec-4] INFO  c.e.l.d.w.s.TodayWeatherService - Short Term Weather API Request: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?ServiceKey=e615e4953d1f3619a528e9a7566edca3952a4dc05b9658416e9159c04a3ea0cd&pageNo=1&numOfRows=100&dataType=JSON&base_date=20260210&base_time=2000&nx=36&ny=127
+2026-02-10 20:35:10.008 [http-nio-8080-exec-6] INFO  c.e.l.d.w.s.TodayWeatherService - Short Term Weather API Request: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?ServiceKey=e615e4953d1f3619a528e9a7566edca3952a4dc05b9658416e9159c04a3ea0cd&pageNo=1&numOfRows=100&dataType=JSON&base_date=20260210&base_time=2000&nx=36&ny=127
+2026-02-10 20:35:10.572 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 616ms
+2026-02-10 20:35:10.572 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 616ms
+2026-02-10 20:35:11.233 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:11.233 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:11.245 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:11.255 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 21ms
+2026-02-10 20:35:11.255 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 20ms
+2026-02-10 20:35:11.258 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/1 | Time: 11ms
+2026-02-10 20:35:12.330 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:12.330 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:12.334 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:35:12.334 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:35:12.340 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:12.349 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/1 | Time: 7ms
+2026-02-10 20:35:13.512 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:13.512 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:13.675 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 160ms
+2026-02-10 20:35:13.675 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 160ms
+2026-02-10 20:35:13.678 [http-nio-8080-exec-10] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-02-10 20:35:24.399 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:24.399 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:24.410 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 10ms
+2026-02-10 20:35:24.410 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 10ms
+2026-02-10 20:35:24.689 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:24.690 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:24.695 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 4ms
+2026-02-10 20:35:24.696 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 4ms
+2026-02-10 20:35:24.996 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:24.997 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 20:35:25.001 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 3ms
+2026-02-10 20:35:25.001 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 3ms
+2026-02-10 20:36:00.101 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 20:36:00.102 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-10 20:36:00.113 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-02-10 20:36:11.922 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-10 20:36:11.974 [main] INFO  c.e.lineofduty.LineofdutyApplication - Starting LineofdutyApplication using Java 25 with PID 35044 (C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty\build\classes\java\main started by Fantasystar94 in C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty)
+2026-02-10 20:36:11.976 [main] INFO  c.e.lineofduty.LineofdutyApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-10 20:36:13.587 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 20:36:13.590 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-10 20:36:13.956 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 358 ms. Found 14 JPA repository interfaces.
+2026-02-10 20:36:13.967 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 20:36:13.969 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-02-10 20:36:14.003 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatMessageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.004 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatRoomRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.004 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.DefermentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.005 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentApplicationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.005 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.005 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.log.LogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.005 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.notice.repository.NoticeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.005 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.orderItem.repository.OrderItemRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.006 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.order.repository.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.006 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.payment.repository.PaymentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.006 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.product.repository.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.007 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.qna.repository.QnaRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.008 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.token.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.008 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.user.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:36:14.008 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 31 ms. Found 0 Redis repository interfaces.
+2026-02-10 20:36:15.087 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-10 20:36:15.102 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-10 20:36:15.104 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-10 20:36:15.104 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2026-02-10 20:36:15.216 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-10 20:36:15.218 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3182 ms
+2026-02-10 20:36:15.745 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-10 20:36:15.820 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-02-10 20:36:15.870 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-10 20:36:16.314 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-10 20:36:16.360 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-10 20:36:16.752 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@702e21c
+2026-02-10 20:36:16.754 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-10 20:36:16.808 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-10 20:36:18.166 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-10 20:36:18.404 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 20:36:19.019 [main] INFO  org.redisson.Version - Redisson 3.27.2
+2026-02-10 20:36:19.425 [redisson-netty-1-5] INFO  o.r.connection.ConnectionsHolder - 1 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 20:36:19.464 [redisson-netty-1-24] INFO  o.r.connection.ConnectionsHolder - 10 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 20:36:19.615 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-10 20:36:21.760 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-10 20:36:21.833 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailService
+2026-02-10 20:36:22.601 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-02-10 20:36:23.863 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-10 20:36:23.875 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-10 20:36:23.889 [main] INFO  c.e.lineofduty.LineofdutyApplication - Started LineofdutyApplication in 12.745 seconds (process running for 14.528)
+2026-02-10 20:36:30.743 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-10 20:36:30.744 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-10 20:36:30.745 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 1 ms
+2026-02-10 20:36:31.515 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:36:31.515 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:36:31.515 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:36:31.529 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 9ms
+2026-02-10 20:36:31.579 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 59ms
+2026-02-10 20:36:31.579 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 59ms
+2026-02-10 20:36:33.394 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:36:33.394 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:36:33.398 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:36:33.398 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:36:33.402 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:36:33.414 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 10ms
+2026-02-10 20:36:34.207 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:36:34.207 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:36:34.263 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 51ms
+2026-02-10 20:36:34.263 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 51ms
+2026-02-10 20:36:42.998 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 20:36:43.000 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-10 20:36:43.018 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
+2026-02-10 20:36:59.974 [background-preinit] INFO  o.h.validator.internal.util.Version - HV000001: Hibernate Validator 8.0.1.Final
+2026-02-10 20:37:00.021 [main] INFO  c.e.lineofduty.LineofdutyApplication - Starting LineofdutyApplication using Java 25 with PID 43760 (C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty\build\classes\java\main started by Fantasystar94 in C:\Users\Fantasystar94\Desktop\sparta\Lineofduty\Lineofduty)
+2026-02-10 20:37:00.022 [main] INFO  c.e.lineofduty.LineofdutyApplication - No active profile set, falling back to 1 default profile: "default"
+2026-02-10 20:37:01.609 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 20:37:01.612 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2026-02-10 20:37:01.983 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 365 ms. Found 14 JPA repository interfaces.
+2026-02-10 20:37:01.998 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Multiple Spring Data modules found, entering strict repository configuration mode
+2026-02-10 20:37:02.000 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Bootstrapping Spring Data Redis repositories in DEFAULT mode.
+2026-02-10 20:37:02.038 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatMessageRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.038 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.chatbot.repository.ChatRoomRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.038 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.DefermentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.038 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentApplicationRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.040 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.enlistmentSchedule.repository.EnlistmentScheduleRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.040 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.log.LogRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.040 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.notice.repository.NoticeRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.040 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.orderItem.repository.OrderItemRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.040 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.order.repository.OrderRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.040 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.payment.repository.PaymentRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.040 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.product.repository.ProductRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.041 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.qna.repository.QnaRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.041 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.token.RefreshTokenRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.041 [main] INFO  o.s.d.r.c.RepositoryConfigurationExtensionSupport - Spring Data Redis - Could not safely identify store assignment for repository candidate interface com.example.lineofduty.domain.user.repository.UserRepository; If you want this repository to be a Redis repository, consider annotating your entities with one of these annotations: org.springframework.data.redis.core.RedisHash (preferred), or consider extending one of the following types with your repository: org.springframework.data.keyvalue.repository.KeyValueRepository
+2026-02-10 20:37:02.041 [main] INFO  o.s.d.r.c.RepositoryConfigurationDelegate - Finished Spring Data repository scanning in 33 ms. Found 0 Redis repository interfaces.
+2026-02-10 20:37:03.144 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat initialized with port 8080 (http)
+2026-02-10 20:37:03.163 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Initializing ProtocolHandler ["http-nio-8080"]
+2026-02-10 20:37:03.165 [main] INFO  o.a.catalina.core.StandardService - Starting service [Tomcat]
+2026-02-10 20:37:03.165 [main] INFO  o.a.catalina.core.StandardEngine - Starting Servlet engine: [Apache Tomcat/10.1.33]
+2026-02-10 20:37:03.262 [main] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring embedded WebApplicationContext
+2026-02-10 20:37:03.263 [main] INFO  o.s.b.w.s.c.ServletWebServerApplicationContext - Root WebApplicationContext: initialization completed in 3181 ms
+2026-02-10 20:37:03.749 [main] INFO  o.h.jpa.internal.util.LogHelper - HHH000204: Processing PersistenceUnitInfo [name: default]
+2026-02-10 20:37:03.826 [main] INFO  org.hibernate.Version - HHH000412: Hibernate ORM core version 6.5.3.Final
+2026-02-10 20:37:03.872 [main] INFO  o.h.c.i.RegionFactoryInitiator - HHH000026: Second-level cache disabled
+2026-02-10 20:37:04.294 [main] INFO  o.s.o.j.p.SpringPersistenceUnitInfo - No LoadTimeWeaver setup: ignoring JPA class transformer
+2026-02-10 20:37:04.347 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Starting...
+2026-02-10 20:37:04.713 [main] INFO  com.zaxxer.hikari.pool.HikariPool - HikariPool-1 - Added connection com.mysql.cj.jdbc.ConnectionImpl@eb77241
+2026-02-10 20:37:04.716 [main] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Start completed.
+2026-02-10 20:37:04.767 [main] WARN  org.hibernate.orm.deprecation - HHH90000025: MySQLDialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2026-02-10 20:37:06.317 [main] INFO  o.h.e.t.j.p.i.JtaPlatformInitiator - HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2026-02-10 20:37:06.571 [main] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2026-02-10 20:37:07.231 [main] INFO  org.redisson.Version - Redisson 3.27.2
+2026-02-10 20:37:07.659 [redisson-netty-1-5] INFO  o.r.connection.ConnectionsHolder - 1 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 20:37:07.697 [redisson-netty-1-24] INFO  o.r.connection.ConnectionsHolder - 10 connections initialized for localhost/127.0.0.1:6379
+2026-02-10 20:37:07.828 [main] INFO  o.s.d.j.r.query.QueryEnhancerFactory - Hibernate is in classpath; If applicable, HQL parser will be used.
+2026-02-10 20:37:10.033 [main] WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2026-02-10 20:37:10.085 [main] INFO  o.s.s.c.a.a.c.InitializeUserDetailsBeanManagerConfigurer$InitializeUserDetailsManagerConfigurer - Global AuthenticationManager configured with UserDetailsService bean with name userDetailService
+2026-02-10 20:37:10.790 [main] INFO  o.s.b.a.e.web.EndpointLinksResolver - Exposing 1 endpoint beneath base path '/actuator'
+2026-02-10 20:37:12.112 [main] INFO  o.a.coyote.http11.Http11NioProtocol - Starting ProtocolHandler ["http-nio-8080"]
+2026-02-10 20:37:12.130 [main] INFO  o.s.b.w.e.tomcat.TomcatWebServer - Tomcat started on port 8080 (http) with context path '/'
+2026-02-10 20:37:12.140 [main] INFO  c.e.lineofduty.LineofdutyApplication - Started LineofdutyApplication in 12.95 seconds (process running for 15.606)
+2026-02-10 20:37:12.360 [http-nio-8080-exec-1] INFO  o.a.c.c.C.[Tomcat].[localhost].[/] - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2026-02-10 20:37:12.360 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Initializing Servlet 'dispatcherServlet'
+2026-02-10 20:37:12.362 [http-nio-8080-exec-1] INFO  o.s.web.servlet.DispatcherServlet - Completed initialization in 2 ms
+2026-02-10 20:37:12.554 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:37:12.699 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 114ms
+2026-02-10 20:37:12.724 [http-nio-8080-exec-2] WARN  o.s.d.w.c.SpringDataJacksonConfiguration$PageModule$WarningLoggingModifier - Serializing PageImpl instances as-is is not supported, meaning that there is no guarantee about the stability of the resulting JSON structure!
+	For a stable JSON structure, please use Spring Data's PagedModel (globally via @EnableSpringDataWebSupport(pageSerializationMode = VIA_DTO))
+	or Spring HATEOAS and Spring Data's PagedResourcesAssembler as documented in https://docs.spring.io/spring-data/commons/reference/repositories/core-extensions.html#core.web.pageables.
+
+2026-02-10 20:37:14.820 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:37:14.820 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:37:14.828 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 6ms
+2026-02-10 20:37:14.828 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 6ms
+2026-02-10 20:37:16.167 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:37:16.167 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:37:16.173 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 3ms
+2026-02-10 20:37:16.173 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 4ms
+2026-02-10 20:37:17.658 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:37:17.658 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:37:17.663 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 2ms
+2026-02-10 20:37:17.663 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 3ms
+2026-02-10 20:38:45.417 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:38:45.418 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:38:45.424 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 4ms
+2026-02-10 20:38:45.425 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 5ms
+2026-02-10 20:38:47.851 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:38:47.851 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:38:47.858 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 4ms
+2026-02-10 20:38:47.858 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 4ms
+2026-02-10 20:39:29.954 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:39:29.956 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:39:29.960 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 5ms
+2026-02-10 20:39:29.960 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 3ms
+2026-02-10 20:42:42.751 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:42:42.752 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:42:43.002 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 248ms
+2026-02-10 20:42:43.001 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 248ms
+2026-02-10 20:43:52.334 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:43:52.334 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:43:52.339 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 3ms
+2026-02-10 20:43:52.339 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 3ms
+2026-02-10 20:44:40.610 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:44:40.611 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:44:40.613 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:44:40.633 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 18ms
+2026-02-10 20:44:40.640 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 10ms
+2026-02-10 20:44:40.642 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 11ms
+2026-02-10 20:44:47.428 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:44:47.428 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:44:47.431 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 2ms
+2026-02-10 20:44:47.431 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 2ms
+2026-02-10 20:44:52.557 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:44:52.785 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: POST /api/enlistment-applications | Time: 214ms
+2026-02-10 20:44:53.687 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:44:53.706 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 16ms
+2026-02-10 20:45:10.129 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:45:10.129 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:45:10.133 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 2ms
+2026-02-10 20:45:10.133 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 2ms
+2026-02-10 20:45:10.656 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:45:10.656 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:45:10.661 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:45:10.661 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:45:10.666 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:45:10.679 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 11ms
+2026-02-10 20:45:16.377 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:45:16.378 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:45:16.377 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:45:16.382 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:45:16.382 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:45:16.395 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 16ms
+2026-02-10 20:45:19.010 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:45:19.010 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:45:19.013 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:45:19.015 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:45:19.017 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:45:19.023 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 11ms
+2026-02-10 20:45:30.370 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:45:30.370 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:45:30.374 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 3ms
+2026-02-10 20:45:30.374 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 3ms
+2026-02-10 20:46:13.999 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:46:13.999 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:46:14.003 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:46:14.003 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:46:14.010 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:46:14.022 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 11ms
+2026-02-10 20:47:27.834 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:47:27.834 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:47:27.841 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 6ms
+2026-02-10 20:47:27.841 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 6ms
+2026-02-10 20:47:50.973 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:47:50.973 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:47:50.977 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:47:50.977 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:47:50.982 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:47:50.991 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 7ms
+2026-02-10 20:47:52.468 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:47:52.468 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:47:52.472 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:47:52.476 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:47:52.484 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 6ms
+2026-02-10 20:47:52.517 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 47ms
+2026-02-10 20:48:07.345 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:48:07.345 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:48:07.350 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 3ms
+2026-02-10 20:48:07.350 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 3ms
+2026-02-10 20:48:10.665 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:48:10.665 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:48:10.665 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:48:10.669 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:48:10.669 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:48:10.669 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:48:10.675 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:48:10.683 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 17ms
+2026-02-10 20:48:10.685 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 14ms
+2026-02-10 20:48:10.686 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 9ms
+2026-02-10 20:49:34.195 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:34.195 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:34.198 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 1ms
+2026-02-10 20:49:34.199 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:34.213 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 17ms
+2026-02-10 20:49:34.215 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 14ms
+2026-02-10 20:49:34.219 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:34.223 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:49:34.231 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:34.261 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 29ms
+2026-02-10 20:49:51.518 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:51.518 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:51.519 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:51.537 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:51.559 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 5ms
+2026-02-10 20:49:51.559 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:49:51.579 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:51.579 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 27ms
+2026-02-10 20:49:51.579 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 38ms
+2026-02-10 20:49:51.591 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 8ms
+2026-02-10 20:49:52.480 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:52.480 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:52.482 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:52.483 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:49:52.497 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 13ms
+2026-02-10 20:49:52.500 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 19ms
+2026-02-10 20:49:52.502 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:52.507 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 4ms
+2026-02-10 20:49:52.516 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:49:52.527 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 10ms
+2026-02-10 20:50:26.261 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:50:26.262 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:50:26.262 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:50:26.262 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:50:26.266 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 4ms
+2026-02-10 20:50:26.266 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 4ms
+2026-02-10 20:50:26.273 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:50:26.278 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 15ms
+2026-02-10 20:50:26.278 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 15ms
+2026-02-10 20:50:26.281 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 7ms
+2026-02-10 20:51:50.759 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:50.759 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:50.759 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:50.761 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:50.764 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:51:50.765 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:51:50.767 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:50.778 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 18ms
+2026-02-10 20:51:50.778 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 17ms
+2026-02-10 20:51:50.783 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 15ms
+2026-02-10 20:51:54.229 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:54.229 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:54.234 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:54.234 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:54.238 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 7ms
+2026-02-10 20:51:54.239 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 4ms
+2026-02-10 20:51:54.246 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:54.253 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 19ms
+2026-02-10 20:51:54.253 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 22ms
+2026-02-10 20:51:54.257 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 8ms
+2026-02-10 20:51:56.153 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:56.153 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:56.154 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:56.161 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 6ms
+2026-02-10 20:51:56.161 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 6ms
+2026-02-10 20:51:56.230 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 75ms
+2026-02-10 20:51:56.285 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:56.287 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:56.287 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:56.290 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:56.292 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 6ms
+2026-02-10 20:51:56.295 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 4ms
+2026-02-10 20:51:56.305 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:51:56.310 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 22ms
+2026-02-10 20:51:56.311 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 23ms
+2026-02-10 20:51:56.319 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 13ms
+2026-02-10 20:52:46.115 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:46.115 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:46.115 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:46.115 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:46.120 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:52:46.120 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:52:46.133 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:46.137 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 19ms
+2026-02-10 20:52:46.137 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 20ms
+2026-02-10 20:52:46.145 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 10ms
+2026-02-10 20:52:47.768 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:47.768 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:47.768 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:47.771 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:47.773 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 4ms
+2026-02-10 20:52:47.776 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 5ms
+2026-02-10 20:52:47.784 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:47.787 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 18ms
+2026-02-10 20:52:47.787 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 17ms
+2026-02-10 20:52:47.794 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 9ms
+2026-02-10 20:52:50.927 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:50.927 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:50.927 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:50.927 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:50.931 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:52:50.931 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:52:50.939 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:50.942 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 12ms
+2026-02-10 20:52:50.942 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 14ms
+2026-02-10 20:52:50.949 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 8ms
+2026-02-10 20:52:52.418 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:52.418 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:52.421 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:52.421 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:52.424 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 4ms
+2026-02-10 20:52:52.424 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:52:52.429 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:52.442 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 21ms
+2026-02-10 20:52:52.442 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 23ms
+2026-02-10 20:52:52.452 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 20ms
+2026-02-10 20:52:53.106 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:53.106 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:53.108 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:53.111 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:52:53.115 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:53.123 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 6ms
+2026-02-10 20:52:53.126 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:52:53.131 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 23ms
+2026-02-10 20:52:53.134 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 25ms
+2026-02-10 20:52:53.139 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 11ms
+2026-02-10 20:53:21.511 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:53:21.511 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:53:21.511 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:53:21.512 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:53:21.514 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:53:21.514 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:53:21.526 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 14ms
+2026-02-10 20:53:21.526 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:53:21.527 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 14ms
+2026-02-10 20:53:21.535 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 9ms
+2026-02-10 20:53:26.183 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:53:26.183 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:53:26.183 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:53:26.183 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:53:26.188 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 5ms
+2026-02-10 20:53:26.189 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 4ms
+2026-02-10 20:53:26.197 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:53:26.201 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 16ms
+2026-02-10 20:53:26.201 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 18ms
+2026-02-10 20:53:26.207 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 9ms
+2026-02-10 20:55:33.750 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:55:33.751 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:55:33.751 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:55:33.753 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:55:33.753 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:55:33.755 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:55:33.759 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 5ms
+2026-02-10 20:55:33.771 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 19ms
+2026-02-10 20:55:33.774 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 21ms
+2026-02-10 20:55:33.775 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 21ms
+2026-02-10 20:55:40.559 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:55:40.559 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:55:40.560 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:55:40.561 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:55:40.561 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:55:40.564 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:55:40.565 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:55:40.577 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 17ms
+2026-02-10 20:55:40.580 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 17ms
+2026-02-10 20:55:40.580 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 20ms
+2026-02-10 20:56:00.062 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:00.066 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:00.066 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:00.066 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:56:00.066 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:00.071 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 4ms
+2026-02-10 20:56:00.072 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:00.083 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 16ms
+2026-02-10 20:56:00.083 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 15ms
+2026-02-10 20:56:00.085 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 12ms
+2026-02-10 20:56:39.847 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:39.846 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:39.846 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:39.846 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:39.849 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:56:39.851 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:56:39.860 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:39.865 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 18ms
+2026-02-10 20:56:39.865 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 18ms
+2026-02-10 20:56:39.872 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 11ms
+2026-02-10 20:56:42.699 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:42.699 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:42.727 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 26ms
+2026-02-10 20:56:42.727 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment | Time: 26ms
+2026-02-10 20:56:44.671 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:44.671 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:44.673 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:44.673 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:44.674 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 20:56:44.677 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:56:44.682 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:56:44.686 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 14ms
+2026-02-10 20:56:44.687 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 12ms
+2026-02-10 20:56:44.692 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 9ms
+2026-02-10 20:58:28.767 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:58:28.767 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:58:28.771 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:58:29.463 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:58:29.463 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 693ms
+2026-02-10 20:58:29.466 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:58:29.482 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 15ms
+2026-02-10 20:58:29.494 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 725ms
+2026-02-10 20:58:29.497 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 725ms
+2026-02-10 20:58:29.498 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 34ms
+2026-02-10 20:58:30.913 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:58:30.913 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:58:30.914 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:58:30.918 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:58:30.923 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 7ms
+2026-02-10 20:58:30.924 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 5ms
+2026-02-10 20:58:30.937 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:58:30.943 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 29ms
+2026-02-10 20:58:30.944 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 28ms
+2026-02-10 20:58:30.947 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 9ms
+2026-02-10 20:59:09.716 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:09.716 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:09.720 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:59:09.729 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:09.731 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 14ms
+2026-02-10 20:59:09.739 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 8ms
+2026-02-10 20:59:15.514 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:15.514 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:15.514 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:15.519 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 5ms
+2026-02-10 20:59:15.532 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:15.537 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 23ms
+2026-02-10 20:59:15.571 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 38ms
+2026-02-10 20:59:15.598 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 57ms
+2026-02-10 20:59:28.982 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:28.982 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:28.991 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 8ms
+2026-02-10 20:59:28.991 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 8ms
+2026-02-10 20:59:32.252 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:32.252 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:32.252 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:32.254 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:32.254 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:32.256 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 4ms
+2026-02-10 20:59:32.259 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:32.263 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 8ms
+2026-02-10 20:59:32.273 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 21ms
+2026-02-10 20:59:32.276 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 21ms
+2026-02-10 20:59:32.277 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 25ms
+2026-02-10 20:59:32.281 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:32.286 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 26ms
+2026-02-10 20:59:32.291 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 9ms
+2026-02-10 20:59:53.799 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:53.799 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:53.808 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 7ms
+2026-02-10 20:59:53.808 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 7ms
+2026-02-10 20:59:55.922 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:55.922 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:55.922 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:55.923 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:55.926 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:55.927 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:55.930 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 7ms
+2026-02-10 20:59:55.931 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 20:59:55.940 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 12ms
+2026-02-10 20:59:55.941 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 17ms
+2026-02-10 20:59:55.944 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 20ms
+2026-02-10 20:59:55.944 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 20:59:55.944 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 21ms
+2026-02-10 20:59:55.952 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 7ms
+2026-02-10 21:01:23.385 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:23.385 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:23.385 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:23.390 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 4ms
+2026-02-10 21:01:23.393 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:23.398 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 12ms
+2026-02-10 21:01:23.399 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 13ms
+2026-02-10 21:01:23.402 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 8ms
+2026-02-10 21:01:23.402 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:23.407 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 4ms
+2026-02-10 21:01:23.409 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:23.411 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:23.418 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 6ms
+2026-02-10 21:01:23.419 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 8ms
+2026-02-10 21:01:24.554 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:24.554 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:24.554 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:24.554 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:24.554 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:24.560 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 21:01:24.560 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 5ms
+2026-02-10 21:01:24.563 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:24.573 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 16ms
+2026-02-10 21:01:24.574 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 18ms
+2026-02-10 21:01:24.574 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 18ms
+2026-02-10 21:01:24.574 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:24.578 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 14ms
+2026-02-10 21:01:24.584 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 9ms
+2026-02-10 21:01:25.057 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:25.057 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:25.064 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 6ms
+2026-02-10 21:01:25.064 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 6ms
+2026-02-10 21:01:27.665 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:27.665 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:27.667 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:27.667 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:27.667 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:27.667 [http-nio-8080-exec-9] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:27.669 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 21:01:27.673 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 5ms
+2026-02-10 21:01:27.681 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 14ms
+2026-02-10 21:01:27.684 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 16ms
+2026-02-10 21:01:27.684 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:01:27.685 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 17ms
+2026-02-10 21:01:27.685 [http-nio-8080-exec-9] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 17ms
+2026-02-10 21:01:27.693 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 8ms
+2026-02-10 21:02:45.471 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:45.476 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:45.476 [http-nio-8080-exec-11] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:45.476 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:45.477 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 5ms
+2026-02-10 21:02:45.477 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:45.478 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:45.480 [http-nio-8080-exec-11] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 21:02:45.488 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 11ms
+2026-02-10 21:02:45.492 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:45.492 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 15ms
+2026-02-10 21:02:45.493 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 14ms
+2026-02-10 21:02:45.493 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 16ms
+2026-02-10 21:02:45.504 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 12ms
+2026-02-10 21:02:46.704 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:46.704 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:46.704 [http-nio-8080-exec-11] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:46.704 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:46.706 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:46.706 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:46.707 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 21:02:46.707 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 21:02:46.717 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 11ms
+2026-02-10 21:02:46.717 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 11ms
+2026-02-10 21:02:46.717 [http-nio-8080-exec-11] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 12ms
+2026-02-10 21:02:46.720 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 14ms
+2026-02-10 21:02:46.720 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:02:46.731 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 10ms
+2026-02-10 21:04:32.904 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 21:04:55.482 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 21:04:55.505 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: POST /api/admin/notices | Time: 21ms
+2026-02-10 21:04:57.301 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:04:57.302 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:04:57.302 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:04:57.302 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:04:57.304 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:04:57.304 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 21:04:57.305 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 3ms
+2026-02-10 21:04:57.308 [http-nio-8080-exec-11] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:04:57.315 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 13ms
+2026-02-10 21:04:57.315 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:04:57.316 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 11ms
+2026-02-10 21:04:57.325 [http-nio-8080-exec-11] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 17ms
+2026-02-10 21:04:57.325 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 23ms
+2026-02-10 21:04:57.326 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 9ms
+2026-02-10 21:05:00.138 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 21:05:00.150 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: POST /api/admin/notices | Time: 11ms
+2026-02-10 21:05:01.096 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:01.099 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:01.111 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices/1 | Time: 13ms
+2026-02-10 21:05:01.111 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices/1 | Time: 11ms
+2026-02-10 21:05:01.504 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:01.504 [http-nio-8080-exec-11] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:01.515 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices/1 | Time: 11ms
+2026-02-10 21:05:01.515 [http-nio-8080-exec-11] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices/1 | Time: 11ms
+2026-02-10 21:05:02.379 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:02.379 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:02.379 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:02.379 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:02.380 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:02.380 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:02.381 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 21:05:02.381 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 1ms
+2026-02-10 21:05:02.389 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 10ms
+2026-02-10 21:05:02.390 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 9ms
+2026-02-10 21:05:02.390 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 11ms
+2026-02-10 21:05:02.393 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:02.395 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 14ms
+2026-02-10 21:05:02.402 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 7ms
+2026-02-10 21:05:05.196 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 1
+2026-02-10 21:05:05.207 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: POST /api/admin/notices | Time: 11ms
+2026-02-10 21:05:06.343 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:06.343 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:06.344 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:06.343 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:06.350 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 6ms
+2026-02-10 21:05:06.351 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 7ms
+2026-02-10 21:05:06.353 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:06.353 [http-nio-8080-exec-11] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:06.365 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 21ms
+2026-02-10 21:05:06.367 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 23ms
+2026-02-10 21:05:06.371 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 17ms
+2026-02-10 21:05:06.371 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:06.375 [http-nio-8080-exec-11] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 21ms
+2026-02-10 21:05:06.388 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 15ms
+2026-02-10 21:05:14.948 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:14.949 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:14.954 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices/3 | Time: 6ms
+2026-02-10 21:05:14.955 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices/3 | Time: 5ms
+2026-02-10 21:05:17.607 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:17.608 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:17.614 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 6ms
+2026-02-10 21:05:17.614 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 6ms
+2026-02-10 21:05:19.946 [http-nio-8080-exec-1] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:19.947 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:19.954 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices/3 | Time: 6ms
+2026-02-10 21:05:19.954 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices/3 | Time: 7ms
+2026-02-10 21:05:21.619 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:21.619 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:21.626 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 6ms
+2026-02-10 21:05:21.626 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 6ms
+2026-02-10 21:05:21.871 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:21.871 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:21.878 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices/3 | Time: 6ms
+2026-02-10 21:05:21.878 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices/3 | Time: 6ms
+2026-02-10 21:05:22.876 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:22.876 [http-nio-8080-exec-11] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:22.876 [http-nio-8080-exec-5] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:22.876 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:22.876 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:22.878 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:22.885 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 8ms
+2026-02-10 21:05:22.886 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 8ms
+2026-02-10 21:05:22.891 [http-nio-8080-exec-11] INFO  c.e.l.d.w.s.TodayWeatherService - Short Term Weather API Request: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?ServiceKey=e615e4953d1f3619a528e9a7566edca3952a4dc05b9658416e9159c04a3ea0cd&pageNo=1&numOfRows=100&dataType=JSON&base_date=20260210&base_time=2000&nx=36&ny=127
+2026-02-10 21:05:22.891 [http-nio-8080-exec-6] INFO  c.e.l.d.w.s.TodayWeatherService - Short Term Weather API Request: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?ServiceKey=e615e4953d1f3619a528e9a7566edca3952a4dc05b9658416e9159c04a3ea0cd&pageNo=1&numOfRows=100&dataType=JSON&base_date=20260210&base_time=2000&nx=36&ny=127
+2026-02-10 21:05:22.891 [http-nio-8080-exec-7] INFO  c.e.l.d.w.s.TodayWeatherService - Short Term Weather API Request: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?ServiceKey=e615e4953d1f3619a528e9a7566edca3952a4dc05b9658416e9159c04a3ea0cd&pageNo=1&numOfRows=100&dataType=JSON&base_date=20260210&base_time=2000&nx=36&ny=127
+2026-02-10 21:05:22.891 [http-nio-8080-exec-5] INFO  c.e.l.d.w.s.TodayWeatherService - Short Term Weather API Request: http://apis.data.go.kr/1360000/VilageFcstInfoService_2.0/getVilageFcst?ServiceKey=e615e4953d1f3619a528e9a7566edca3952a4dc05b9658416e9159c04a3ea0cd&pageNo=1&numOfRows=100&dataType=JSON&base_date=20260210&base_time=2000&nx=36&ny=127
+2026-02-10 21:05:22.895 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:05:22.903 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 7ms
+2026-02-10 21:05:23.143 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 266ms
+2026-02-10 21:05:23.150 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 273ms
+2026-02-10 21:05:24.503 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 1626ms
+2026-02-10 21:05:24.512 [http-nio-8080-exec-11] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 1635ms
+2026-02-10 21:07:21.283 [http-nio-8080-exec-3] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:07:21.283 [http-nio-8080-exec-8] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:07:21.286 [http-nio-8080-exec-2] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:07:21.286 [http-nio-8080-exec-8] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 2ms
+2026-02-10 21:07:21.290 [http-nio-8080-exec-6] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:07:21.290 [http-nio-8080-exec-7] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:07:21.292 [http-nio-8080-exec-10] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:07:21.294 [http-nio-8080-exec-6] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/weather/today | Time: 4ms
+2026-02-10 21:07:21.298 [http-nio-8080-exec-2] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 12ms
+2026-02-10 21:07:21.298 [http-nio-8080-exec-3] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 14ms
+2026-02-10 21:07:21.303 [http-nio-8080-exec-7] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 13ms
+2026-02-10 21:07:21.304 [http-nio-8080-exec-4] INFO  c.e.l.common.filter.JwtFilter - 인증 성공 : userId : 123708
+2026-02-10 21:07:21.308 [http-nio-8080-exec-10] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/enlistment/thisWeek | Time: 15ms
+2026-02-10 21:07:21.312 [http-nio-8080-exec-4] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/123708 | Time: 8ms

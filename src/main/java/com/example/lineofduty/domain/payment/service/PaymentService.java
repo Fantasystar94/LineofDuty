@@ -11,6 +11,7 @@ import com.example.lineofduty.domain.payment.Payment;
 import com.example.lineofduty.domain.payment.PaymentStatus;
 import com.example.lineofduty.domain.payment.dto.*;
 import com.example.lineofduty.domain.payment.repository.PaymentRepository;
+import com.example.lineofduty.domain.product.service.ProductFacade;
 import com.example.lineofduty.domain.product.service.ProductService;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -24,6 +25,7 @@ import java.net.URI;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
 import java.time.OffsetDateTime;
 import java.util.Base64;
 import java.util.List;
@@ -35,7 +37,7 @@ public class PaymentService {
 
     private final OrderRepository orderRepository;
     private final PaymentRepository paymentRepository;
-    private final ProductService productService;
+    private final ProductFacade productFacade;
 
     @Value("${toss.secret.key}")
     private String secretKey;
@@ -132,7 +134,7 @@ public class PaymentService {
 
             // 주문 내역(List<orderItem>)에 맞추어서 재고(product) 차감해
             for (OrderItem orderItem : orderItemList) {
-                productService.decreaseStock(
+                productFacade.decreaseStock(
                         orderItem.getProduct().getId(),
                         orderItem.getQuantity()
                 );
@@ -307,7 +309,7 @@ public class PaymentService {
 
             // 각 주문 상품의 재고를 다시 증가시켜
             for (OrderItem orderItem : orderItemList) {
-                productService.increaseStock(
+                productFacade.increaseStock(
                         orderItem.getProduct().getId(),
                         orderItem.getQuantity()
                 );
@@ -320,6 +322,7 @@ public class PaymentService {
     }
 
     private String encodeSecretKey(String secretKey) {
-        return Base64.getEncoder().encodeToString(secretKey.getBytes());
+        return Base64.getEncoder()
+                .encodeToString((secretKey + ":").getBytes(StandardCharsets.UTF_8));
     }
 }

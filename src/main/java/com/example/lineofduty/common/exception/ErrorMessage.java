@@ -21,6 +21,10 @@ public enum ErrorMessage {
     // 게시판(QnA/공지) 관련
     MISSING_QUESTION_CONTENT(HttpStatus.BAD_REQUEST, "질문 내용은 필수입니다."),
     MISSING_COMMENT_CONTENT(HttpStatus.BAD_REQUEST, "댓글 내용은 필수입니다."),
+    PROFANITY_DETECTED(HttpStatus.BAD_REQUEST, "비속어가 포함되어 있습니다." ),
+    NOT_BLANK(HttpStatus.BAD_REQUEST, "빈칸으로 작성할 수 없습니다." ),
+    ANTI_PLAQUE_FUNCTION(HttpStatus.BAD_REQUEST, "1분에 2개까지 글작성이 가능합니다. 잠시후 다시 시도해주세요."),
+    ALREADY_ANSWERED_CANNOT_MODIFY(HttpStatus.BAD_REQUEST, "관리자가 답변한 게시글은 수정할 수 없습니다."),
 
     // 주문/상품 관련
     MISSING_ORDER_ID(HttpStatus.BAD_REQUEST, "orderId가 누락되었습니다."),
@@ -54,6 +58,7 @@ public enum ErrorMessage {
     ADMIN_PERMISSION_REQUIRED(HttpStatus.UNAUTHORIZED, "관리자 권한이 필요합니다."),
     INVALID_DEFERMENT_STATUS(HttpStatus.UNAUTHORIZED, "없는 연기 상태 입니다."),
     PASSWORD_MISMATCH(HttpStatus.BAD_REQUEST, "비밀번호가 일치하지 않습니다."),
+    INVALID_VERIFICATION_CODE(HttpStatus.BAD_REQUEST, "유효하지 않은 인증 코드입니다."),
 
     /* --- 403 Forbidden --- */
     // 인가 실패 (권한 부족 - 작성자가 아님 등)
@@ -70,6 +75,7 @@ public enum ErrorMessage {
     /* --- 404 Not Found --- */
     // 리소스 없음
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "사용자를 찾을 수 없습니다."),
+    EMAIL_NOT_FOUND(HttpStatus.NOT_FOUND, "이메일을 찾을 수 없습니다."),
     APPLICATION_NOT_FOUND(HttpStatus.NOT_FOUND, "입영 신청 내역이 없습니다."),
     QUESTION_NOT_FOUND(HttpStatus.NOT_FOUND, "질문을 찾을 수 없습니다."),
     PRODUCT_NOT_FOUND(HttpStatus.NOT_FOUND, "존재하지 않는 상품입니다."),
@@ -92,7 +98,7 @@ public enum ErrorMessage {
     NO_REMAINING_SLOTS(HttpStatus.CONFLICT,"입영 일정이 모두 소진 되었습니다"),
     INVALID_AMOUNT_PAYMENT(HttpStatus.CONFLICT, "결제할 금액 정보가 일치하지 않습니다."),
     SCHEDULE_CONFLICT(HttpStatus.CONFLICT, "동시에 요청이 들어왔습니다."),
-
+    ALREADY_CREATED_YEAR(HttpStatus.CONFLICT, "이미 해당년도 입영일정이 있습니다"),
     /* --- 500 Internal Server Error --- */
     // 외부 API 관련
     WEATHER_API_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "기상청 API 호출 중 오류가 발생했습니다."),

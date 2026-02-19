@@ -1,5 +1,7 @@
 package com.example.lineofduty.domain.product;
 
+import com.example.lineofduty.common.exception.CustomException;
+import com.example.lineofduty.common.exception.ErrorMessage;
 import com.example.lineofduty.common.model.enums.ProductStatus;
 import com.example.lineofduty.domain.product.dto.request.ProductRequest;
 import com.example.lineofduty.entity.BaseEntity;
@@ -64,6 +66,26 @@ public class Product extends BaseEntity {
         if (request.getPrice() != null) this.price = request.getPrice();
         if (request.getStock() != null) {
             updateStock(request.getStock());
+        }
+    }
+
+    public void decreaseStock(Long quantity) {
+        if (this.stock < quantity) {
+            throw new CustomException(ErrorMessage.OUT_OF_STOCK);
+        }
+
+        this.stock -= quantity;
+
+        if (this.stock == 0) {
+            this.status = ProductStatus.SOLD_OUT;
+        }
+    }
+
+    public void increaseStock(Long quantity) {
+        this.stock += quantity;
+
+        if (this.stock > 0) {
+            this.status = ProductStatus.ON_SALE;
         }
     }
 

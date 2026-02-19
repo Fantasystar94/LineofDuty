@@ -1,6 +1,9 @@
 spring:
   config:
     import: optional:file:.env[.properties]
+  output:
+    ansi:
+      enabled: always
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: ${DB_URL}
@@ -38,13 +41,18 @@ spring:
     redis:
       host: ${REDIS_HOST}
       port: ${REDIS_PORT}
-      timeout: 3000ms
-      lettuce:
-        pool:
-          max-active: 8
-          max-idle: 8
-          min-idle: 2
-          max-wait: -1ms
+      password:
+      redisson:
+        # 연결 풀 설정
+        connection-pool-size: 64
+        connection-minimum-idle-size: 10
+        # 타임아웃 설정 (밀리초)
+        idle-connection-timeout: 10000
+        connect-timeout: 10000
+        timeout: 3000
+        # 재시도 설정
+        retry-attempts: 3
+        retry-interval: 1500
 
   jackson:
     serialization:
@@ -55,6 +63,16 @@ spring:
     type: caffeine
     caffeine:
       spec: maximumSize=500,expireAfterWrite=10m
+  
+  cloud:
+    aws:
+      s3:
+        bucket: ${AWS_S3_BUCKET}
+      region:
+        static: ${AWS_REGION}
+      credentials:
+        access-key: ${AWS_ACCESS_KEY}
+        secret-key: ${AWS_SECRET_KEY}
 
 openai:
   api:
@@ -83,10 +101,3 @@ weather:
 kakao:
   client-id: ${KAKAO_CLIENT_ID}
   redirect-uri: ${KAKAO_REDIRECT_URI}
-
-gcp:
-  project-id: ${GCP_PROJECT_ID}
-  client-email: ${GCP_CLIENT_EMAIL}
-  private-key: ${GCP_PRIVATE_KEY}
-  private-key-id: ${GCP_PRIVATE_KEY_ID}
-  client-id: ${GCP_CLIENT_ID}

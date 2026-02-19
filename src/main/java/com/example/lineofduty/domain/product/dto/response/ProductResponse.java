@@ -16,6 +16,7 @@ public class ProductResponse {
     private Long price;
     private Long stock;
     private ProductStatus status;
+    private String productImageUrl;
     private LocalDateTime createdAt;
     private LocalDateTime modifiedAt;
 
@@ -27,6 +28,7 @@ public class ProductResponse {
                 product.getPrice(),
                 product.getStock(),
                 product.getStatus(),
+                product.getProductImageUrl(),
                 product.getCreatedAt(),
                 product.getModifiedAt()
         );
