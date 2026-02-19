@@ -15,7 +15,6 @@ env:
   JWT_SECRET: ${{ secrets.APPLICATION.JWT_SECRET }}
   REDIS_HOST: ${{ secrets.APPLICATION.REDIS_HOST }}
   REDIS_PORT: ${{ secrets.APPLICATION.REDIS_PORT }}
-
 # =========================
 # 1️⃣ CI: Build & Push
 # =========================
