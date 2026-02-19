@@ -14,6 +14,7 @@ public class UserResponse {
     private final LocalDateTime deletedAt;
     private final LocalDateTime createdAt;
     private final LocalDateTime modifiedAt;
+    private final String profileImageUrl;
 
     public UserResponse(User user) {
         this.id = user.getId();
@@ -24,5 +25,6 @@ public class UserResponse {
         this.deletedAt = user.getDeletedAt();
         this.createdAt = user.getCreatedAt();
         this.modifiedAt = user.getModifiedAt();
+        this.profileImageUrl = user.getProfileImageUrl();
     }
 }

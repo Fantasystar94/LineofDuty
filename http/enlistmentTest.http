@@ -1,4 +1,4 @@
-@baseUrl = http://43.201.115.73:8080
+@baseUrl = http://localhost:8080
 #@accessToken = 초기값 (로그인 후 자동 세팅됨)
 
 ################################
@@ -77,7 +77,7 @@ GET {{baseUrl}}/api/enlistment-applications
 Authorization: Bearer {{accessToken}}
 
 ### GET APPLICATION DETAIL
-GET {{baseUrl}}/api/enlistment-applications/8525
+GET {{baseUrl}}/api/enlistment-applications/18
 Authorization: Bearer {{accessToken}}
 
 ### CANCEL APPLICATION
@@ -101,7 +101,7 @@ Content-Type: application/json
 }
 
 ### GET DEFERMENT DETAIL (USER)
-GET {{baseUrl}}/api/deferments/1
+GET {{baseUrl}}/api/deferments/11
 Authorization: Bearer {{accessToken}}
 
 ################################

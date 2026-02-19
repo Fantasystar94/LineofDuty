@@ -37,11 +37,18 @@ public class Deferment extends BaseEntity {
 
     private LocalDate changedDate;
 
+    private boolean isConfirmed;
+
     public Deferment(EnlistmentApplication application, Long userId, String reason, DefermentStatus status, LocalDate changedDate) {
         this.application = application;
         this.userId = userId;
         this.reason = reason;
         this.status = status;
         this.changedDate = changedDate;
+        this.isConfirmed = false;
+    }
+
+    public void setConfirmed() {
+        this.isConfirmed = true;
     }
 }
