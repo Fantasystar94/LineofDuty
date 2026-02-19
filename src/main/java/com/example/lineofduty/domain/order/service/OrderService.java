@@ -55,9 +55,14 @@ public class OrderService {
          1. 사용 가능한 주문서가 있다면 그 주문서를 사용해
          2. 주문서가 없다면 주문서를 새로 만들어
         */
-        Order order = orderRepository.findByUserIdAndIsOrderCompletedFalse(userId).orElseGet(
+        Order order = orderRepository.findLastUsingOrder(userId).orElseGet(
                 () -> createNewOrder(userId, product)    // 빈 주문서 생성
         );
+
+        // 주문 완료된 주문서일 경우 빈 주문서 생성
+        if (order.isOrderCompleted()) {
+            createNewOrder(userId, product);
+        }
 
         // 주문서에 추가하려는 product가 이미 존재하는지 확인하고 있으면 주문 수량만 올리기
         OrderItem orderItem = null;
