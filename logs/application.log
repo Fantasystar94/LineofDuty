@@ -809,3 +809,6 @@ org.springframework.web.bind.MissingServletRequestParameterException: Required r
 2026-02-19 17:27:31.302 [http-nio-8080-exec-1] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 48ms
 2026-02-19 17:27:31.303 [http-nio-8080-exec-13] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/notices | Time: 51ms
 2026-02-19 17:27:31.340 [http-nio-8080-exec-5] INFO  c.e.lineofduty.domain.log.LogAspect - Request: GET /api/users/16 | Time: 42ms
+2026-02-19 18:42:51.888 [SpringApplicationShutdownHook] INFO  o.s.o.j.LocalContainerEntityManagerFactoryBean - Closing JPA EntityManagerFactory for persistence unit 'default'
+2026-02-19 18:42:51.896 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown initiated...
+2026-02-19 18:42:51.965 [SpringApplicationShutdownHook] INFO  com.zaxxer.hikari.HikariDataSource - HikariPool-1 - Shutdown completed.
