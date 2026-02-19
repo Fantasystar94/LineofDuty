@@ -19,6 +19,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
+@Tag("concurrency")
 class ProductServiceConcurrencyTest {
 
     @Autowired
