@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -14,7 +13,6 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
@@ -55,11 +53,6 @@ public class OpenAIService {
                 .connectTimeout(Duration.ofSeconds(30))
                 .build();
         this.objectMapper = new ObjectMapper();
-    }
-
-    @Async
-    public CompletableFuture<String> generateResponseAsync(String userMessage) {
-        return CompletableFuture.supplyAsync(() -> generateResponse(userMessage));
     }
 
     // 일반 채팅 응답 생성
