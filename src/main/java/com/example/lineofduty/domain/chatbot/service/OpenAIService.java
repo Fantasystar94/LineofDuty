@@ -4,7 +4,6 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 import java.net.URI;
 import java.net.http.HttpClient;
@@ -14,7 +13,6 @@ import java.time.Duration;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.CompletableFuture;
 
 @Service
 @Slf4j
@@ -57,21 +55,15 @@ public class OpenAIService {
         this.objectMapper = new ObjectMapper();
     }
 
-    @Async
-    public CompletableFuture<String> generateResponseAsync(String userMessage) {
-        return CompletableFuture.supplyAsync(() -> generateResponse(userMessage));
-    }
-
     // 일반 채팅 응답 생성
     public String generateResponse(String userMessage) {
         try {
             // API 키 확인
             if (apiKey == null || apiKey.isEmpty() || apiKey.equals("${OPENAI_API_KEY}")) {
-                log.warn("OpenAI API key is not configured, using fallback response");
                 return getFallbackResponse(userMessage);
             }
 
-            String requestBody = createRequestBody(userMessage, false);
+            String requestBody = createRequestBody(userMessage);
 
             // User-Agent 포함한 요청 생성 (Cloudflare 우회)
             HttpRequest request = HttpRequest.newBuilder()
@@ -84,21 +76,17 @@ public class OpenAIService {
 
             HttpResponse<String> response = httpClient.send(request, HttpResponse.BodyHandlers.ofString());
 
-            log.info("OpenAI API Response Status: {}", response.statusCode());
-
             if (response.statusCode() == 200) {
                 return parseResponse(response.body());
             } else {
-                log.error("OpenAI API Error (Status {}): {}", response.statusCode(), response.body());
                 return getFallbackResponse(userMessage);
             }
         } catch (Exception e) {
-            log.error("Error calling OpenAI API: {}", e.getMessage(), e);
             return getFallbackResponse(userMessage);
         }
     }
 
-    private String createRequestBody(String userMessage, boolean stream) {
+    private String createRequestBody(String userMessage) {
         Map<String, Object> requestBody = new HashMap<>();
         requestBody.put("model", AI_MODEL);
         requestBody.put("messages", List.of(
@@ -107,7 +95,6 @@ public class OpenAIService {
         ));
         requestBody.put("temperature", 0.7);
         requestBody.put("max_tokens", 1000);
-        requestBody.put("stream", stream);
 
         try {
             return objectMapper.writeValueAsString(requestBody);
@@ -129,65 +116,164 @@ public class OpenAIService {
     private String getFallbackResponse(String userMessage) {
         String lowerMessage = userMessage.toLowerCase();
 
-        if (lowerMessage.contains("입영 신청")) {
+        if (lowerMessage.contains("입영 일정") || lowerMessage.contains("입영일정")
+                || lowerMessage.contains("입영 신청") || lowerMessage.contains("입영날짜")
+                || lowerMessage.contains("입영 날짜")) {
             return """
-                    입영 신청은 다음과 같은 절차로 진행됩니다:
+                    📅 **입영 일정 안내**
                     
-                    1. **입영 가능 일정 조회**: GET /api/enlistment API를 통해 가능한 입영일을 확인합니다.
-                    2. **일정 선택**: 원하는 입영일을 선택합니다.
-                    3. **신청**: POST /api/enlistment-applications API로 입영 신청을 합니다.
+                    상단 메뉴의 **[입영 일정]** 을 클릭하시면 달력 화면으로 이동합니다.
                     
-                    더 자세한 정보가 필요하시면 관리자에게 문의해주세요.
+                    **이용 방법:**
+                    1. 달력에서 원하는 날짜를 클릭합니다.
+                    2. 우측 패널에서 해당 날짜의 잔여 슬롯을 확인합니다.
+                    3. **[이 날짜로 입영 신청]** 버튼을 눌러 신청을 완료합니다.
+                    
+                    ※ 잔여 인원이 있는 날짜만 신청 가능하며, 신청 전 로그인이 필요합니다.
+                    ※ 신청 후 마이페이지에서 신청 내역을 확인하실 수 있습니다.
                     """;
-        } else if (lowerMessage.contains("입영 연기")) {
+
+        } else if (lowerMessage.contains("연기") || lowerMessage.contains("입영 연기")
+                || lowerMessage.contains("연기 신청")) {
             return """
-                    입영 연기 신청은 다음과 같이 진행됩니다:
+                    📋 **입영 연기 신청 안내**
                     
-                    1. **연기 사유 선택**: 질병, 학업, 가족 사유, 개인 사유 등
-                    2. **필요 서류 준비**: 사유에 따른 증빙 서류
-                    3. **시스템 신청**: POST /api/deferments API를 통해 연기 신청
-                    4. **관리자 승인 대기**
+                    상단 메뉴의 **[연기 신청]** 을 클릭하시면 연기 신청 페이지로 이동합니다.
                     
-                    연기는 정당한 사유가 있을 때만 가능하며, 관리자의 승인이 필요합니다.
+                    **연기 가능 사유:**
+                    - 질병·부상 (진단서 등 의료 서류 필요)
+                    - 학업 (재학증명서 필요)
+                    - 가족 사유 (가족관계증명서 등 필요)
+                    - 기타 개인 사유
+                    
+                    **신청 절차:**
+                    1. [연기 신청] 메뉴 접속
+                    2. 연기 사유 선택 및 증빙 서류 업로드
+                    3. 신청 제출 → 관리자 승인 대기
+                    4. 승인 결과는 마이페이지 또는 이메일로 통보됩니다.
+                    
+                    ※ 연기는 정당한 사유가 있을 때만 가능하며, 허위 신청 시 불이익이 발생할 수 있습니다.
                     """;
-        } else if (lowerMessage.contains("입영 일정") || lowerMessage.contains("입영 날짜")) {
+
+        } else if (lowerMessage.contains("상품") || lowerMessage.contains("군장")
+                || lowerMessage.contains("구매") || lowerMessage.contains("준비물")
+                || lowerMessage.contains("장비") || lowerMessage.contains("용품")) {
             return """
-                    입영 일정 조회는 다음과 같이 진행됩니다:
+                    🛒 **군장용품 상품 안내**
                     
-                    1. **전체 일정 조회**: GET /api/enlistment API로 입영 가능한 전체 일정을 확인할 수 있습니다.
-                    2. **기간별 조회**: GET /api/enlistment/search?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD로 특정 기간의 일정을 조회할 수 있습니다.
-                    3. **단건 조회**: GET /api/enlistment/{scheduleId}로 특정 일정의 상세 정보를 확인할 수 있습니다.
+                    상단 메뉴의 **[상품]** 을 클릭하시면 입영 전 필요한 물품을 구매하실 수 있습니다.
                     
-                    각 일정의 남은 슬롯 수도 함께 확인하실 수 있습니다.
-                    """;
-        } else if (lowerMessage.contains("준비물") || lowerMessage.contains("준비")) {
-            return """
-                    입영 시 준비물은 다음과 같습니다:
-                    
-                    **필수 지참물**:
-                    - 주민등록증 또는 운전면허증
-                    - 입영통지서
-                    - 도장 (인감도장 권장)
-                    - 신분증 사진 3매
-                    
-                    **개인 물품** (선택):
+                    **주요 상품 카테고리:**
                     - 세면도구 (칫솔, 치약, 비누 등)
-                    - 속옷 2~3벌
-                    - 현금 (소액)
+                    - 의류·속옷
+                    - 기타 개인 물품
                     
-                    상세한 준비물 목록은 입영통지서를 참고해주세요.
+                    **구매 방법:**
+                    1. [상품] 메뉴에서 원하는 상품 선택
+                    2. **[장바구니에 담기]** 또는 **[바로 구매]**
+                    3. 결제 후 [주문내역]에서 배송 현황 확인
+                    
+                    ※ 구매 전 반드시 입영통지서에 안내된 준비물 목록을 확인하세요.
+                    ※ 장바구니는 상단 메뉴 [장바구니]에서 확인 가능합니다.
                     """;
+
+
+        } else if (lowerMessage.contains("장바구니")) {
+            return """
+                    🛍️ **장바구니 안내**
+                    
+                    상단 메뉴의 **[장바구니]** 를 클릭하시면 담아둔 상품 목록을 확인할 수 있습니다.
+                    
+                    **이용 방법:**
+                    1. [상품] 메뉴에서 원하는 상품을 장바구니에 담습니다.
+                    2. [장바구니] 메뉴에서 수량 변경 및 상품 삭제가 가능합니다.
+                    3. 최종 확인 후 결제를 진행합니다.
+                    
+                    ※ 장바구니는 로그인 후 이용 가능합니다.
+                    """;
+
+        } else if (lowerMessage.contains("주문") || lowerMessage.contains("주문내역")
+                || lowerMessage.contains("배송") || lowerMessage.contains("구매내역")) {
+            return """
+                    📦 **주문내역 안내**
+                    
+                    상단 메뉴의 **[주문내역]** 을 클릭하시면 과거 주문 목록과 배송 현황을 확인할 수 있습니다.
+                    
+                    **확인 가능한 정보:**
+                    - 주문 일자 및 주문 번호
+                    - 구매 상품 목록 및 금액
+                    - 배송 상태 (결제완료 / 배송중 / 배송완료)
+                    
+                    ※ 주문내역은 로그인 후 이용 가능합니다.
+                    ※ 배송 관련 문의는 QnA 메뉴를 이용해주세요.
+                    """;
+
+        } else if (lowerMessage.contains("공지") || lowerMessage.contains("공지사항")
+                || lowerMessage.contains("안내")) {
+            return """
+                    📢 **공지사항 안내**
+                    
+                    상단 메뉴의 **[공지사항]** 을 클릭하시면 병무청의 최신 공지 및 안내사항을 확인할 수 있습니다.
+                    
+                    **주요 공지 유형:**
+                    - 시스템 점검 안내
+                    - 병역 의무자 개인정보 변경 방법 안내
+                    - 입영 전 준비사항 안내
+                    - 제도 변경 및 정책 업데이트
+                    
+                    최신 공지를 정기적으로 확인하시어 중요한 정보를 놓치지 마세요.
+                    """;
+
+        } else if (lowerMessage.contains("qna") || lowerMessage.contains("문의")
+                || lowerMessage.contains("질문") || lowerMessage.contains("궁금")) {
+            return """
+                    ❓ **QnA 안내**
+                    
+                    상단 메뉴의 **[QnA]** 를 클릭하시면 자주 묻는 질문을 확인하거나 1:1 문의를 남기실 수 있습니다.
+                    
+                    **QnA 이용 방법:**
+                    1. [QnA] 메뉴 접속
+                    2. 자주 묻는 질문에서 원하는 답변 검색
+                    3. 해당 내용이 없으면 **1:1 문의 작성**
+                    4. 담당자 답변은 마이페이지 또는 이메일로 전달됩니다.
+                    
+                    ※ 긴급한 사항은 병무청 콜센터(☎ 1588-9090)로 문의하시기 바랍니다.
+                    """;
+
+        } else if (lowerMessage.contains("마이페이지") || lowerMessage.contains("내 정보")
+                || lowerMessage.contains("개인정보") || lowerMessage.contains("내정보")
+                || lowerMessage.contains("신청내역") || lowerMessage.contains("로그인")) {
+            return """
+                    👤 **마이페이지 안내**
+                    
+                    우측 상단의 **[마이페이지]** 를 클릭하시면 개인 정보 및 신청 내역을 관리할 수 있습니다.
+                    
+                    **마이페이지에서 가능한 작업:**
+                    - 내 정보 조회 및 수정 (주소, 연락처 등)
+                    - 입영 신청 내역 확인
+                    - 연기 신청 내역 및 승인 결과 확인
+                    - 주문내역 바로가기
+                    
+                    ※ 마이페이지는 로그인 후 이용 가능합니다.
+                    ※ 개인정보 변경 시 반드시 최신 정보로 업데이트해 주세요.
+                    """;
+
         } else {
             return """
-                    안녕하세요! 병역 관련 상담 AI입니다.
+                    안녕하세요! 병무청 상담 AI입니다. 😊
                     
-                    다음과 같은 내용에 대해 도움을 드릴 수 있습니다:
-                    - 입영 신청 방법
-                    - 입영 연기 절차
-                    - 입영 일정 조회
-                    - 준비물 안내
+                    아래 메뉴에 대해 도움을 드릴 수 있습니다:
                     
-                    궁금하신 내용을 구체적으로 말씀해주세요!
+                    - 🛒 **상품** - 군장용품 구매
+                    - 📅 **입영 일정** - 입영 날짜 조회 및 신청
+                    - 📋 **연기 신청** - 입영 연기 신청 절차
+                    - 📢 **공지사항** - 병무청 공지 확인
+                    - ❓ **QnA** - 질문 및 1:1 문의
+                    - 🛍️ **장바구니** - 담아둔 상품 관리
+                    - 📦 **주문내역** - 구매 내역 및 배송 확인
+                    - 👤 **마이페이지** - 내 정보 및 신청 내역
+                    
+                    궁금하신 내용을 구체적으로 말씀해 주세요!
                     """;
         }
     }
