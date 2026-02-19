@@ -16,14 +16,6 @@ public class RedissonConfig {
     @Value("${spring.data.redis.port}")
     private int redisPort;
 
-    @Value("${spring.data.redis.password}")
-    private String redisPassword;
-
-    @Value("${spring.data.redis.redisson.connection-minimum-idle-size}")
-    private int connectionMinimumIdleSize;
-
-    @Value("${spring.data.redis.redisson.connection-pool-size}")
-    private int connectionPoolSize;
 
     @Bean
     public RedissonClient redissonClient() {
@@ -33,9 +25,8 @@ public class RedissonConfig {
 
         config.useSingleServer()
                 .setAddress(address)
-                .setPassword(redisPassword.isEmpty() ? null : redisPassword)
-                .setConnectionMinimumIdleSize(connectionMinimumIdleSize)
-                .setConnectionPoolSize(connectionPoolSize)
+                .setConnectionMinimumIdleSize(10)
+                .setConnectionPoolSize(64)
                 .setIdleConnectionTimeout(10000)
                 .setConnectTimeout(10000)
                 .setTimeout(3000)
