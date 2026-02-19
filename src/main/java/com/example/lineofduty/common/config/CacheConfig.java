@@ -53,7 +53,7 @@ public class CacheConfig {
                 config.entryTtl(Duration.ofMinutes(30)));
 
         cacheConfigs.put("enlistmentList",
-                config.entryTtl(Duration.ofMinutes(5)));;
+                config.entryTtl(Duration.ofMinutes(5)));
 
         return RedisCacheManager.builder(connectionFactory)
                 .cacheDefaults(config)

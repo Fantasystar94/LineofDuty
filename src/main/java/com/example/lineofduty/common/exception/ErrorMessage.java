@@ -101,6 +101,8 @@ public enum ErrorMessage {
     ALREADY_CREATED_YEAR(HttpStatus.CONFLICT, "이미 해당년도 입영일정이 있습니다"),
     /* --- 500 Internal Server Error --- */
     // 외부 API 관련
+    TOSS_API_INTERRUPTED(HttpStatus.INTERNAL_SERVER_ERROR, "toss 결제 요청 처리 중 문제가 발생했습니다."),
+    TOSS_PAYMENT_API_COMMUNICATION_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "toss 결제 시스템과 통신 중 오류가 발생했습니다."),
     WEATHER_API_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "기상청 API 호출 중 오류가 발생했습니다."),
     KAKAO_LOGIN_FAILED(HttpStatus.INTERNAL_SERVER_ERROR, "카카오 로그인 중 오류가 발생했습니다.");
 
