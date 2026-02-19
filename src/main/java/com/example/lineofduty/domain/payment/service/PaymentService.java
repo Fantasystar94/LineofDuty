@@ -12,7 +12,7 @@ import com.example.lineofduty.domain.payment.PaymentStatus;
 import com.example.lineofduty.domain.payment.dto.*;
 import com.example.lineofduty.domain.payment.repository.PaymentRepository;
 import com.example.lineofduty.domain.product.service.ProductFacade;
-import com.example.lineofduty.domain.product.service.ProductService;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -41,6 +41,17 @@ public class PaymentService {
 
     @Value("${toss.secret.key}")
     private String secretKey;
+
+    //토스 response key값 (토스 api 명세서 참고할 것)
+    private static final String AUTHORIZATION = "Authorization";
+    private static final String MESSAGE = "message";
+    private static final String STATUS = "status";
+    private static final String PAYMENT_KEY = "paymentKey";
+    private static final String TOTAL_AMOUNT = "totalAmount";
+    private static final String REQUESTED_AT = "requestedAt";
+    private static final String APPROVED_AT = "approvedAt";
+    private static final String ORDER_NAME = "orderName";
+    private static final String ORDER_ID = "orderId";
 
     private static final String TOSS_CONFIRM_URL = "https://api.tosspayments.com/v1/payments/confirm";
     private static final String TOSS_GET_BY_PAYMENTKEY_URL = "https://api.tosspayments.com/v1/payments";
@@ -95,42 +106,38 @@ public class PaymentService {
             throw new CustomException(ErrorMessage.ALREADY_CANCELED_PAYMENT);
         }
 
-        // 토스로 결제 요청 보내
-        String body = String.format("""
-                        {
-                            "paymentKey": "%s",
-                            "orderId": "%s",
-                            "amount": %d
-                        }
-                        """,
-                payment.getPaymentKey(),
-                payment.getOrderNumber(),
-                payment.getTotalPrice()
-        );
+        // 결제할 값에 조작이 가해졌는지 검사
+        long compareTotalPrice = 0;
+        for (OrderItem item : payment.getOrder().getOrderItemList()) {
+            compareTotalPrice += item.getProduct().getPrice() * item.getQuantity();
+        }
 
-        try {
-            HttpRequest httpRequest = HttpRequest.newBuilder()
-                    .uri(URI.create(TOSS_CONFIRM_URL))
-                    .header("Authorization", "Basic " + encodeSecretKey(secretKey))
-                    .header("Content-Type", "application/json")
-                    .method("POST", HttpRequest.BodyPublishers.ofString(body)
-                    )
-                    .build();
-            HttpResponse<String> response = HttpClient.newHttpClient().send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        if (compareTotalPrice != payment.getTotalPrice()) {
+            throw new CustomException(ErrorMessage.INVALID_AMOUNT_PAYMENT);
+        }
 
-            // 결제 승인 받으면 성공 처리해
-            //response(json형식)를 java객체로 변환해 추출
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(response.body());
+        // 토스로 결제 승인 요청 보내
+        TossConfirmRequest requestBody = new TossConfirmRequest(payment.getPaymentKey(), payment.getOrderNumber(), payment.getTotalPrice());
 
-            // toss에서 에러를 출력할 시 에러 반환
-            if (rootNode.has("message")) {
-                payment.updateStatus(PaymentStatus.ABORTED);
-                throw new CustomTossResponseException(rootNode.get("message").asText());
-            }
+        String body = createTossRequestBody(requestBody);
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .uri(URI.create(TOSS_CONFIRM_URL))
+                .header(AUTHORIZATION, encodeBasicSecretKey(secretKey))
+                .header("Content-Type", "application/json")
+                .method("POST", HttpRequest.BodyPublishers.ofString(body))
+                .build();
 
-            // 주문서(order)에서 주문 내역(List<orderItem>)을 가져와
-            List<OrderItem> orderItemList = payment.getOrder().getOrderItemList();
+        JsonNode rootNode = extractTossResponse(httpRequest);
+
+        // toss에서 에러를 출력할 시 에러 반환
+        if (rootNode.has(MESSAGE)) {
+            payment.updateStatus(PaymentStatus.ABORTED);
+            throw new CustomTossResponseException(rootNode.get(MESSAGE).asText());
+        }
+
+        // 결제 승인 받으면 성공 처리해
+        // 주문서(order)에서 주문 내역(List<orderItem>)을 가져와
+        List<OrderItem> orderItemList = payment.getOrder().getOrderItemList();
 
             // 주문 내역(List<orderItem>)에 맞추어서 재고(product) 차감해
             for (OrderItem orderItem : orderItemList) {
@@ -140,22 +147,19 @@ public class PaymentService {
                 );
             }
 
-            String status = rootNode.get("status").asText();
-            String paymentKey = rootNode.get("paymentKey").asText();
-            long totalPrice = rootNode.get("totalAmount").asLong();
-            OffsetDateTime requestedAt = OffsetDateTime.parse(rootNode.get("requestedAt").asText());
-            OffsetDateTime approvedAt = OffsetDateTime.parse(rootNode.get("approvedAt").asText());
+        String status = rootNode.get(STATUS).asText();
+        String paymentKey = rootNode.get(PAYMENT_KEY).asText();
+        long totalPrice = rootNode.get(TOTAL_AMOUNT).asLong();
+        OffsetDateTime requestedAt = OffsetDateTime.parse(rootNode.get(REQUESTED_AT).asText());
+        OffsetDateTime approvedAt = OffsetDateTime.parse(rootNode.get(APPROVED_AT).asText());
 
-            // toss 반환 값에 맞추어 결제 정보 업데이트
-            payment.updateByResponse(PaymentStatus.valueOf(status), paymentKey, totalPrice, requestedAt, approvedAt);
+        // toss 반환 값에 맞추어 결제 정보 업데이트
+        payment.updateByResponse(PaymentStatus.valueOf(status), paymentKey, totalPrice, requestedAt, approvedAt);
 
-            // 결제 끝난 주문서는 사용 종료 처리
-            payment.getOrder().updateIsOrderCompleted(true);
+        // 결제 끝난 주문서는 사용 종료 처리
+        payment.getOrder().updateIsOrderCompleted(true);
 
-            return PaymentConfirmResponse.from(payment);
-        } catch (IOException | InterruptedException ie) {
-            throw new RuntimeException(ie);
-        }
+        return PaymentConfirmResponse.from(payment);
     }
 
     // 결제 조회 (paymentKey)
@@ -163,40 +167,34 @@ public class PaymentService {
     public PaymentGetResponse getPaymentByPaymentKeyService(String paymentKey) {
 
         // 토스로 결제 요청 보내
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(TOSS_GET_BY_PAYMENTKEY_URL + paymentKey))
-                    .header("Authorization", "Basic " + encodeSecretKey(secretKey))
-                    .method("GET", HttpRequest.BodyPublishers.noBody())
-                    .build();
-            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
-            //response(json형식)를 java객체로 변환해 추출
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(response.body());
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .uri(URI.create(TOSS_GET_BY_PAYMENTKEY_URL + paymentKey))
+                .header(AUTHORIZATION, encodeBasicSecretKey(secretKey))
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
 
-            // toss에서 에러를 출력할 시 에러 반환
-            if (rootNode.has("message")) {
-                throw new CustomTossResponseException(rootNode.get("message").asText());
-            }
+        JsonNode rootNode = extractTossResponse(httpRequest);
 
-            // toss에서 정상 값을 반환할 시 값 추출
-            String orderName = rootNode.get("orderName").asText();
-            String orderNumber = rootNode.get("orderId").asText();
-            long totalPrice = rootNode.get("totalAmount").asLong();
-            String status = rootNode.get("status").asText();
-            OffsetDateTime requestedAt = OffsetDateTime.parse(rootNode.get("requestedAt").asText());
-            OffsetDateTime approvedAt = OffsetDateTime.parse(rootNode.get("approvedAt").asText());
-
-            Order order = orderRepository.findByOrderNumber(orderNumber).orElseThrow(
-                    () -> new CustomException(ErrorMessage.ORDER_NOT_FOUND)
-            );
-            List<OrderItemResponse> orderItemList = order.getOrderItemList().stream().map(OrderItemResponse::from).toList();
-
-            return new PaymentGetResponse(paymentKey, orderName, orderNumber, orderItemList, PaymentStatus.valueOf(status), totalPrice, requestedAt, approvedAt);
-        } catch (IOException | InterruptedException ie) {   // 결제 조회 실패 시
-            throw new RuntimeException(ie);
+        // toss에서 에러를 출력할 시 에러 반환
+        if (rootNode.has(MESSAGE)) {
+            throw new CustomTossResponseException(rootNode.get(MESSAGE).asText());
         }
+
+        // toss에서 정상 값을 반환할 시 값 추출
+        String orderName = rootNode.get(ORDER_NAME).asText();
+        String orderNumber = rootNode.get(ORDER_ID).asText();
+        long totalPrice = rootNode.get(TOTAL_AMOUNT).asLong();
+        String status = rootNode.get(STATUS).asText();
+        OffsetDateTime requestedAt = OffsetDateTime.parse(rootNode.get(REQUESTED_AT).asText());
+        OffsetDateTime approvedAt = OffsetDateTime.parse(rootNode.get(APPROVED_AT).asText());
+
+        Order order = orderRepository.findByOrderNumber(orderNumber).orElseThrow(
+                () -> new CustomException(ErrorMessage.ORDER_NOT_FOUND)
+        );
+        List<OrderItemResponse> orderItemList = order.getOrderItemList().stream().map(OrderItemResponse::from).toList();
+
+        return new PaymentGetResponse(paymentKey, orderName, orderNumber, orderItemList, PaymentStatus.valueOf(status), totalPrice, requestedAt, approvedAt);
     }
 
     // 결제 조회 (orderNumber)
@@ -204,51 +202,45 @@ public class PaymentService {
     public PaymentGetResponse getPaymentByOrderIdService(String orderNumber) {
 
         // 토스로 결제 요청 보내
-        try {
-            HttpRequest request = HttpRequest.newBuilder()
-                    .uri(URI.create(TOSS_GET_BY_ORDERID_URL + orderNumber))
-                    .header("Authorization", "Basic " + encodeSecretKey(secretKey))
-                    .method("GET", HttpRequest.BodyPublishers.noBody())
-                    .build();
-            HttpResponse<String> response = HttpClient.newHttpClient().send(request, HttpResponse.BodyHandlers.ofString());
 
-            //response(json형식)를 java객체로 변환해 추출
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(response.body());
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .uri(URI.create(TOSS_GET_BY_ORDERID_URL + orderNumber))
+                .header(AUTHORIZATION, encodeBasicSecretKey(secretKey))
+                .method("GET", HttpRequest.BodyPublishers.noBody())
+                .build();
 
-            // toss에서 에러를 출력할 시 에러 반환
-            if (rootNode.has("message")) {
-                throw new CustomTossResponseException(rootNode.get("message").asText());
-            }
+        JsonNode rootNode = extractTossResponse(httpRequest);
 
-            // toss에서 정상 값을 반환할 시 값 추출
-            String paymentKey = rootNode.get("paymentKey").asText();
-            String orderName = rootNode.get("orderName").asText();
-
-            Order order = orderRepository.findByOrderNumber(orderNumber).orElseThrow(
-                    () -> new CustomException(ErrorMessage.ORDER_NOT_FOUND)
-            );
-            List<OrderItemResponse> orderItemList = order.getOrderItemList().stream().map(OrderItemResponse::from).toList();
-
-            String status = rootNode.get("status").asText();
-            long totalPrice = rootNode.get("totalAmount").asLong();
-            OffsetDateTime requestedAt = OffsetDateTime.parse(rootNode.get("requestedAt").asText());
-            OffsetDateTime approvedAt = OffsetDateTime.parse(rootNode.get("approvedAt").asText());
-
-            // toss 반환 값에 맞추어 response 생성, 반환
-            return new PaymentGetResponse(paymentKey, orderName, orderNumber, orderItemList, PaymentStatus.valueOf(status), totalPrice, requestedAt, approvedAt);
-        } catch (IOException | InterruptedException ie) {   // 결제 조회 실패 시
-            throw new RuntimeException(ie);
+        // toss에서 에러를 출력할 시 에러 반환
+        if (rootNode.has(MESSAGE)) {
+            throw new CustomTossResponseException(rootNode.get(MESSAGE).asText());
         }
+
+        // toss에서 정상 값을 반환할 시 값 추출
+        String paymentKey = rootNode.get(PAYMENT_KEY).asText();
+        String orderName = rootNode.get(ORDER_NAME).asText();
+
+        Order order = orderRepository.findByOrderNumber(orderNumber)
+                .orElseThrow(() -> new CustomException(ErrorMessage.ORDER_NOT_FOUND));
+        List<OrderItemResponse> orderItemList = order.getOrderItemList().stream()
+                .map(OrderItemResponse::from)
+                .toList();
+
+        String status = rootNode.get(STATUS).asText();
+        long totalPrice = rootNode.get(TOTAL_AMOUNT).asLong();
+        OffsetDateTime requestedAt = OffsetDateTime.parse(rootNode.get(REQUESTED_AT).asText());
+        OffsetDateTime approvedAt = OffsetDateTime.parse(rootNode.get(APPROVED_AT).asText());
+
+        // toss 반환 값에 맞추어 response 생성, 반환
+        return new PaymentGetResponse(paymentKey, orderName, orderNumber, orderItemList, PaymentStatus.valueOf(status), totalPrice, requestedAt, approvedAt);
     }
 
     // 결제 취소
     @Transactional
     public PaymentCancelResponse cancelPaymentService(PaymentCancelRequest request, String paymentKey, long userId) {
 
-        Payment payment = paymentRepository.findByPaymentKey(paymentKey).orElseThrow(
-                () -> new CustomException(ErrorMessage.NOT_FOUND_PAYMENT)
-        );
+        Payment payment = paymentRepository.findByPaymentKey(paymentKey)
+                .orElseThrow(() -> new CustomException(ErrorMessage.NOT_FOUND_PAYMENT));
 
         // payment 삭제 권한 검사해
         Long paymentUserId = payment.getOrder().getUser().getId();
@@ -266,46 +258,37 @@ public class PaymentService {
             throw new CustomException(ErrorMessage.ALREADY_CANCELED_PAYMENT);
         }
 
-        try {
+        // 결제 취소 body 생성
+        String tossCancelURL = "https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel";
 
-            // 결제 취소 body 생성
-            String tossCancelURL = "https://api.tosspayments.com/v1/payments/" + paymentKey + "/cancel";
-            String body = String.format("""
-                            {
-                                "cancelReason": "%s"
-                            }
-                            """,
-                    request.getCancelReason()
-            );
+        TossCancelRequest requestBody = new TossCancelRequest(request.getCancelReason());
+        String body = createTossRequestBody(requestBody);
 
-            // 토스로 결제 취소 요청 보내
-            HttpRequest httpRequest = HttpRequest.newBuilder()
-                    .uri(URI.create(tossCancelURL))
-                    .header("Authorization", "Basic " + encodeSecretKey(secretKey))
-                    .header("Content-Type", "application/json")
-                    .method("POST", HttpRequest.BodyPublishers.ofString(body))
-                    .build();
-            HttpResponse<String> response = HttpClient.newHttpClient().send(httpRequest, HttpResponse.BodyHandlers.ofString());
+        // 토스로 결제 취소 요청 보내
+        HttpRequest httpRequest = HttpRequest.newBuilder()
+                .uri(URI.create(tossCancelURL))
+                .header(AUTHORIZATION, encodeBasicSecretKey(secretKey))
+                .header("Content-Type", "application/json")
+                .method("POST", HttpRequest.BodyPublishers.ofString(body))
+                .build();
 
-            // 반환값 받으면 response(json형식)를 java객체로 변환해 추출
-            ObjectMapper objectMapper = new ObjectMapper();
-            JsonNode rootNode = objectMapper.readTree(response.body());
+        JsonNode rootNode = extractTossResponse(httpRequest);
 
-            // toss에서 에러를 출력할 시 에러 반환
-            if (rootNode.has("message")) {
-                throw new CustomTossResponseException(rootNode.get("message").asText());
-            }
+        // toss에서 에러를 출력할 시 에러 반환
+        if (rootNode.has(MESSAGE)) {
+            throw new CustomTossResponseException(rootNode.get(MESSAGE).asText());
+        }
 
-            String status = rootNode.get("status").asText();
-            long totalPrice = rootNode.get("totalAmount").asLong();
-            OffsetDateTime requestedAt = OffsetDateTime.parse(rootNode.get("requestedAt").asText());
-            OffsetDateTime approvedAt = OffsetDateTime.parse(rootNode.get("approvedAt").asText());
+        String status = rootNode.get(STATUS).asText();
+        long totalPrice = rootNode.get(TOTAL_AMOUNT).asLong();
+        OffsetDateTime requestedAt = OffsetDateTime.parse(rootNode.get(REQUESTED_AT).asText());
+        OffsetDateTime approvedAt = OffsetDateTime.parse(rootNode.get(APPROVED_AT).asText());
 
-            // toss 반환 값에 맞추어 결제 정보 업데이트
-            payment.updateByResponse(PaymentStatus.valueOf(status), paymentKey, totalPrice, requestedAt, approvedAt);
+        // toss 반환 값에 맞추어 결제 정보 업데이트
+        payment.updateByResponse(PaymentStatus.valueOf(status), paymentKey, totalPrice, requestedAt, approvedAt);
 
-            // 주문서에서 주문 내역 가져오기
-            List<OrderItem> orderItemList = payment.getOrder().getOrderItemList();
+        // 주문서에서 주문 내역 가져오기
+        List<OrderItem> orderItemList = payment.getOrder().getOrderItemList();
 
             // 각 주문 상품의 재고를 다시 증가시켜
             for (OrderItem orderItem : orderItemList) {
@@ -315,14 +298,41 @@ public class PaymentService {
                 );
             }
 
-            return PaymentCancelResponse.from(payment);
-        } catch (IOException | InterruptedException ie) {
-            throw new RuntimeException(ie);
+        return PaymentCancelResponse.from(payment);
+    }
+
+    private String encodeBasicSecretKey(String secretKey) {
+        return "Basic " + Base64.getEncoder()
+                .encodeToString((secretKey + ":").getBytes(StandardCharsets.UTF_8));
+    }
+
+    private String createTossRequestBody(Object requestBody) {
+
+        ObjectMapper objectMapper = new ObjectMapper();
+
+        String body;
+        try {
+            body = objectMapper.writeValueAsString(requestBody);
+        } catch (JsonProcessingException e) {
+            throw new CustomException(ErrorMessage.INVALID_REQUEST);
+        }
+        return body;
+    }
+
+    private JsonNode extractTossResponse(HttpRequest httpRequest) {
+        try {
+            HttpResponse<String> response = HttpClient.newHttpClient().send(httpRequest, HttpResponse.BodyHandlers.ofString());
+
+            //response(json형식)를 java객체로 변환해 추출
+            ObjectMapper objectMapper = new ObjectMapper();
+
+            return objectMapper.readTree(response.body());
+        } catch (IOException ie) {   // 결제 조회 실패 시
+            throw new CustomException(ErrorMessage.TOSS_PAYMENT_API_COMMUNICATION_FAILED);
+        } catch (InterruptedException ie) {   // 결제 조회 실패 시
+            Thread.currentThread().interrupt();
+            throw new CustomException(ErrorMessage.TOSS_API_INTERRUPTED);
         }
     }
 
-    private String encodeSecretKey(String secretKey) {
-        return Base64.getEncoder()
-                .encodeToString((secretKey + ":").getBytes(StandardCharsets.UTF_8));
-    }
 }
