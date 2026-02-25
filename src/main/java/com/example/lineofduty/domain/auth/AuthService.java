@@ -78,14 +78,6 @@ public class AuthService {
     @Transactional
     public void signup(SignupRequest request) {
 
-        // 이메일 인증 여부 확인
-        EmailVerification verification = emailVerificationRepository.findByEmail(request.getEmail())
-                .orElseThrow(() -> new CustomException(ErrorMessage.EMAIL_NOT_FOUND));
-
-        if (!verification.isVerified()) {
-            throw new CustomException(ErrorMessage.EMAIL_NOT_FOUND);
-        }
-
         Optional<User> existingUser = userRepository.findByEmail(request.getEmail());
 
         // 권한 결정
@@ -122,16 +114,22 @@ public class AuthService {
                 passwordEncoder.encode(request.getPassword()),
                 role
         );
-        
-        // 가입 성공 시 인증 데이터 삭제
-        emailVerificationRepository.delete(verification);
-        
+
         userRepository.save(user);
     }
 
     // 로그인
     @Transactional
     public TokenResponse login(LoginRequest request) {
+
+        // 이메일 인증 여부 확인
+        EmailVerification verification = emailVerificationRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new CustomException(ErrorMessage.EMAIL_NOT_FOUND));
+
+        if (!verification.isVerified()) {
+            throw new CustomException(ErrorMessage.EMAIL_NOT_FOUND);
+        }
+
 
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new CustomException(ErrorMessage.INVALID_AUTH_INFO));
@@ -155,6 +153,9 @@ public class AuthService {
 
         refreshTokenEntity.updateToken(refreshToken);
         refreshTokenRepository.save(refreshTokenEntity);
+
+        // 가입 성공 시 인증 데이터 삭제
+        emailVerificationRepository.delete(verification);
 
         return new TokenResponse(accessToken, refreshToken);
     }
