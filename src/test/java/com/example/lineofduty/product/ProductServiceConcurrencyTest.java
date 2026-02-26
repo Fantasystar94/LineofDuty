@@ -7,14 +7,10 @@ import com.example.lineofduty.domain.product.service.ProductFacade;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicInteger;
-import java.util.prefs.AbstractPreferences;
-
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest
